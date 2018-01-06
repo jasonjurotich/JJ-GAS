@@ -2,6 +2,8 @@
 I will put all my GAS (Google Apps Script) code here. This will just be to share, so please feel free to fork it.
 Take note that this is not a unified project, but rather just a bank of multiple scripts. They do not have any relation to each other. 
 
+blockformstime.gs (This GAS will block forms based on a time given in a Google Spreadsheet.)
+
 continuecreatingforms.gs (This GAS will continue to create Google forms from a Google Spreadsheet even after the 6 minute limit by saving and then restarting the script.)
 
 dropdownlists.gs (GOOGLE SCRIPT FOR DYNAMIC DEPENDENT DROP DOWN LISTS IN GOOGLE SPREADSHEETS)	
