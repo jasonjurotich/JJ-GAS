@@ -6,6 +6,8 @@ blockformstime.gs (This GAS will block forms based on a time given in a Google S
 
 continuecreatingforms.gs (This GAS will continue to create Google forms from a Google Spreadsheet even after the 6 minute limit by saving and then restarting the script.)
 
+copyformswovalidation.gs (This GAS will copy forms, put a new title on the copied form, put the links of the new form in a Google Spreadsheet, and get rid of response validation (lines 14-19).)
+
 dropdownlists.gs (GOOGLE SCRIPT FOR DYNAMIC DEPENDENT DROP DOWN LISTS IN GOOGLE SPREADSHEETS)	
 
 formsfromsheet.gs	(Create one or multiple Google forms from a Google Spreadsheet)
