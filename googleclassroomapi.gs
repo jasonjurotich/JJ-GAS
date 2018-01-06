@@ -250,6 +250,6 @@ function listCourses() {
   }
   
   var l = Logger.getLog();
-  SpreadsheetApp.openById('1OGRGZuZnlQ1fcLENiz6W2DfO6lyHAbCqqYxrHKkCzDk').getRange('A1').setValue(l);
+  SpreadsheetApp.openById('ID').getRange('A1').setValue(l);
  
 }
