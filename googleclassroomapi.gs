@@ -75,7 +75,6 @@ Classroom.Courses.remove(d[x][8]);
 }}}
 
 
-
 function addStudentsTeachers () { 
 var s = SpreadsheetApp.getActiveSpreadsheet();
 var sh = s.getSheetByName('CLASS');
@@ -143,8 +142,7 @@ var r = sh.getDataRange();
 var n = r.getNumRows();
 var d = r.getValues();
 for (x=0; x<n; x++) {var i=d[x][0]; if(i==''){continue;} 
-                     
-                     
+                 
 else if (i=='D'){  
   
   var assignment = {
@@ -234,9 +232,6 @@ else if (i=='L'){
 Classroom.Courses.CourseWork.remove(d[x][1], d[x][2]);
 } 
 }}
-
-
-
 
 
 function listCourses() {
