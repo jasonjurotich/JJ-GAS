@@ -59,7 +59,7 @@ if(i==''){continue;} else if (i=='D'){
 MailApp.sendEmail(emails1,sub,m,{bcc: emails2,attachments:[attach1]});
 
 var end = sh.getRange(rr, 1).setValue('');  
- 
+var color = sh.getRange(rr, 1,1,sh.getLastColumn()).setBackground('#bad1d1'); 
 
 }
 
