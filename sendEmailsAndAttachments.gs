@@ -58,6 +58,8 @@ if(i==''){continue;} else if (i=='D'){
   
 MailApp.sendEmail(emails1,sub,m,{bcc: emails2,attachments:[attach1]});
 
+  
+// Theses last two are to get rid of the "D" which indicates that the row should be done and to color it so as to mark it as done.  
 var end = sh.getRange(rr, 1).setValue('');  
 var color = sh.getRange(rr, 1,1,sh.getLastColumn()).setBackground('#bad1d1'); 
 
