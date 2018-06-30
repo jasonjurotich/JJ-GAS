@@ -59,7 +59,8 @@ f.setIsQuiz(true);
 f.collectsEmail(true);
 f.hasLimitOneResponsePerUser(true);
 f.hasProgressBar(true);
-f.hasRespondAgainLink(false);  
+f.hasRespondAgainLink(false);
+f.canEditResponse(false);
 
 var ur = f.getPublishedUrl();
 s.getRange('G1').setValue(ur);
