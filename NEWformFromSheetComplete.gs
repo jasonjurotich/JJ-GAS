@@ -1,8 +1,7 @@
-function onOpen1() {
-  var menu = [];
-  menu.push({name:"CREATE TEMPLATE", functionName: "createTemplate"});
-  menu.push({name:"CREATE FORM", functionName: "createForm"});
-  SpreadsheetApp.getActiveSpreadsheet().addMenu("Forms", menu);
+function onOpen() {
+  var menu = SpreadsheetApp.getUi().createMenu('Forms');
+  menu.addItem('CREATE TEMPLATE', 'createTemplate').addToUi();
+  menu.addItem('CREATE FORM', 'createForm').addToUi();
 }
 
 
