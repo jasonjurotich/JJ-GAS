@@ -56,6 +56,10 @@ var id = fm.getId();
 var f = FormApp.openById(id);
 f.setDescription(d[1][1]);
 f.setIsQuiz(true);
+f.collectsEmail(true);
+f.hasLimitOneResponsePerUser(true);
+f.hasProgressBar(true);
+f.hasRespondAgainLink(false);  
 
 var ur = f.getPublishedUrl();
 s.getRange('G1').setValue(ur);
