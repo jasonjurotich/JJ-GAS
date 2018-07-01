@@ -1,3 +1,5 @@
+// A YouTube video will be placed here to explain the code.
+
 function onOpen() {
   var menu = SpreadsheetApp.getUi().createMenu('Forms');
   menu.addItem('CREATE TEMPLATE', 'createTemplate').addToUi();
