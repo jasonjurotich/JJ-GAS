@@ -502,3 +502,7 @@ for(var x=0;x<nr;x++){ // Beginning of for loop with x
  
 }
 } // End of entire scipt
+
+
+
+
