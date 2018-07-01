@@ -1,4 +1,6 @@
-// A YouTube video will be placed here to explain the code.
+
+
+
 
 function onOpen() {
   var menu = SpreadsheetApp.getUi().createMenu('Forms');
@@ -19,7 +21,7 @@ function createTemplate() {
   s.setFrozenRows(3);
   s.getRange('A4:A100').setDataValidation(SpreadsheetApp.newDataValidation()
   .setAllowInvalid(false)
-  .requireValueInList(['ACCEPTANCE', 'CHECKBOX', 'CHECKGRID', 'CHOICE', 'DATE', 'GRID', 'IMAGE1', 'IMAGE2', 'LIST', 'PAGE', 'PARAGRAPH', 'SCALE', 'SECTION', 'TEXT', 'TIME', 'TITLE', 'VIDEO'], true)
+  .requireValueInList(['ACCEPTANCE', 'CHECKBOX', 'CHECKGRID', 'CHOICE', 'DATE', 'GRID', 'IMAGE1', 'IMAGE2', 'LIST', 'PAGE', 'PARAGRAPH', 'SCALE', 'SECTION', 'TEXT', 'TIME', 'VIDEO'], true)
   .build());
   s.getRange('A1:A100').setFontWeight('bold').setHorizontalAlignment('center');
   s.getRange('A1').setValue('EXERCISE');
@@ -203,12 +205,12 @@ for(var x=0;x<nr;x++){ // Beginning of for loop with x
     }
     
     else if (i =='TEXT') {
-        f.addTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        var q = f.addTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     }
     
     else if (i =='PARAGRAPH') {
-        f.addParagraphTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        var q = f.addParagraphTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     }
       
@@ -230,22 +232,22 @@ for(var x=0;x<nr;x++){ // Beginning of for loop with x
         f.addImageItem().setTitle(d[x][1]).setHelpText(d[x][2]).setImage(file).setAlignment(FormApp.Alignment.CENTER).setWidth(800);
     }
     
-    else if (i =='VIDEO1') {
+    else if (i =='VIDEO') {
         f.addVideoItem().setTitle(d[x][1]).setHelpText(d[x][2]).setVideoUrl(d[x][6]).setAlignment(FormApp.Alignment.CENTER).setWidth(800);
     }
          
     else if (i =='SCALE') {
-        f.addScaleItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true).setLabels(d[x][6], d[x][7]).setBounds(d[x][4], d[x][5]);
+        var q = f.addScaleItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true).setLabels(d[x][6], d[x][7]).setBounds(d[x][4], d[x][5]);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     } 
     
     else if (i =='TIME') {
-        f.addTimeItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        var q = f.addTimeItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     }
    
     else if (i =='DATE') {
-        f.addDateItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        var q = f.addDateItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     }
     
@@ -434,12 +436,12 @@ for(var x=0;x<nr;x++){ // Beginning of for loop with x
     }
     
     else if (i =='TEXT') {
-        f.addTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        var q = f.addTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     }
     
     else if (i =='PARAGRAPH') {
-        f.addParagraphTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        var q = f.addParagraphTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     }
       
@@ -461,22 +463,22 @@ for(var x=0;x<nr;x++){ // Beginning of for loop with x
         f.addImageItem().setTitle(d[x][1]).setHelpText(d[x][2]).setImage(file).setAlignment(FormApp.Alignment.CENTER).setWidth(800);
     }
     
-    else if (i =='VIDEO1') {
+    else if (i =='VIDEO') {
         f.addVideoItem().setTitle(d[x][1]).setHelpText(d[x][2]).setVideoUrl(d[x][6]).setAlignment(FormApp.Alignment.CENTER).setWidth(800);
     }
          
     else if (i =='SCALE') {
-        f.addScaleItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true).setLabels(d[x][6], d[x][7]).setBounds(d[x][4], d[x][5]);
+        var q = f.addScaleItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true).setLabels(d[x][6], d[x][7]).setBounds(d[x][4], d[x][5]);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     } 
     
     else if (i =='TIME') {
-        f.addTimeItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        var q = f.addTimeItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     }
    
     else if (i =='DATE') {
-        f.addDateItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        var q = f.addDateItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
         if (d[x][3] !== '') {q.setPoints(d[x][3])}
     }
     
@@ -502,7 +504,6 @@ for(var x=0;x<nr;x++){ // Beginning of for loop with x
  
 }
 } // End of entire scipt
-
 
 
 
