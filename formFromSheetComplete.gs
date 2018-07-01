@@ -1,7 +1,6 @@
 
 
 
-
 function onOpen() {
   var menu = SpreadsheetApp.getUi().createMenu('Forms');
   menu.addItem('CREATE TEMPLATE', 'createTemplate').addToUi();
