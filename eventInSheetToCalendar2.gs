@@ -44,7 +44,6 @@ function sheetToCalendar() {
         
         var end = s.getRange(l, 1).setValue('');  
         var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1');
-      
       }
       
       
@@ -58,7 +57,6 @@ function sheetToCalendar() {
         
         var end = s.getRange(l, 1).setValue('');  
         var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1');
-      
       }
            
       
@@ -73,8 +71,7 @@ function sheetToCalendar() {
         s.getRange(l, 11, 1, 1).setValue(id);
         
         var end = s.getRange(l, 1).setValue('');  
-        var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1');
-      
+        var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1'); 
       }
       
       
@@ -92,7 +89,6 @@ function sheetToCalendar() {
         
         var end = s.getRange(l, 1).setValue('');  
         var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1');
-      
       }
       
       
@@ -108,7 +104,6 @@ function sheetToCalendar() {
         
         var end = s.getRange(l, 1).setValue('');  
         var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1');
-      
       }
  
   }
