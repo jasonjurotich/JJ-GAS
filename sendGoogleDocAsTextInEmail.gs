@@ -1,7 +1,6 @@
 
 
-function exportAsHTML1(){
-  var forDriveScope = DriveApp.getStorageUsed();
+function Html(){
   var docID = 'ID';
   var url = "https://docs.google.com/feeds/download/documents/export/Export?id="+docID+"&exportFormat=html";
   var param = {method: "get", headers: {"Authorization": "Bearer " + ScriptApp.getOAuthToken()}, muteHttpExceptions:true};
@@ -13,7 +12,7 @@ function exportAsHTML1(){
 function mailer(){
    var em = 'email@gmail.com';
    var su = 'This is a test';
-   var body = exportAsHTML1();
+   var body = Html();
    MailApp.sendEmail({to: em, subject: su, htmlBody: body});
 }
 
