@@ -65,7 +65,7 @@ var d = r.getValues();
     var param = {method: "get", headers: {"Authorization": "Bearer " + ScriptApp.getOAuthToken()}, muteHttpExceptions:true};
     var h = UrlFetchApp.fetch(url,param).getContentText();
     
-    MailApp.sendEmail({to: emails1, bbc: emails2, subject: sub, htmlBody: h});
+    MailApp.sendEmail({to: emails1, bcc: emails2, subject: sub, htmlBody: h});
     DriveApp.getFileById(docID).setTrashed(true);  
     
     var end = sh.getRange(rr, 1).setValue('');  
