@@ -4,6 +4,8 @@ function onOpen() {
   var m = SpreadsheetApp.getUi().createMenu('Console');
   m.addItem('ORG', 'createOrg').addToUi();
   m.addItem('GROUP', 'createGroup').addToUi();
+  m.addItem('TEMPLATE', 'TEMPLATE').addToUi();
+}
 
 
 function createOrg() {
@@ -43,4 +45,38 @@ function createGroup() {
     
 // https://stackoverflow.com/questions/33493998/how-do-i-find-the-immutable-id-of-my-google-apps-account
 
+  
+function TEMPLATE() {
+  var spreadsheet = SpreadsheetApp.getActive();
+  spreadsheet.getActiveSheet().setName('ORG');
+  spreadsheet.getRange('A1').activate(); spreadsheet.getCurrentCell().setValue('NAME');
+  spreadsheet.getRange('B1').activate(); spreadsheet.getCurrentCell().setValue('DESCRIPTION');
+  spreadsheet.getRange('C1').activate(); spreadsheet.getCurrentCell().setValue('PATH');
+  spreadsheet.getRange('D:D').activate();
+  var currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getActiveSheet().setFrozenRows(1);
+  spreadsheet.getRange('A1:C1').activate();
+  spreadsheet.getActiveRangeList().setFontWeight('bold').setHorizontalAlignment('center');
+  spreadsheet.getRange('A:C').activate(); spreadsheet.getActiveSheet().setColumnWidths(1, 3, 300);
+  spreadsheet.insertSheet(1); spreadsheet.getActiveSheet().setName('GROUP');
+  spreadsheet.getRange('D:D').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getRange('A1').activate(); spreadsheet.getCurrentCell().setValue('EMAIL');
+  spreadsheet.getRange('B1').activate(); spreadsheet.getCurrentCell().setValue('NAME');
+  spreadsheet.getRange('C1').activate(); spreadsheet.getCurrentCell().setValue('DECRIPTION');
+  spreadsheet.getRange('A:C').activate();
+  spreadsheet.getActiveSheet().setColumnWidths(1, 3, 300);
+  spreadsheet.getActiveSheet().setFrozenRows(1);
+  spreadsheet.getRange('A1:C1').activate();
+  spreadsheet.getActiveRangeList().setHorizontalAlignment('center').setFontWeight('bold');
+};
+  
+  
+  
 
