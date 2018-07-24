@@ -4,7 +4,7 @@ function myFunction1() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Form Responses 1');
   var r = s.getDataRange(); var n = r.getNumRows(); var d = r.getValues(); var l = r.getLastRow();
   
-  for (x=0; x<n; x++){
+  for (x=1; x<n; x++){
     var l = 1 + x;
     var name = d[x][1];
     var em = d[x][2];
