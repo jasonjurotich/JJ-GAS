@@ -64,6 +64,29 @@ function updateUserOYG() {
 }
 
 
+
+function suspendUserOYG() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+  for (x=1; x<nr; x++){
+    var l = 1 + x;  
+   
+    if (s.getRange(l,1).getBackground() !== '#d0e0e3' ) {
+      try{
+      var user = d[x][0];
+      var resource = {suspended: d[x][8]};
+      var org = AdminDirectory.Users.update(resource, user);
+      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3');
+      Utilities.sleep(1000);
+        }
+      catch (e){continue;}
+    }
+     
+  }  
+}
+
+
   
 function createGroupOYG() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
