@@ -253,7 +253,7 @@ function createOrgOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{
       var or = {name: d[x][0], description: d[x][2], parentOrgUnitPath: d[x][3], blockInheritance: false}
-      var me = 'ID'; // Admin ID 
+      var me = 'ID'; // Admin ID which is found under SECURITY > Set up single sign on (SSO) > Entity ID id=
       var org = AdminDirectory.Orgunits.insert(or, me);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
