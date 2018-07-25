@@ -4,14 +4,17 @@ function onOpen(){
 var s = SpreadsheetApp.getUi().createMenu('Scripts');
 s.addItem('USER', 'createUserOYG').addToUi();  
 s.addItem('UPDATE USER', 'updateUserOYG').addToUi();
+s.addItem('SUSPEND USER', 'suspendUserOYG').addToUi();  
 s.addItem('GROUP', 'createGroupOYG').addToUi();  
 s.addItem('EDIT GROUP INFO', 'editGroupInfoOYG').addToUi();
 s.addItem('EDIT GROUP NAME', 'editGroupNameOYG').addToUi();
 s.addItem('ADD USER', 'addGroupMemberOYG').addToUi();
-s.addItem('ADD GROUP2GR', 'addGroupToGroupOYG').addToUi();  
+s.addItem('ADD GROUP2GR', 'addGroupToGroupOYG').addToUi(); 
+s.addItem('DELETE GROUP','deleteGroupOYG').addToUi();  
 s.addItem('ORG', 'createOrgOYG').addToUi();
 s.addItem('LIST ORGS', 'listOrgOYG').addToUi();  
-s.addItem('EDIT ORG', 'editOrgOYG').addToUi();    
+s.addItem('EDIT ORG', 'editOrgOYG').addToUi();
+s.addItem('DELETE ORG', 'deleteOrgOYG').addToUi();    
 }
 
 
@@ -298,6 +301,29 @@ function editOrgOYG() {
       var orgUnitPath = d[x][1];
       var me = 'ID'; // Admin ID
       var org = AdminDirectory.Orgunits.update(or, me, orgUnitPath);
+      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
+      Utilities.sleep(3000);  
+      }
+      catch (e){continue;}  
+    }
+     
+  }  
+}
+
+
+
+function deleteOrgOYG() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORGS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+  for (x=1; x<nr; x++){
+    var l = 1 + x;  
+   
+    if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
+      try{  
+      var orgUnitPath = d[x][1];
+      var me = 'ID';
+      var org = AdminDirectory.Orgunits.remove(me, orgUnitPath);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
       }
