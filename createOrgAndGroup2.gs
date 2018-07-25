@@ -218,6 +218,28 @@ function addGroupToGroupOYG() {
 
 
 
+function deleteGroupOYG() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+  for (x=1; x<nr; x++){
+    var l = 1 + x;  
+   
+    if (s.getRange(l,1).getBackground() !== '#d0e0e3'){
+      try{
+      var groupKey = d[x][0];  
+      var gro = AdminDirectory.Groups.remove(groupKey);
+      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
+      Utilities.sleep(2000); 
+      }
+      catch (e){continue;}
+    }
+     
+  }  
+}
+
+
+
 function createOrgOYG() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORGS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
