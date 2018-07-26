@@ -5,13 +5,13 @@ var s = SpreadsheetApp.getUi().createMenu('Scripts');
 s.addItem('CREATE USER', 'createUserOYG').addToUi();  
 s.addItem('UPDATE USER', 'updateUserOYG').addToUi();
 s.addItem('SUSPEND USER', 'suspendUserOYG').addToUi();  
-s.addItem('CREATE GROUP', 'createGroupOYG').addToUi();  
+s.addItem('CREATE GROUP', 'createGroupOYG').addToUi();
+s.addItem('LIST GROUPS', 'listGroupOYG').addToUi();  
 s.addItem('EDIT GROUP INFO', 'editGroupInfoOYG').addToUi();
 s.addItem('EDIT GROUP NAME', 'editGroupNameOYG').addToUi();
-s.addItem('LIST GROUPS', 'listGroupOYG').addToUi();  
-s.addItem('ADD USER', 'addGroupMemberOYG').addToUi();
-s.addItem('ADD GROUP2GR', 'addGroupToGroupOYG').addToUi(); 
 s.addItem('DELETE GROUP','deleteGroupOYG').addToUi();  
+s.addItem('ADD USER TO GROUP', 'addGroupMemberOYG').addToUi();
+s.addItem('ADD GROUP2GR', 'addGroupToGroupOYG').addToUi(); 
 s.addItem('CREATE ORG', 'createOrgOYG').addToUi();
 s.addItem('LIST ORGS', 'listOrgOYG').addToUi();  
 s.addItem('EDIT ORG', 'editOrgOYG').addToUi();
@@ -114,6 +114,28 @@ function createGroupOYG() {
 
 
 
+function listGroupOYG() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LISTGROUPS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+ var pageToken;
+ var gr = AdminDirectory.Groups.list({domain: 'oyg.edu.mx', maxResults: 300, pageToken: pageToken});
+ var grs = gr.groups; 
+  var arr = [];
+      for (i = 0; i < grs.length; i++) {
+        var or = grs[i]; 
+        var ids = or.id;
+        var names = or.name;
+        var email = or.email;
+        var des = or.description;
+        
+        arr.push([email,names,des,ids]); 
+      }
+      s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);  
+}
+      
+
+
 function editGroupInfoOYG(){
   
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
@@ -123,7 +145,7 @@ function editGroupInfoOYG(){
    
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{
-        var groupId = d[x][5];
+        var groupId = d[x][3];
         var group = AdminGroupsSettings.newGroups();
         group.name = d[x][1]
         group.description = d[x][2];
@@ -161,7 +183,7 @@ function editGroupNameOYG() {
    
     if (s.getRange(l,1).getBackground() !== '#d0e0e3'){
       try{
-      var groupKey = d[x][5];  
+      var groupKey = d[x][3];  
       var gr = {email: d[x][0]}
       var gro = AdminDirectory.Groups.update(gr, groupKey);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
@@ -175,24 +197,24 @@ function editGroupNameOYG() {
 
 
 
-function listGroupOYG() {
-  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LISTGROUPS');
+function deleteGroupOYG() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
- var pageToken;
- var gr = AdminDirectory.Groups.list({domain: 'oyg.edu.mx', maxResults: 300, pageToken: pageToken});
- var grs = gr.groups; 
-  var arr = [];
-      for (i = 0; i < grs.length; i++) {
-        var or = grs[i]; 
-        var ids = or.id;
-        var names = or.name;
-        var email = or.email;
-        var des = or.description;
-        
-        arr.push([email,names,des,ids]); 
+  for (x=1; x<nr; x++){
+    var l = 1 + x;  
+   
+    if (s.getRange(l,1).getBackground() !== '#d0e0e3'){
+      try{
+      var groupKey = d[x][3];  
+      var gro = AdminDirectory.Groups.remove(groupKey);
+      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
+      Utilities.sleep(2000); 
       }
-      s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);  
+      catch (e){continue;}
+    }
+     
+  }  
 }
 
 
@@ -239,28 +261,6 @@ function addGroupToGroupOYG() {
       catch (e){continue;}
     }
   }
-}
-
-
-
-function deleteGroupOYG() {
-  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
-  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
-  
-  for (x=1; x<nr; x++){
-    var l = 1 + x;  
-   
-    if (s.getRange(l,1).getBackground() !== '#d0e0e3'){
-      try{
-      var groupKey = d[x][0];  
-      var gro = AdminDirectory.Groups.remove(groupKey);
-      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
-      Utilities.sleep(2000); 
-      }
-      catch (e){continue;}
-    }
-     
-  }  
 }
 
 
