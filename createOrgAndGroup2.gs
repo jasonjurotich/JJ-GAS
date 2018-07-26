@@ -274,8 +274,8 @@ function createOrgOYG() {
    
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{
-      var or = {name: d[x][0], description: d[x][2], parentOrgUnitPath: d[x][3], blockInheritance: false}
-      var me = 'ID'; // Admin ID which is found under SECURITY > Set up single sign on (SSO) > Entity ID id=
+      var or = {name: d[x][0], description: d[x][1], parentOrgUnitPath: d[x][2], blockInheritance: false}
+      var me = 'ID';
       var org = AdminDirectory.Orgunits.insert(or, me);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
@@ -289,10 +289,10 @@ function createOrgOYG() {
   
 
 function listOrgOYG() {
-  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORGS');
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LISTORGS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
- var me = 'ID';  // Admin ID
+ var me = 'C04blr3gm';
  var org = AdminDirectory.Orgunits.list(me, {orgUnitPath: '/', type: 'all'});
  var orgs = org.organizationUnits;  
   
@@ -303,7 +303,7 @@ function listOrgOYG() {
         var names = or.name;
         var des = or.description;
         var path = or.parentOrgUnitPath;
-        arr.push([names,ids,des,path]); 
+        arr.push([names,des,path,ids]); 
       }
       s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);  
 }
@@ -321,9 +321,9 @@ function editOrgOYG() {
    
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{  
-      var or = {name: d[x][0], description: d[x][2], parentOrgUnitPath: d[x][3], blockInheritance: false}
-      var orgUnitPath = d[x][1];
-      var me = 'ID'; // Admin ID
+      var or = {name: d[x][0], description: d[x][1], parentOrgUnitPath: d[x][2], blockInheritance: false}
+      var orgUnitPath = d[x][3];
+      var me = 'ID';
       var org = AdminDirectory.Orgunits.update(or, me, orgUnitPath);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
@@ -345,7 +345,7 @@ function deleteOrgOYG() {
    
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{  
-      var orgUnitPath = d[x][1];
+      var orgUnitPath = d[x][3];
       var me = 'ID';
       var org = AdminDirectory.Orgunits.remove(me, orgUnitPath);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
