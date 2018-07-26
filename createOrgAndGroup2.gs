@@ -161,6 +161,7 @@ function editGroupConfigOYG(){
         group.includeInGlobalAddressList = false;
         group.whoCanLeaveGroup = 'NONE_CAN_LEAVE';
         
+        var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3');
         AdminGroupsSettings.Groups.patch(group, groupId);
         Utilities.sleep(2000); 
       }
