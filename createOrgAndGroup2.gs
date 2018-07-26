@@ -2,17 +2,17 @@
 
 function onOpen(){
 var s = SpreadsheetApp.getUi().createMenu('Scripts');
-s.addItem('USER', 'createUserOYG').addToUi();  
+s.addItem('CREATE USER', 'createUserOYG').addToUi();  
 s.addItem('UPDATE USER', 'updateUserOYG').addToUi();
 s.addItem('SUSPEND USER', 'suspendUserOYG').addToUi();  
-s.addItem('GROUP', 'createGroupOYG').addToUi();  
+s.addItem('CREATE GROUP', 'createGroupOYG').addToUi();  
 s.addItem('EDIT GROUP INFO', 'editGroupInfoOYG').addToUi();
 s.addItem('EDIT GROUP NAME', 'editGroupNameOYG').addToUi();
 s.addItem('LIST GROUPS', 'listGroupOYG').addToUi();  
 s.addItem('ADD USER', 'addGroupMemberOYG').addToUi();
 s.addItem('ADD GROUP2GR', 'addGroupToGroupOYG').addToUi(); 
 s.addItem('DELETE GROUP','deleteGroupOYG').addToUi();  
-s.addItem('ORG', 'createOrgOYG').addToUi();
+s.addItem('CREATE ORG', 'createOrgOYG').addToUi();
 s.addItem('LIST ORGS', 'listOrgOYG').addToUi();  
 s.addItem('EDIT ORG', 'editOrgOYG').addToUi();
 s.addItem('DELETE ORG', 'deleteOrgOYG').addToUi();    
