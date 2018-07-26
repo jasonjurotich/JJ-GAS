@@ -2,8 +2,10 @@
 
 function onOpen(){
 var s = SpreadsheetApp.getUi().createMenu('Scripts');
-s.addItem('CREATE USER', 'createUserOYG').addToUi();  
+s.addItem('CREATE USER', 'createUserOYG').addToUi(); 
+s.addItem('LIST USERS', 'listUsersOYG').addToUi();  
 s.addItem('UPDATE USER', 'updateUserOYG').addToUi();
+s.addItem('CHANGE USER PASS', 'updateUserPassOYG').addToUi();  
 s.addItem('SUSPEND USER', 'suspendUserOYG').addToUi();  
 s.addItem('CREATE GROUP', 'createGroupOYG').addToUi();
 s.addItem('LIST GROUPS', 'listGroupOYG').addToUi();  
@@ -21,7 +23,7 @@ s.addItem('DELETE ORG', 'deleteOrgOYG').addToUi();
 
 
 function createUserOYG() {
-  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CREATEUSERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
   for (x=1; x<nr; x++){
@@ -45,7 +47,37 @@ function createUserOYG() {
 }
 
 
+
+function listUsersOYG() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LISTUSERS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+  var pageToken = null, urs = [];
  
+  do{
+    var us = AdminDirectory.Users.list({domain: 'oyg.edu.mx', pageToken: pageToken, pageSize:100});
+    pageToken = us.nextPageToken;
+    urs = urs.concat(us.users);  
+  }while(pageToken);
+ 
+  var arr = [];
+      for (i = 0; i < urs.length; i++) {
+        var ur = urs[i]; 
+        var email = ur.primaryEmail;
+        var first = ur.name.givenName;
+        var last = ur.name.familyName;
+        var pass = ur.password;
+        var pass2 = ur.changePasswordAtNextLogin;
+        var gl = ur.includeInGlobalAddressList;
+        var org = ur.orgUnitPath;
+        var sus = ur.suspended;
+        arr.push([email,first,last,pass,pass2,gl,org]); 
+      }
+      s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);  
+}
+
+
+
 function updateUserOYG() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
@@ -56,7 +88,32 @@ function updateUserOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3' ) {
       try{
       var user = d[x][0];
-      var resource = {orgUnitPath: d[x][6]};
+      var resource = {primaryEmail: d[x][0], name: {givenName: d[x][1],familyName: d[x][2]},
+      includeInGlobalAddressList: d[x][5], orgUnitPath: d[x][6],    
+      };
+      var org = AdminDirectory.Users.update(resource, user);
+      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3');
+      Utilities.sleep(1000);
+        }
+      catch (e){continue;}
+    }
+     
+  }  
+}
+
+
+
+function updateUserPassOYG() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+  for (x=1; x<nr; x++){
+    var l = 1 + x;  
+   
+    if (s.getRange(l,1).getBackground() !== '#d0e0e3' ) {
+      try{
+      var user = d[x][0];
+      var resource = {password: d[x][3],changePasswordAtNextLogin: d[x][4]};
       var org = AdminDirectory.Users.update(resource, user);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3');
       Utilities.sleep(1000);
@@ -79,7 +136,7 @@ function suspendUserOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3' ) {
       try{
       var user = d[x][0];
-      var resource = {suspended: d[x][8]};
+      var resource = {suspended: d[x][7]};
       var org = AdminDirectory.Users.update(resource, user);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3');
       Utilities.sleep(1000);
@@ -217,6 +274,8 @@ function deleteGroupOYG() {
 }
 
 
+
+
 function addGroupMemberOYG() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
@@ -227,7 +286,7 @@ function addGroupMemberOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{ 
     var userEmail = d[x][0];
-    var groupKey = d[x][7];
+    var groupKey = d[x][8];
     var resource = { email: userEmail, role: 'MEMBER'};
     var gr = AdminDirectory.Members.insert(resource, groupKey);
     var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3');
@@ -274,7 +333,7 @@ function createOrgOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{
       var or = {name: d[x][0], description: d[x][1], parentOrgUnitPath: d[x][2], blockInheritance: false}
-      var me = 'ID';
+      var me = 'C04blr3gm';
       var org = AdminDirectory.Orgunits.insert(or, me);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
@@ -322,7 +381,7 @@ function editOrgOYG() {
       try{  
       var or = {name: d[x][0], description: d[x][1], parentOrgUnitPath: d[x][2], blockInheritance: false}
       var orgUnitPath = d[x][3];
-      var me = 'ID';
+      var me = 'C04blr3gm';
       var org = AdminDirectory.Orgunits.update(or, me, orgUnitPath);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
@@ -345,7 +404,7 @@ function deleteOrgOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{  
       var orgUnitPath = d[x][3];
-      var me = 'ID';
+      var me = 'C04blr3gm';
       var org = AdminDirectory.Orgunits.remove(me, orgUnitPath);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
