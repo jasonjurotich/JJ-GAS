@@ -8,6 +8,7 @@ s.addItem('SUSPEND USER', 'suspendUserOYG').addToUi();
 s.addItem('GROUP', 'createGroupOYG').addToUi();  
 s.addItem('EDIT GROUP INFO', 'editGroupInfoOYG').addToUi();
 s.addItem('EDIT GROUP NAME', 'editGroupNameOYG').addToUi();
+s.addItem('LIST GROUPS', 'listGroupOYG').addToUi();  
 s.addItem('ADD USER', 'addGroupMemberOYG').addToUi();
 s.addItem('ADD GROUP2GR', 'addGroupToGroupOYG').addToUi(); 
 s.addItem('DELETE GROUP','deleteGroupOYG').addToUi();  
@@ -172,6 +173,27 @@ function editGroupNameOYG() {
   }  
 }
 
+
+
+function listGroupOYG() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LISTGROUPS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+ var pageToken;
+ var gr = AdminDirectory.Groups.list({domain: 'oyg.edu.mx', maxResults: 300, pageToken: pageToken});
+ var grs = gr.groups; 
+  var arr = [];
+      for (i = 0; i < grs.length; i++) {
+        var or = grs[i]; 
+        var ids = or.id;
+        var names = or.name;
+        var email = or.email;
+        var des = or.description;
+        
+        arr.push([email,names,des,ids]); 
+      }
+      s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);  
+}
 
 
 function addGroupMemberOYG() {
