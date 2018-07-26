@@ -301,7 +301,9 @@ function listOrgOYG() {
         var or = orgs[i]; 
         var ids = or.orgUnitId;
         var names = or.name;
-        arr.push([names,ids]); 
+        var des = or.description;
+        var path = or.parentOrgUnitPath;
+        arr.push([names,ids,des,path]); 
       }
       s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);  
 }
