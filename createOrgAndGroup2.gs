@@ -7,8 +7,8 @@ s.addItem('UPDATE USER', 'updateUserOYG').addToUi();
 s.addItem('SUSPEND USER', 'suspendUserOYG').addToUi();  
 s.addItem('CREATE GROUP', 'createGroupOYG').addToUi();
 s.addItem('LIST GROUPS', 'listGroupOYG').addToUi();  
+s.addItem('EDIT GROUP CONFIG', 'editGroupConfigOYG').addToUi();
 s.addItem('EDIT GROUP INFO', 'editGroupInfoOYG').addToUi();
-s.addItem('EDIT GROUP NAME', 'editGroupNameOYG').addToUi();
 s.addItem('DELETE GROUP','deleteGroupOYG').addToUi();  
 s.addItem('ADD USER TO GROUP', 'addGroupMemberOYG').addToUi();
 s.addItem('ADD GROUP2GR', 'addGroupToGroupOYG').addToUi(); 
@@ -136,7 +136,7 @@ function listGroupOYG() {
       
 
 
-function editGroupInfoOYG(){
+function editGroupConfigOYG(){
   
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
@@ -145,10 +145,8 @@ function editGroupInfoOYG(){
    
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{
-        var groupId = d[x][3];
+        var groupId = d[x][3]; // This is ONLY the email username, NOT the ID.
         var group = AdminGroupsSettings.newGroups();
-        group.name = d[x][1]
-        group.description = d[x][2];
         group.whoCanAdd = 'NONE_CAN_ADD';
         group.whoCanJoin = 'INVITED_CAN_JOIN';
         group.whoCanViewMembership = 'ALL_MEMBERS_CAN_VIEW';
@@ -174,7 +172,7 @@ function editGroupInfoOYG(){
 
 
 
-function editGroupNameOYG() {
+function editGroupInfoOYG() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -184,7 +182,7 @@ function editGroupNameOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3'){
       try{
       var groupKey = d[x][3];  
-      var gr = {email: d[x][0]}
+        var gr = {email: d[x][0], name: d[x][1], description: d[x][2]}
       var gro = AdminDirectory.Groups.update(gr, groupKey);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(2000); 
