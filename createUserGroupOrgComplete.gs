@@ -8,6 +8,7 @@ function allSCH(){
 //suspendUserSCH();  
 //createGroupSCH();
 //listGroupSCH();  
+//listUsersInGroupSCH();  
 //editGroupConfigSCH();
 //editGroupInfoSCH();
 //deleteGroupSCH();  
@@ -29,7 +30,8 @@ s.addItem('UPDATE USER', 'updateUserSCH').addToUi();
 s.addItem('CHANGE USER PASS', 'updateUserPassSCH').addToUi();  
 s.addItem('SUSPEND USER', 'suspendUserSCH').addToUi();  
 s.addItem('CREATE GROUP', 'createGroupSCH').addToUi();
-s.addItem('LIST GROUPS', 'listGroupSCH').addToUi();  
+s.addItem('LIST GROUPS', 'listGroupSCH').addToUi(); 
+s.addItem('LIST USERS IN GROUPS', 'listUsersInGroupSCH').addToUi();  
 s.addItem('EDIT GROUP CONFIG', 'editGroupConfigSCH').addToUi();
 s.addItem('EDIT GROUP INFO', 'editGroupInfoSCH').addToUi();
 s.addItem('DELETE GROUP','deleteGroupSCH').addToUi();  
@@ -212,6 +214,34 @@ function listGroupSCH() {
       s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);  
 }
       
+
+
+function listUsersInGroupSCH() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  for (x=1; x<nr; x++){
+    var l = 1 + x;
+
+  if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
+      try{
+        var s1 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LISTUSERSGROUPS');
+        var pageToken;
+        var gr = AdminDirectory.Members.list(d[x][0], {domain: 'SCH.edu.mx', maxResults: 500, pageToken: pageToken});
+        var grs = gr.members; 
+        var arr = [];
+        for (i = 0; i < grs.length; i++) {
+          var or = grs[i]; 
+          var email = or.email;
+          arr.push([email]); 
+        }
+        s1.getRange(5, s1.getLastColumn()+1, arr.length, arr[0].length).setValues(arr);  
+      }
+    catch (e){continue;} 
+  }
+var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3');                     
+ }
+}
+
 
 
 // ** IMPORTANT: For "editGroupConfigSCH" function, the ""groupId" is the EMAIL of the group, NOT the unique ID.
