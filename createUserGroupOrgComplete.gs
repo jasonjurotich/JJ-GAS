@@ -345,7 +345,9 @@ function addGroupToGroupSCH() {
 }
 
 
-// ** IMPORTANT: The ID in each GAS below requires a special ID that you find under the Google Admin Console > Security > Set up single sign on (SSO) > Entity ID > id="ID HERE"
+/* IMPORTANT: The ID in each GAS below requires a special ID that you find under the 
+Google Admin Console > Security > Set up single sign on (SSO) > Entity ID > id="ID HERE"
+*/
 
 function createOrgSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORGS');
