@@ -197,10 +197,14 @@ function createGroupSCH() {
 function listGroupSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LISTGROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  var pageToken = null, grs = [];
+ 
+  do{
+    var gr = AdminDirectory.Groups.list({domain: 'SCH.edu.mx', pageToken: pageToken, pageSize:100});
+    pageToken = gr.nextPageToken;
+    grs = grs.concat(gr.groups);  
+  } while(pageToken);
   
- var pageToken;
- var gr = AdminDirectory.Groups.list({domain: 'SCH.edu.mx', maxResults: 300, pageToken: pageToken});
- var grs = gr.groups; 
   var arr = [];
       for (i = 0; i < grs.length; i++) {
         var or = grs[i]; 
