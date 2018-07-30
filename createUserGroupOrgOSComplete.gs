@@ -20,7 +20,8 @@ function allSCH(){
 //deleteOrgSCH();
 //listChromeOsSCH();
 //moveChromeOsSCH(); 
-//suspendChromeOsSCH();  
+//suspendChromeOsSCH();
+//editChromeOsSCH();  
 }
 
 
@@ -46,7 +47,8 @@ s.addItem('EDIT ORG', 'editOrgSCH').addToUi();
 s.addItem('DELETE ORG', 'deleteOrgSCH').addToUi();
 s.addItem('LIST CHROMEOS', 'listChromeOsSCH').addToUi(); 
 s.addItem('MOVE CHROMEOS', 'moveChromeOsSCH').addToUi();
-s.addItem('SUSPEND CHROMEOS', 'suspendChromeOsSCH').addToUi();  
+s.addItem('SUSPEND CHROMEOS', 'suspendChromeOsSCH').addToUi();
+s.addItem('EDIT CHROMEOS', 'editChromeOsSCH').addToUi();  
 }
 
 
@@ -557,6 +559,29 @@ function suspendChromeOsSCH() {
       var me = 'ID';
       var deviceId = d[x][5];   
       var org = AdminDirectory.Chromeosdevices.action(resource, me, deviceId);
+      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
+      Utilities.sleep(2000);  
+      }
+      catch (e){continue;}  
+    }
+     
+  }  
+}
+
+
+function editChromeOsSCH() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CHROMEOS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+  for (x=1; x<nr; x++){
+    var l = 1 + x;  
+   
+    if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
+      try{  
+      var resource = {annotatedUser: d[x][2], notes: d[x][6], orgUnitPath: d[x][5]} 
+      var me = 'ID';
+      var deviceId = d[x][0];
+      var org = AdminDirectory.Chromeosdevices.update(resource, me, deviceId);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(2000);  
       }
