@@ -54,14 +54,18 @@ function createUserSCH() {
    
     if (s.getRange(l,1).getBackground() !== '#d0e0e3' ) {
       try {
-      var user = {primaryEmail: d[x][0], name: {givenName: d[x][1],familyName: d[x][2]},
-      password: d[x][3],changePasswordAtNextLogin: d[x][4],
-      includeInGlobalAddressList: d[x][5], orgUnitPath: d[x][6],    
-      };
-      
-      var org = AdminDirectory.Users.insert(user);
-      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
-      Utilities.sleep(1000);
+        var user = {primaryEmail: d[x][0], name: {givenName: d[x][1],familyName: d[x][2]},
+                    password: d[x][3],changePasswordAtNextLogin: d[x][4],
+                    includeInGlobalAddressList: d[x][5], orgUnitPath: d[x][6] };
+        var org = AdminDirectory.Users.insert(user);
+        
+        var userEmail = d[x][0];
+        var groupKey = d[x][7];
+        var resource = { email: userEmail, role: 'MEMBER' };
+        var gr = AdminDirectory.Members.insert(resource, groupKey);  
+        
+        var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
+        Utilities.sleep(2000);
       }
       catch (e){continue;}
     }
