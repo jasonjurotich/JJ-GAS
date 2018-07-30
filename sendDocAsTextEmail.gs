@@ -84,10 +84,11 @@ deleteTriggers_();
 
 function deleteTriggers_() {
 var triggers = ScriptApp.getProjectTriggers();
-  triggers.forEach(function (trigger) {ScriptApp.deleteTrigger(trigger);   
+  triggers.forEach(function (trigger) {
+  ScriptApp.deleteTrigger(trigger);   
   Utilities.sleep(1000);                                    
   });  
-};
+}
   
   
   
