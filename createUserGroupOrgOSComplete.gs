@@ -18,7 +18,8 @@ function allSCH(){
 //listOrgSCH();  
 //editOrgSCH();
 //deleteOrgSCH();
-//listChromeOsSCH();  
+//listChromeOsSCH();
+//moveChromeOsSCH();  
 }
 
 
@@ -42,7 +43,8 @@ s.addItem('CREATE ORG', 'createOrgSCH').addToUi();
 s.addItem('LIST ORGS', 'listOrgSCH').addToUi();  
 s.addItem('EDIT ORG', 'editOrgSCH').addToUi();
 s.addItem('DELETE ORG', 'deleteOrgSCH').addToUi();
-s.addItem('LIST CHROMEOS', 'listChromeOsSCH').addToUi();  
+s.addItem('LIST CHROMEOS', 'listChromeOsSCH').addToUi(); 
+s.addItem('MOVE CHROMEOS', 'moveChromeOsSCH').addToUi();   
 }
 
 
@@ -512,6 +514,29 @@ function listChromeOsSCH() {
         arr.push([ids,ser,user,mac,mod,path,note,stat,ver,use]); 
       }
       s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);  
+}
+
+
+function moveChromeOsSCH() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CHROMEOS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+  for (x=1; x<nr; x++){
+    var l = 1 + x;  
+   
+    if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
+      try{  
+      var cb = {deviceIds: [d[x][0]]};  
+      var orgUnitPath = d[x][5];
+      var me = 'ID';
+      var org = AdminDirectory.Chromeosdevices.moveDevicesToOu(cb, me, orgUnitPath);
+      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
+      Utilities.sleep(2000);  
+      }
+      catch (e){continue;}  
+    }
+     
+  }  
 }
 
 
