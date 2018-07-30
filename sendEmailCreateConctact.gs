@@ -2,7 +2,7 @@
 
 function myFunction1() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Form Responses 1');
-  var r = s.getDataRange(); var n = r.getNumRows(); var d = r.getValues(); var l = r.getLastRow();
+  var r = s.getDataRange(); var n = r.getNumRows(); var d = r.getValues(); 
   
   for (x=1; x<n; x++){
     var l = 1 + x;
