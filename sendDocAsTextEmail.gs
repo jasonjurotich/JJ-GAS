@@ -3,6 +3,7 @@
 function onOpen (){
 var m = SpreadsheetApp.getUi().createMenu('Emails');
   m.addItem('DOC', 'Create Email').addToUi();
+}
 
 function DOC(){
 var s = SpreadsheetApp.getActiveSpreadsheet();
