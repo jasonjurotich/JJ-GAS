@@ -19,7 +19,8 @@ function allSCH(){
 //editOrgSCH();
 //deleteOrgSCH();
 //listChromeOsSCH();
-//moveChromeOsSCH();  
+//moveChromeOsSCH(); 
+//suspendChromeOsSCH();  
 }
 
 
@@ -44,7 +45,8 @@ s.addItem('LIST ORGS', 'listOrgSCH').addToUi();
 s.addItem('EDIT ORG', 'editOrgSCH').addToUi();
 s.addItem('DELETE ORG', 'deleteOrgSCH').addToUi();
 s.addItem('LIST CHROMEOS', 'listChromeOsSCH').addToUi(); 
-s.addItem('MOVE CHROMEOS', 'moveChromeOsSCH').addToUi();   
+s.addItem('MOVE CHROMEOS', 'moveChromeOsSCH').addToUi();
+s.addItem('SUSPEND CHROMEOS', 'suspendChromeOsSCH').addToUi();  
 }
 
 
@@ -540,3 +542,26 @@ function moveChromeOsSCH() {
 }
 
 
+function suspendChromeOsSCH() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CHROMEOS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  
+  for (x=1; x<nr; x++){
+    var l = 1 + x;  
+   
+    if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
+      try{  
+      var resource = {action: d[x][6],deprovisionReason: d[x][7]} 
+      // action can take: "deprovision","disable","reenable". deprovisionReason can take "different_model_replacement","retiring_device","same_model_replacement"
+      // You can comment out deprovisionReason if you are only going to use action.
+      var me = 'ID';
+      var deviceId = d[x][5];   
+      var org = AdminDirectory.Chromeosdevices.action(resource, me, deviceId);
+      var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
+      Utilities.sleep(2000);  
+      }
+      catch (e){continue;}  
+    }
+     
+  }  
+}
