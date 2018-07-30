@@ -18,6 +18,7 @@ function allSCH(){
 //listOrgSCH();  
 //editOrgSCH();
 //deleteOrgSCH();
+//listChromeOsSCH();  
 }
 
 
@@ -40,7 +41,8 @@ s.addItem('ADD GROUP2GR', 'addGroupToGroupSCH').addToUi();
 s.addItem('CREATE ORG', 'createOrgSCH').addToUi();
 s.addItem('LIST ORGS', 'listOrgSCH').addToUi();  
 s.addItem('EDIT ORG', 'editOrgSCH').addToUi();
-s.addItem('DELETE ORG', 'deleteOrgSCH').addToUi();    
+s.addItem('DELETE ORG', 'deleteOrgSCH').addToUi();
+s.addItem('LIST CHROMEOS', 'listChromeOsSCH').addToUi();  
 }
 
 
@@ -478,4 +480,38 @@ function deleteOrgSCH() {
      
   }  
 }
+
+
+function listChromeOsSCH() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LISTOS');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  var pageToken;
+ var me = 'ID';
+  
+  var pageToken = null, orgs = [];
+   do{
+    var org = AdminDirectory.Chromeosdevices.list(me,{domain: 'SCH.edu.mx', pageToken: pageToken, pageSize:100});
+    pageToken = org.nextPageToken;
+    orgs = orgs.concat(org.chromeosdevices);  
+  } while (pageToken);
+
+  var arr = [];
+      for (i = 0; i < orgs.length; i++) {
+        var or = orgs[i]; 
+        var ids = or.deviceId;
+        var ser = or.serialNumber;
+        var user = or.annotatedUser;
+        var mac = or.macAddress
+        var mod = or.model;
+        var path = or.orgUnitPath;
+        var note = or.notes;
+        var stat = or.status;
+        var ver = or.osVersion;
+        var use = or.recentUsers;
+        
+        arr.push([ids,ser,user,mac,mod,path,note,stat,ver,use]); 
+      }
+      s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);  
+}
+
 
