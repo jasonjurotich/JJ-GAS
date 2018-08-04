@@ -1,62 +1,60 @@
-
-
-function allOYG(){
-//createUserOYG(); 
-//listUsersOYG();  
-//updateUserOYG();
-//changeUserOrgOYG();  
-//updateUserPassOYG(); 
-//addGroupMemberOYG();
-//removeGroupMemberOYG();  
-//suspendUserOYG();  
-//createGroupOYG();
-//listGroupOYG(); 
-//listUsersInGroupOYG();  
-//editGroupConfigOYG();
-//editGroupInfoOYG();
-//deleteGroupOYG();  
-//createOrgOYG();
-//listOrgOYG();  
-//editOrgOYG();
-//deleteOrgOYG();
-//listChromeOsOYG();
-//moveChromeOsOYG();  
-//editChromeOsOYG();  
-//suspendChromeOsOYG();  
+function allSCH(){
+//createUserSCH(); 
+//listUsersSCH();  
+//updateUserSCH();
+//changeUserOrgSCH();  
+//updateUserPassSCH(); 
+//addGroupMemberSCH();
+//removeGroupMemberSCH();  
+//suspendUserSCH();  
+//createGroupSCH();
+//listGroupSCH(); 
+//listUsersInGroupSCH();  
+//editGroupConfigSCH();
+//editGroupInfoSCH();
+//deleteGroupSCH();  
+//createOrgSCH();
+//listOrgSCH();  
+//editOrgSCH();
+//deleteOrgSCH();
+//listChromeOsSCH();
+//moveChromeOsSCH();  
+//editChromeOsSCH();  
+//suspendChromeOsSCH();  
 }
 
 
 
 function onOpen(){
 var s = SpreadsheetApp.getUi().createMenu('Scripts');
-s.addItem('CREATE USER', 'createUserOYG').addToUi(); 
-s.addItem('LIST USERS', 'listUsersOYG').addToUi();  
-s.addItem('UPDATE USER', 'updateUserOYG').addToUi();
-s.addItem('CHANGE USER ORG', 'changeUserOrgOYG').addToUi();  
-s.addItem('CHANGE USER PASS', 'updateUserPassOYG').addToUi();
-s.addItem('ADD USER GROUP', 'addGroupMemberOYG').addToUi();
-s.addItem('REMOVE USER GROUP', 'removeGroupMemberOYG').addToUi();  
-s.addItem('SUSPEND USER', 'suspendUserOYG').addToUi();
-s.addItem('CREATE GROUP', 'createGroupOYG').addToUi();
-s.addItem('LIST GROUPS', 'listGroupOYG').addToUi();
-s.addItem('LIST USERS GROUPS', 'listUsersInGroupOYG').addToUi();  
-s.addItem('EDIT GROUP CONFIG', 'editGroupConfigOYG').addToUi();
-s.addItem('EDIT GROUP INFO', 'editGroupInfoOYG').addToUi();
-s.addItem('DELETE GROUP','deleteGroupOYG').addToUi();  
-s.addItem('CREATE ORG', 'createOrgOYG').addToUi();
-s.addItem('LIST ORGS', 'listOrgOYG').addToUi();  
-s.addItem('EDIT ORG', 'editOrgOYG').addToUi();
-s.addItem('DELETE ORG', 'deleteOrgOYG').addToUi(); 
-s.addItem('LIST CHROMEOS', 'listChromeOsOYG').addToUi();
-s.addItem('MOVE CHROMEOS', 'moveChromeOsOYG').addToUi();  
-s.addItem('EDIT CHROMEOS', 'editChromeOsOYG').addToUi();
-s.addItem('SUSPEND CHROMEOS', 'suspendChromeOsOYG').addToUi();   
+s.addItem('CREATE USER', 'createUserSCH').addToUi(); 
+s.addItem('LIST USERS', 'listUsersSCH').addToUi();  
+s.addItem('UPDATE USER', 'updateUserSCH').addToUi();
+s.addItem('CHANGE USER ORG', 'changeUserOrgSCH').addToUi();  
+s.addItem('CHANGE USER PASS', 'updateUserPassSCH').addToUi();
+s.addItem('ADD USER GROUP', 'addGroupMemberSCH').addToUi();
+s.addItem('REMOVE USER GROUP', 'removeGroupMemberSCH').addToUi();  
+s.addItem('SUSPEND USER', 'suspendUserSCH').addToUi();
+s.addItem('CREATE GROUP', 'createGroupSCH').addToUi();
+s.addItem('LIST GROUPS', 'listGroupSCH').addToUi();
+s.addItem('LIST USERS GROUPS', 'listUsersInGroupSCH').addToUi();  
+s.addItem('EDIT GROUP CONFIG', 'editGroupConfigSCH').addToUi();
+s.addItem('EDIT GROUP INFO', 'editGroupInfoSCH').addToUi();
+s.addItem('DELETE GROUP','deleteGroupSCH').addToUi();  
+s.addItem('CREATE ORG', 'createOrgSCH').addToUi();
+s.addItem('LIST ORGS', 'listOrgSCH').addToUi();  
+s.addItem('EDIT ORG', 'editOrgSCH').addToUi();
+s.addItem('DELETE ORG', 'deleteOrgSCH').addToUi(); 
+s.addItem('LIST CHROMEOS', 'listChromeOsSCH').addToUi();
+s.addItem('MOVE CHROMEOS', 'moveChromeOsSCH').addToUi();  
+s.addItem('EDIT CHROMEOS', 'editChromeOsSCH').addToUi();
+s.addItem('SUSPEND CHROMEOS', 'suspendChromeOsSCH').addToUi();   
   
 }
 
 
 
-function createUserOYG() {
+function createUserSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -87,14 +85,14 @@ function createUserOYG() {
 
 
 
-function listUsersOYG() {
+function listUsersSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
   var pageToken = null, urs = [];
  
   do{
-    var us = AdminDirectory.Users.list({domain: 'oyg.edu.mx', pageToken: pageToken, pageSize:100});
+    var us = AdminDirectory.Users.list({domain: 'SCH.edu.mx', pageToken: pageToken, pageSize:100});
     pageToken = us.nextPageToken;
     urs = urs.concat(us.users);  
   }while(pageToken);
@@ -118,7 +116,7 @@ function listUsersOYG() {
 
 
 
-function updateUserOYG() {
+function updateUserSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -142,7 +140,7 @@ function updateUserOYG() {
 
 
 
-function changeUserOrgOYG() {
+function changeUserOrgSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -165,7 +163,7 @@ function changeUserOrgOYG() {
 
 
 
-function updateUserPassOYG() {
+function updateUserPassSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -188,7 +186,7 @@ function updateUserPassOYG() {
 
 
 
-function addGroupMemberOYG() {
+function addGroupMemberSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -212,7 +210,7 @@ function addGroupMemberOYG() {
 
 
 
-function removeGroupMemberOYG() {
+function removeGroupMemberSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -236,7 +234,7 @@ function removeGroupMemberOYG() {
 
 
 
-function suspendUserOYG() {
+function suspendUserSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -259,7 +257,7 @@ function suspendUserOYG() {
 
 
   
-function createGroupOYG() {
+function createGroupSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -281,13 +279,13 @@ function createGroupOYG() {
 
 
 
-function listGroupOYG() {
+function listGroupSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   var pageToken = null, grs = [];
  
   do{
-    var gr = AdminDirectory.Groups.list({domain: 'oyg.edu.mx', pageToken: pageToken, pageSize:100});
+    var gr = AdminDirectory.Groups.list({domain: 'SCH.edu.mx', pageToken: pageToken, pageSize:100});
     pageToken = gr.nextPageToken;
     grs = grs.concat(gr.groups);  
   } while(pageToken);
@@ -307,7 +305,7 @@ function listGroupOYG() {
       
 
 
-function listUsersInGroupOYG() {
+function listUsersInGroupSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   for (x=1; x<nr; x++){
@@ -317,7 +315,7 @@ function listUsersInGroupOYG() {
       try{
         var s1 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('USERSINGROUPS');
         var pageToken;
-        var gr = AdminDirectory.Members.list(d[x][0], {domain: 'oyg.edu.mx', maxResults: 500, pageToken: pageToken});
+        var gr = AdminDirectory.Members.list(d[x][0], {domain: 'SCH.edu.mx', maxResults: 500, pageToken: pageToken});
         var grs = gr.members; 
         var arr = [];
         for (i = 0; i < grs.length; i++) {
@@ -335,7 +333,7 @@ var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3');
 
 
 
-function editGroupConfigOYG(){
+function editGroupConfigSCH(){
   
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
@@ -372,7 +370,7 @@ function editGroupConfigOYG(){
 
 
 
-function editGroupInfoOYG() {
+function editGroupInfoSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -395,7 +393,7 @@ function editGroupInfoOYG() {
 
 
 
-function deleteGroupOYG() {
+function deleteGroupSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -417,7 +415,7 @@ function deleteGroupOYG() {
 
 
 
-function createOrgOYG() {
+function createOrgSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORGS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -427,7 +425,7 @@ function createOrgOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{
       var or = {name: d[x][0], description: d[x][1], parentOrgUnitPath: d[x][2], blockInheritance: false}
-      var me = 'C04blr3gm';
+      var me = 'ID';
       var org = AdminDirectory.Orgunits.insert(or, me);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
@@ -440,11 +438,11 @@ function createOrgOYG() {
 
   
 
-function listOrgOYG() {
+function listOrgSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORGS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
- var me = 'C04blr3gm';
+ var me = 'ID';
  var org = AdminDirectory.Orgunits.list(me, {orgUnitPath: '/', type: 'all'});
  var orgs = org.organizationUnits;  
   
@@ -462,7 +460,7 @@ function listOrgOYG() {
         
 
 
-function editOrgOYG() {
+function editOrgSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORGS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -473,7 +471,7 @@ function editOrgOYG() {
       try{  
       var or = {name: d[x][0], description: d[x][1], parentOrgUnitPath: d[x][2], blockInheritance: false}
       var orgUnitPath = d[x][3];
-      var me = 'C04blr3gm';
+      var me = 'ID';
       var org = AdminDirectory.Orgunits.update(or, me, orgUnitPath);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
@@ -486,7 +484,7 @@ function editOrgOYG() {
 
 
 
-function deleteOrgOYG() {
+function deleteOrgSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORGS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -496,7 +494,7 @@ function deleteOrgOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{  
       var orgUnitPath = d[x][3];
-      var me = 'C04blr3gm';
+      var me = 'ID';
       var org = AdminDirectory.Orgunits.remove(me, orgUnitPath);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(3000);  
@@ -509,15 +507,15 @@ function deleteOrgOYG() {
 
 
 
-function listChromeOsOYG() {
+function listChromeOsSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CHROMEOS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   var pageToken;
- var me = 'C04blr3gm';
+ var me = 'ID';
   
   var pageToken = null, orgs = [];
    do{
-    var org = AdminDirectory.Chromeosdevices.list(me,{domain: 'oyg.edu.mx', pageToken: pageToken, pageSize:100});
+    var org = AdminDirectory.Chromeosdevices.list(me,{domain: 'SCH.edu.mx', pageToken: pageToken, pageSize:100});
     pageToken = org.nextPageToken;
     orgs = orgs.concat(org.chromeosdevices);  
   } while (pageToken);
@@ -544,7 +542,7 @@ function listChromeOsOYG() {
 
 
 
-function moveChromeOsOYG() {
+function moveChromeOsSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CHROMEOS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -555,7 +553,7 @@ function moveChromeOsOYG() {
       try{  
       var cb = {deviceIds: [d[x][0]]};  
       var orgUnitPath = d[x][5];
-      var me = 'C04blr3gm';
+      var me = 'ID';
       var org = AdminDirectory.Chromeosdevices.moveDevicesToOu(cb, me, orgUnitPath);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
       Utilities.sleep(2000);  
@@ -568,7 +566,7 @@ function moveChromeOsOYG() {
 
 
 
-function editChromeOsOYG() {
+function editChromeOsSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CHROMEOS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -578,7 +576,7 @@ function editChromeOsOYG() {
     if (s.getRange(l,1).getBackground() !== '#d0e0e3') {
       try{  
       var resource = {annotatedUser: d[x][2], notes: d[x][6], orgUnitPath: d[x][5]} 
-      var me = 'C04blr3gm';
+      var me = 'ID';
       var deviceId = d[x][0];
       var org = AdminDirectory.Chromeosdevices.update(resource, me, deviceId);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
@@ -591,7 +589,7 @@ function editChromeOsOYG() {
 }
 
 
-function suspendChromeOsOYG() {
+function suspendChromeOsSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CHROMEOS');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
   
@@ -603,7 +601,7 @@ function suspendChromeOsOYG() {
       var resource = {action: d[x][7],deprovisionReason: d[x][10]} 
       // action can take: "deprovision","disable","reenable". deprovisionReason can take "different_model_replacement","retiring_device","same_model_replacement"
       // You can comment out deprovisionReason if you are only going to use action.
-      var me = 'C04blr3gm';
+      var me = 'ID';
       var deviceId = d[x][0];   
       var org = AdminDirectory.Chromeosdevices.action(resource, me, deviceId);
       var color = s.getRange(l,1,1,s.getLastColumn()).setBackground('#d0e0e3'); 
@@ -614,5 +612,3 @@ function suspendChromeOsOYG() {
      
   }  
 }
-
-
