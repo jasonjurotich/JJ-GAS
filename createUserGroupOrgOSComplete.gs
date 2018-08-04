@@ -1,6 +1,7 @@
 
 
 function allSCH(){
+//SHEETTEMPLATE();  
 //createUserSCH(); 
 //listUsersSCH();  
 //updateUserSCH();
@@ -22,13 +23,14 @@ function allSCH(){
 //listChromeOsSCH();
 //moveChromeOsSCH();  
 //editChromeOsSCH();  
-//suspendChromeOsSCH();  
+//suspendChromeOsSCH();
 }
 
 
 
 function onOpen(){
 var s = SpreadsheetApp.getUi().createMenu('Scripts');
+s.addItem('TEMPLATE', 'SHEETTEMPLATE').addToUi();  
 s.addItem('CREATE USER', 'createUserSCH').addToUi(); 
 s.addItem('LIST USERS', 'listUsersSCH').addToUi();  
 s.addItem('UPDATE USER', 'updateUserSCH').addToUi();
@@ -50,8 +52,7 @@ s.addItem('DELETE ORG', 'deleteOrgSCH').addToUi();
 s.addItem('LIST CHROMEOS', 'listChromeOsSCH').addToUi();
 s.addItem('MOVE CHROMEOS', 'moveChromeOsSCH').addToUi();  
 s.addItem('EDIT CHROMEOS', 'editChromeOsSCH').addToUi();
-s.addItem('SUSPEND CHROMEOS', 'suspendChromeOsSCH').addToUi();   
-  
+s.addItem('SUSPEND CHROMEOS', 'suspendChromeOsSCH').addToUi();
 }
 
 
@@ -616,4 +617,260 @@ function suspendChromeOsSCH() {
   }  
 }
 
+
+
+
+
+
+function SHEETTEMPLATE() {
+  var spreadsheet = SpreadsheetApp.getActive();
+  spreadsheet.getRange('A1').activate();
+  spreadsheet.getActiveSheet().setName('USERS');
+  spreadsheet.insertSheet(1);
+  spreadsheet.getActiveSheet().setName('GROUPS');
+  spreadsheet.insertSheet(2);
+  spreadsheet.getActiveSheet().setName('USERSINGROUPS');
+  spreadsheet.insertSheet(3);
+  spreadsheet.getActiveSheet().setName('ORGS');
+  spreadsheet.insertSheet(4);
+  spreadsheet.getActiveSheet().setName('CHROMEOS');
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('USERS'), true);
+  spreadsheet.getRange('K:K').activate();
+  var currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('GROUPS'), true);
+  spreadsheet.getRange('F:F').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('ORGS'), true);
+  spreadsheet.getRange('E:E').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  var nextSheetIndex = spreadsheet.getActiveSheet().getIndex() + 1;
+  if (nextSheetIndex > spreadsheet.getSheets().length) { nextSheetIndex = 1; }
+  spreadsheet.setActiveSheet(spreadsheet.getSheets()[nextSheetIndex - 1], true);
+  spreadsheet.getRange('L:L').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getActiveSheet().setFrozenRows(1);
+  spreadsheet.getRange('1:1').activate();
+  spreadsheet.getActiveRangeList().setFontWeight('bold')
+  .setHorizontalAlignment('center')
+  .setBackground('#00ffff');
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('ORGS'), true);
+  spreadsheet.getActiveSheet().setFrozenRows(1);
+  spreadsheet.getRange('1:1').activate();
+  spreadsheet.getActiveRangeList().setFontWeight('bold')
+  .setHorizontalAlignment('center')
+  .setBackground('#00ffff');
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('USERSINGROUPS'), true);
+  spreadsheet.getActiveSheet().setFrozenRows(1);
+  spreadsheet.getRange('1:1').activate();
+  spreadsheet.getActiveRangeList().setBackground('#00ffff')
+  .setFontWeight('bold')
+  .setHorizontalAlignment('center');
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('GROUPS'), true);
+  spreadsheet.getActiveSheet().setFrozenRows(1);
+  spreadsheet.getRange('1:1').activate();
+  spreadsheet.getActiveRangeList().setBackground('#00ffff')
+  .setFontWeight('bold')
+  .setHorizontalAlignment('center');
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('USERS'), true);
+  spreadsheet.getActiveSheet().setFrozenRows(1);
+  spreadsheet.getRange('1:1').activate();
+  spreadsheet.getActiveRangeList().setBackground('#00ffff')
+  .setFontWeight('bold')
+  .setHorizontalAlignment('center');
+  spreadsheet.getRange('A1').activate();
+  spreadsheet.getCurrentCell().setValue('EMAIL');
+  spreadsheet.getRange('B1').activate();
+  spreadsheet.getCurrentCell().setValue('FIRST');
+  spreadsheet.getRange('C1').activate();
+  spreadsheet.getCurrentCell().setValue('LAST');
+  spreadsheet.getRange('D1').activate();
+  spreadsheet.getCurrentCell().setValue('PASS');
+  spreadsheet.getRange('E1').activate();
+  spreadsheet.getCurrentCell().setValue('CHANGE PASS');
+  spreadsheet.getRange('F1').activate();
+  spreadsheet.getCurrentCell().setValue('GLOBAL ADDRESS');
+  spreadsheet.getRange('G1').activate();
+  spreadsheet.getCurrentCell().setValue('ORG');
+  spreadsheet.getRange('H1').activate();
+  spreadsheet.getCurrentCell().setValue('SUSPEND');
+  spreadsheet.getRange('I1').activate();
+  spreadsheet.getCurrentCell().setValue('ID');
+  spreadsheet.getRange('J1').activate();
+  spreadsheet.getCurrentCell().setValue('GROUP');
+  spreadsheet.getRange('A:A').activate();
+  spreadsheet.getActiveSheet().setColumnWidth(1, 320);
+  spreadsheet.getRange('B:C').activate();
+  spreadsheet.getActiveSheet().setColumnWidths(2, 2, 200);
+  spreadsheet.getRange('D:D').activate();
+  spreadsheet.getActiveSheet().setColumnWidth(4, 200);
+  spreadsheet.getActiveSheet().autoResizeColumns(5, 1);
+  spreadsheet.getActiveSheet().autoResizeColumns(6, 1);
+  spreadsheet.getRange('G:G').activate();
+  spreadsheet.getActiveSheet().setColumnWidth(7, 200);
+  spreadsheet.getRange('I:I').activate();
+  spreadsheet.getActiveSheet().setColumnWidth(9, 200);
+  spreadsheet.getRange('J:J').activate();
+  spreadsheet.getActiveSheet().setColumnWidth(10, 300);
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('GROUPS'), true);
+  spreadsheet.getRange('A1').activate();
+  spreadsheet.getCurrentCell().setValue('EMAIL');
+  spreadsheet.getRange('B1').activate();
+  spreadsheet.getCurrentCell().setValue('DESCIPTION')
+  .setValue('NAME');
+  spreadsheet.getRange('C1').activate();
+  spreadsheet.getCurrentCell().setValue('DESCRIPTIN')
+  .setValue('DESCRIPTION');
+  spreadsheet.getRange('D1').activate();
+  spreadsheet.getCurrentCell().setValue('ID');
+  spreadsheet.getRange('E1').activate();
+  spreadsheet.getCurrentCell().setValue('C');
+  spreadsheet.getRange('E2').activate();
+  spreadsheet.getCurrentCell().setValue('1');
+  spreadsheet.getRange('E3').activate();
+  spreadsheet.getCurrentCell().setValue('2');
+  spreadsheet.getRange('E4').activate();
+  spreadsheet.getCurrentCell().setValue('3');
+  spreadsheet.getRange('E5').activate();
+  spreadsheet.getCurrentCell().setValue('4');
+  spreadsheet.getRange('E6').activate();
+  spreadsheet.getCurrentCell().setValue('5');
+  spreadsheet.getRange('E7').activate();
+  spreadsheet.getCurrentCell().setValue('6');
+  spreadsheet.getRange('E8').activate();
+  spreadsheet.getCurrentCell().setValue('7');
+  spreadsheet.getRange('E9').activate();
+  spreadsheet.getCurrentCell().setValue('8');
+  spreadsheet.getRange('E10').activate();
+  spreadsheet.getCurrentCell().setValue('9');
+  spreadsheet.getRange('E2:E10').activate();
+  spreadsheet.getActiveRange().autoFill(spreadsheet.getRange('E2:E1000'), SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+  spreadsheet.getRange('E2:E1000').activate();
+  spreadsheet.getActiveSheet().autoResizeColumns(5, 1);
+  spreadsheet.getRange('E:E').activate();
+  spreadsheet.getActiveSheet().hideColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getRange('D:D').activate();
+  spreadsheet.getRange('A:C').activate();
+  spreadsheet.getActiveSheet().setColumnWidths(1, 3, 320);
+  spreadsheet.getRange('D:D').activate();
+  spreadsheet.getActiveSheet().setColumnWidth(4, 200);
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('USERSINGROUPS'), true);
+  spreadsheet.getRange('A:A').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().insertColumnsAfter(spreadsheet.getActiveRange().getLastColumn(), 26);
+  spreadsheet.getActiveRange().offset(0, spreadsheet.getActiveRange().getNumColumns(), spreadsheet.getActiveRange().getNumRows(), 26).activate();
+  spreadsheet.getRange('A:A').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().insertColumnsAfter(spreadsheet.getActiveRange().getLastColumn(), 52);
+  spreadsheet.getActiveRange().offset(0, spreadsheet.getActiveRange().getNumColumns(), spreadsheet.getActiveRange().getNumRows(), 52).activate();
+  spreadsheet.getRange('A:A').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().insertColumnsAfter(spreadsheet.getActiveRange().getLastColumn(), 104);
+  spreadsheet.getActiveRange().offset(0, spreadsheet.getActiveRange().getNumColumns(), spreadsheet.getActiveRange().getNumRows(), 104).activate();
+  spreadsheet.getRange('A:A').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().insertColumnsAfter(spreadsheet.getActiveRange().getLastColumn(), 208);
+  spreadsheet.getActiveRange().offset(0, spreadsheet.getActiveRange().getNumColumns(), spreadsheet.getActiveRange().getNumRows(), 208).activate();
+  spreadsheet.getRange('A:A').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.NEXT).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveSheet().insertColumnsAfter(spreadsheet.getActiveRange().getLastColumn(), 416);
+  spreadsheet.getActiveRange().offset(0, spreadsheet.getActiveRange().getNumColumns(), spreadsheet.getActiveRange().getNumRows(), 416).activate();
+  spreadsheet.getRange('AEZ:AEZ').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.PREVIOUS).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getRange('AAG:AEZ').activate();
+  spreadsheet.setCurrentCell(spreadsheet.getRange('AEZ1'));
+  spreadsheet.getActiveSheet().insertColumnsAfter(spreadsheet.getActiveRange().getLastColumn(), 124);
+  spreadsheet.getActiveRange().offset(0, spreadsheet.getActiveRange().getNumColumns(), spreadsheet.getActiveRange().getNumRows(), 124).activate();
+  spreadsheet.getRange('AJT:AJT').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.PREVIOUS).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getRange('K10').activate();
+  spreadsheet.getCurrentCell().getNextDataCell(SpreadsheetApp.Direction.NEXT).activate();
+  spreadsheet.getRange('AIM:AJT').activate();
+  spreadsheet.setCurrentCell(spreadsheet.getRange('AJT1'));
+  spreadsheet.getActiveSheet().insertColumnsAfter(spreadsheet.getActiveRange().getLastColumn(), 34);
+  spreadsheet.getActiveRange().offset(0, spreadsheet.getActiveRange().getNumColumns(), spreadsheet.getActiveRange().getNumRows(), 34).activate();
+  spreadsheet.getRange('ALB:ALB').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.PREVIOUS).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getRange('K7').activate();
+  spreadsheet.getCurrentCell().getNextDataCell(SpreadsheetApp.Direction.NEXT).activate();
+  spreadsheet.getRange('AKS:ALB').activate();
+  spreadsheet.setCurrentCell(spreadsheet.getRange('ALB1'));
+  spreadsheet.getActiveSheet().insertColumnsAfter(spreadsheet.getActiveRange().getLastColumn(), 10);
+  spreadsheet.getActiveRange().offset(0, spreadsheet.getActiveRange().getNumColumns(), spreadsheet.getActiveRange().getNumRows(), 10).activate();
+  spreadsheet.getCurrentCell().getNextDataCell(SpreadsheetApp.Direction.PREVIOUS).activate();
+  spreadsheet.getCurrentCell().setFormula('=TRANSPOSE(GROUPS!A2:A1000)');
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('ORGS'), true);
+  spreadsheet.getRange('D:D').activate();
+  currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getSelection().getNextDataRange(SpreadsheetApp.Direction.DOWN).activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getCurrentCell().setValue('NAME');
+  spreadsheet.getRange('B1').activate();
+  spreadsheet.getCurrentCell().setValue('DESCRIPTION');
+  spreadsheet.getRange('C1').activate();
+  spreadsheet.getCurrentCell().setValue('PATH');
+  spreadsheet.getRange('D1').activate();
+  spreadsheet.getCurrentCell().setValue('ID');
+  spreadsheet.getRange('A:D').activate();
+  spreadsheet.getActiveSheet().setColumnWidths(1, 4, 320);
+  spreadsheet.setActiveSheet(spreadsheet.getSheetByName('CHROMEOS'), true);
+  spreadsheet.getRange('A1').activate();
+  spreadsheet.getCurrentCell().setValue('DEVICE');
+  spreadsheet.getRange('B1').activate();
+  spreadsheet.getCurrentCell().setValue('SERIAL');
+  spreadsheet.getRange('C1').activate();
+  spreadsheet.getCurrentCell().setValue('USER');
+  spreadsheet.getRange('D1').activate();
+  spreadsheet.getCurrentCell().setValue('MAC');
+  spreadsheet.getRange('E1').activate();
+  spreadsheet.getCurrentCell().setValue('MODEL');
+  spreadsheet.getRange('F1').activate();
+  spreadsheet.getCurrentCell().setValue('PATH');
+  spreadsheet.getRange('G1').activate();
+  spreadsheet.getCurrentCell().setValue('NOTES');
+  spreadsheet.getRange('H1').activate();
+  spreadsheet.getCurrentCell().setValue('STATUS');
+  spreadsheet.getRange('I1').activate();
+  spreadsheet.getCurrentCell().setValue('OS');
+  spreadsheet.getRange('J1').activate();
+  spreadsheet.getCurrentCell().setValue('RECENT USERS');
+  spreadsheet.getRange('K1').activate();
+  spreadsheet.getCurrentCell().setValue('REASON');
+  spreadsheet.getRange('F:G').activate();
+  spreadsheet.getActiveSheet().setColumnWidths(6, 2, 320);
+  spreadsheet.getRange('J:J').activate();
+  spreadsheet.getActiveSheet().setColumnWidth(10, 320);
+  spreadsheet.getRange('C:C').activate();
+  spreadsheet.getActiveSheet().setColumnWidth(3, 320);
+  spreadsheet.getRange('A:A').activate();
+  spreadsheet.getActiveSheet().setColumnWidth(1, 200);
+  spreadsheet.getRange('C14').activate();
+};
 
