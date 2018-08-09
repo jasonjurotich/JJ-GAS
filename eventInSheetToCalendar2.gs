@@ -36,40 +36,35 @@ function sheetToCalendar() {
       
       else if (i == 'D') {
         var recur1 = CalendarApp.newRecurrence().addDailyRule().times(rep);
-        var ne1 = c.createEventSeries(title, start, stop, recur1, options);
-      
-        var id = ne1.getId();
-        Logger.log(id);
-        s.getRange(l, 11, 1, 1).setValue(id);
-        
+        var ne1 = c.createEventSeries(title, start, stop, recur1, options).getId();
+        var col = CalendarApp.getEventById(ne1).setColor(d[x][12]);
+        var cc = s.getRange(l, 11, 1, 1).setValue(ne1);
         var end = s.getRange(l, 1).setValue('');  
-        var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1');
       }
-      
       
       else if (i == 'A') {
-        var recur1 = CalendarApp.newRecurrence().addDailyRule().times(rep);
-        var ne4 = c.createAllDayEventSeries(title, start, recur1, options);
-        
-        var id = ne4.getId();
-        Logger.log(id);
-        s.getRange(l, 11, 1, 1).setValue(id);
-        
+        var recur2 = CalendarApp.newRecurrence().addDailyRule().times(rep);
+        var ne2 = c.createAllDayEventSeries(title, start, recur2, options).getId();
+        var col = CalendarApp.getEventById(ne2).setColor(d[x][12]);
+        s.getRange(l, 11, 1, 1).setValue(ne2);
         var end = s.getRange(l, 1).setValue('');  
-        var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1');
       }
+         
+      else if (i == 'AW') {
+        var ne3 = c.createAllDayEvent(title, start, stop, options).getId();
+        var col = CalendarApp.getEventById(ne3).setColor(d[x][12]);
+        s.getRange(l, 11, 1, 1).setValue(ne3);
+        var end = s.getRange(l, 1).setValue('');  
+      }    
            
       
       else if (i == 'S') {
         var day;
         if (w1 == rd1){day = day1;} else if (w1 == rd2){day = day2;} else if (w1 == rd3){day = day3;} else if (w1 == rd4){day = day4;} else if (w1 == rd5){day = day5;} 
-        var recur2 = CalendarApp.newRecurrence().addWeeklyRule().onlyOnWeekday(day).until(until);
-        var ne2 = c.createEventSeries(title, start, stop, recur2, options);
-      
-        var id = ne2.getId();
-        Logger.log(id);
-        s.getRange(l, 11, 1, 1).setValue(id);
-        
+        var recur4 = CalendarApp.newRecurrence().addWeeklyRule().onlyOnWeekday(day).until(until);
+        var ne4 = c.createEventSeries(title, start, stop, recur4, options).getId();
+        s.getRange(l, 11, 1, 1).setValue(ne4);
+        var col = CalendarApp.getEventById(ne4).setColor(d[x][12]);
         var end = s.getRange(l, 1).setValue('');  
         var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1'); 
       }
@@ -80,13 +75,10 @@ function sheetToCalendar() {
         var dai;
         if (w1 == rd1){day = day1;} else if (w1 == rd2){day = day2;} else if (w1 == rd3){day = day3;} else if (w1 == rd4){day = day4;} else if (w1 == rd5){day = day5;}
         if (w2 == rd1){dai = day1;} else if (w2 == rd2){dai = day2;} else if (w2 == rd3){dai = day3;} else if (w2 == rd4){dai = day4;} else if (w2 == rd5){dai = day5;}
-        var recur3 = CalendarApp.newRecurrence().addWeeklyRule().onlyOnWeekdays([day,dai]).until(until);
-        var ne3 = c.createEventSeries(title, start, stop, recur3, options);
-        
-        var id = ne3.getId();
-        Logger.log(id);
-        s.getRange(l, 11, 1, 1).setValue(id);
-        
+        var recur5 = CalendarApp.newRecurrence().addWeeklyRule().onlyOnWeekdays([day,dai]).until(until);
+        var ne5 = c.createEventSeries(title, start, stop, recur5, options).getId();
+        s.getRange(l, 11, 1, 1).setValue(ne5);
+        var col = CalendarApp.getEventById(ne5).setColor(d[x][12]);
         var end = s.getRange(l, 1).setValue('');  
         var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1');
       }
@@ -95,13 +87,10 @@ function sheetToCalendar() {
       else if (i == 'M') {
         var day;
         if (w1 == rd1){day = day1;} else if (w1 == rd2){day = day2;} else if (w1 == rd3){day = day3;} else if (w1 == rd4){day = day4;} else if (w1 == rd5){day = day5;}
-        var recur4 = CalendarApp.newRecurrence().addYearlyRule().onlyOnWeeks(rep.split(",")).onlyOnWeekday(day);
-        var ne4 = c.createEventSeries(title, start, stop, recur4, options);
-        
-        var id = ne4.getId();
-        Logger.log(id);
-        s.getRange(l, 11, 1, 1).setValue(id);
-        
+        var recur6 = CalendarApp.newRecurrence().addYearlyRule().onlyOnWeeks(rep.split(",")).onlyOnWeekday(day);
+        var ne6 = c.createEventSeries(title, start, stop, recur6, options).getId();
+        s.getRange(l, 11, 1, 1).setValue(ne6);
+        var col = CalendarApp.getEventById(ne6).setColor(d[x][12]);
         var end = s.getRange(l, 1).setValue('');  
         var color = s.getRange(l, 1,1,s.getLastColumn()).setBackground('#bad1d1');
       }
