@@ -1,5 +1,12 @@
 
 
+function onOpen(){
+var s = SpreadsheetApp.getUi().createMenu('Calendar');
+s.addItem('LIST CALS', 'listCals').addToUi();
+s.addItem('EDIT CALS', 'editCals').addToUi();  
+}
+
+
 function listCals() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var r = s.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
@@ -12,16 +19,15 @@ function listCals() {
     var name = ca.getName();
     arr.push([id,name]); 
   }
-  s.getRange(2, 1, arr.length, arr[0].length).setValues(arr);
+  s.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
 }
-
 
 
 
 function editCals() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var r = s.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
-  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1 + x; 
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1 + x; var color = d[x][3];
     if(i==''){continue;} else if (i=='D'){ 
       var cal = CalendarApp.getCalendarById(d[x][1]); 
       var hid = cal.setHidden(true); 
