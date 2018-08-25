@@ -486,6 +486,7 @@ function editOrgSCH() {
 }
 
 
+// There might be a bug or change here. Do not put the / for root at the beginning of the path to delete.
 
 function deleteOrgSCH() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORGS');
