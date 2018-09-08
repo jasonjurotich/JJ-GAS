@@ -1,3 +1,5 @@
+
+
 ADD ALL APIs TO THE PROJECT FIRST
 ADD PORTS TO VPC NETWORK > FIREWALL
 udp:6000-65535
@@ -63,3 +65,5 @@ INSTALL DRIVE IN VIM
 3. Click "Create". You will get a Client ID, a Client Secret.
 4. google-drive-ocamlfuse -headless -label me -id "ID" -secret "ID"
 5. mkdir ~/gdrive && google-drive-ocamlfuse -label me ~/gdrive
+
+
