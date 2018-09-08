@@ -44,7 +44,7 @@ let mapleader="f"
 inoremap <leader>f <C-x><C-o>
 inoremap tt <Esc>
 map Q :qa<CR>
-map H :Vex<CR>
+map W :Vex<CR>
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
