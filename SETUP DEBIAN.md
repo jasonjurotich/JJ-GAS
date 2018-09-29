@@ -38,11 +38,12 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set cursorline
+set colorcolumn=85
 
 nnoremap <C-h> <C-W><C-W>
-let mapleader="f"
-inoremap <leader>f <C-x><C-o>
-inoremap tt <Esc>
+let mapleader="g"
+inoremap <leader>g <C-x><C-o>
+inoremap ff <Esc>
 map Q :qa<CR>
 map W :Vex<CR>
 map E <C-f>
