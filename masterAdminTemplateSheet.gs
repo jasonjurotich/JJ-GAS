@@ -7,7 +7,7 @@ var sf =  DriveApp.getFileById(s);
   DriveApp.getFolderById(f).addFile(sf);
   DriveApp.getRootFolder().removeFile(sf);  
 var sh = SpreadsheetApp.openById(s);
-  var cu = sh.getActiveSheet();
+  var cu = sh.getActiveSheet(); cu.insertColumns(26,4); 
     cu.setName('CUSER').setFrozenRows(1); cu.getRange('1:1').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00'); 
     cu.getRange('A1').setValue('COMPLETE NAMES'); cu.getRange('B1')
@@ -22,57 +22,59 @@ var sh = SpreadsheetApp.openById(s);
       .setAllowInvalid(false).requireValueInList(['FIRST','LAST'],true).build()); 
     cu.getRange('Q1:T1').mergeAcross(); 
     cu.getRange('U1').setValue('FIRST NAME'); cu.getRange('V1')
-      .setValue('LAST NAME'); cu.getRange('W1').setValue('USER'); 
-    cu.getRange('X1').setValue('EMAIL'); cu.getRange('Y1').setValue('PASSWORD'); 
-    cu.getRange('Z1').setValue('ORG'); cu.getRange('AA1').setValue('GROUP');
+      .setValue('LAST NAME'); cu.getRange('W1').setValue('USER');  
+    cu.getRange('X1').setDataValidation(SpreadsheetApp.newDataValidation()
+      .setAllowInvalid(false).requireValueInList(['cumbresleon.edu.mx','oyg.edu.mx',
+      'mirafloresleon.edu.mx','institutohispanoingles.edu.mx','bms.edu.mx',
+      'amagno.edu.mx','cadc.edu.mx','institutooviedo.edu.mx'],true).build());  
+    cu.getRange('Y1').setValue('PASSWORD'); cu.getRange('Z1').setValue('ORG'); 
+    cu.getRange('AA1').setValue('GROUP');
+    cu.getRange('AB1').setDataValidation(SpreadsheetApp.newDataValidation()
+      .setAllowInvalid(false).requireValueInList(['true','false'],true).build()); 
+    cu.getRange('AC1').setDataValidation(SpreadsheetApp.newDataValidation()
+      .setAllowInvalid(false).requireValueInList(['true','false'],true).build()); 
+    cu.getRange('AD1').setValue('DO'); 
     cu.setColumnWidth(1,350); cu.setColumnWidth(2,250); cu.setColumnWidth(3,250); 
-    cu.setColumnWidth(4,130); cu.setColumnWidth(5,130);
-    cu.setColumnWidth(6,130); cu.setColumnWidth(7,130); cu.setColumnWidth(8,350); 
-    cu.setColumnWidth(9,350); cu.setColumnWidth(10,350); 
-    cu.setColumnWidth(21,200); cu.setColumnWidth(22,200); cu.setColumnWidth(23,200);
-    cu.setColumnWidth(24,300); cu.setColumnWidth(25,200); 
-    cu.setColumnWidth(26,350); cu.setColumnWidth(27,250);
+    cu.setColumnWidth(4,130); cu.setColumnWidth(5,130); cu.setColumnWidth(6,130); 
+    cu.setColumnWidth(7,130); cu.setColumnWidth(8,350); cu.setColumnWidth(9,350);
+    cu.setColumnWidth(10,350); cu.setColumnWidth(21,200); cu.setColumnWidth(22,200); 
+    cu.setColumnWidth(23,200); cu.setColumnWidth(24,300); cu.setColumnWidth(25,200); 
+    cu.setColumnWidth(26,350); cu.setColumnWidth(27,250); cu.setColumnWidth(28,100); 
+    cu.setColumnWidth(29,100); cu.setColumnWidth(30,40);    
     cu.getRange('H2').setFormula('=UPPER(IF(B2<>"",CONCATENATE(B2," ",C2),IF(D2<>"",CONCATENATE(D2," ",E2," ",F2," ",G2),A2)))');
     cu.getRange('I2').setFormula('=TRIM(UPPER(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(H2,".",""),"Á","A"),"É","E"),"Í","I"),"Ó","O"),"Ú","U"),"Ü","U"),"Ñ","N"),"MA DE LOS "," ")," MA DE LOS "," "),"MA DEL "," ")," MA DEL "," ")," DE LOS "," ")," DE LA "," ")," DE LAS "," ")," DEL "," ")," LAS "," ")," LOS "," ")," LA "," ")," DE "," ")," MA "," "),", "," "),","," ")))');
-    cu.getRange('J2').setFormula('=IF(SUM(COUNTIF(I2,"DE*"))>0,SUBSTITUTE(I2,"DE ",""),IF(SUM(COUNTIF(I2,"MA*"))>0,SUBSTITUTE(I2,"MA ",""),I2))');
+    cu.getRange('J2').setFormula('=IF(SUM(COUNTIF(I2,"DEL*"))>0,SUBSTITUTE(I2,"DEL ",""),IF(SUM(COUNTIF(I2,"DE*"))>0,SUBSTITUTE(I2,"DE ",""),IF(SUM(COUNTIF(I2,"MA*"))>0,SUBSTITUTE(I2,"MA ",""),I2)))');
     cu.getRange('K2').setFormula('=IFERROR(SPLIT(J2," ",),"")');
     cu.getRange('Q2').setFormula('=IF(AND($Q$1="FIRST",$P2<>""),ARRAYFORMULA({$K2:$L2,$N2:$O2}),(IF(AND($Q$1="FIRST",$N2=""),ARRAYFORMULA({$K2,$N2,$L2:$M2}),(IF(AND($Q$1="FIRST",$N2<>""),ARRAYFORMULA({$K2:$L2,$M2:$N2}),(IF(AND($Q$1="LAST",$P2<>""),ARRAYFORMULA({$N2:$O2,$K2:$L2}),(IF(AND($Q$1="LAST",$N2=""),ARRAYFORMULA({$M2:$N2,$K2:$L2}),(IF(AND($Q$1="LAST",$N2<>""),ARRAYFORMULA({$M2:$N2,$K2:$L2}),"")))))))))))');
     cu.getRange('U2').setFormula('=TRIM(PROPER(CONCATENATE(Q2," ",R2)))');
     cu.getRange('V2').setFormula('=TRIM(PROPER(CONCATENATE(S2," ",T2)))');
     cu.getRange('W2').setFormula('=TRIM(LOWER(CONCATENATE(Q2,S2,LEFT(T2,1))))');
-    cu.getRange('X2').setFormula('=IF(U2<>"",CONCATENATE(W2,"@cumbresleon.edu.mx"),"")');
+    cu.getRange('X2').setFormula('=IF(U2<>"",CONCATENATE(W2,'@',$X$1),"")');
     cu.getRange('Y2').setFormula('=IF(X2<>"", CONCATENATE(W2,12345),"")'); 
-    cu.getRange('AA2').setFormula('=IF(Z2<>"",LOWER(TRIM(CONCATENATE(SUBSTITUTE(RIGHT(Z2,10)," ",""),"@cumbresleon.edu.mx"))),"")');
-    cu.getRange('A2:AA2').autoFill(cu.getRange('A2:AA1000'),
+    cu.getRange('AA2').setFormula('=IF(Z2<>"",LOWER(TRIM(CONCATENATE(SUBSTITUTE(RIGHT(Z2,10)," ",""),$X$1))),"")');
+    cu.getRange('A2:AD2').autoFill(cu.getRange('A2:AD1000'),
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
 
   var lu = sh.insertSheet().activate(); 
     lu.setName('LUSER').setFrozenRows(1); lu.getRange('1:1').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00');
     lu.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
-    lu.getRange('A1').setValue('DO'); 
-    lu.getRange('B1').setValue('FIRST');  lu.getRange('C1').setValue('LAST'); 
-    lu.getRange('D1').setValue('EMAIL'); lu.getRange('E1').setValue('PASS'); 
-    lu.getRange('F1').setValue('ORG'); lu.getRange('G1').setValue('GLOBAL'); 
-    lu.getRange('H1').setValue('SUSPENDED'); lu.getRange('I1').setValue('ID'); 
+    lu.getRange('A1').setValue('DO'); lu.getRange('B1').setValue('FIRST');  
+    lu.getRange('C1').setValue('LAST'); lu.getRange('D1').setValue('EMAIL'); 
+    lu.getRange('E1').setValue('PASS'); lu.getRange('F1').setValue('ORG'); 
+    lu.getRange('G1').setValue('ID'); 
+    lu.getRange('H1').setDataValidation(SpreadsheetApp.newDataValidation()
+      .setAllowInvalid(false).requireValueInList(['true','false'],true).build()); 
+    lu.getRange('I1').setDataValidation(SpreadsheetApp.newDataValidation()
+      .setAllowInvalid(false).requireValueInList(['true','false'],true).build()); 
+    lu.getRange('J1').setDataValidation(SpreadsheetApp.newDataValidation()
+      .setAllowInvalid(false).requireValueInList(['true','false'],true).build());  
+    lu.getRange('K1').setValue('GROUPTO'); lu.getRange('L1').setValue('GROUPFROM');
     lu.setColumnWidth(1,40) ;lu.setColumnWidth(2,200); lu.setColumnWidth(3,200); 
-    lu.setColumnWidth(4,350); lu.setColumnWidth(5,250); lu.setColumnWidth(6,350);
-    lu.setColumnWidth(7,100); lu.setColumnWidth(8,100); lu.setColumnWidth(9,200); 
-    lu.deleteColumns(10,17); lu.setFrozenColumns(1);
-
-  var eu = sh.insertSheet().activate();
-    eu.setName('EUSER').setFrozenRows(1); eu.getRange('1:1').setFontWeight('bold')
-      .setHorizontalAlignment('center').setBackground('#00ff00'); 
-    eu.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
-    eu.getRange('A1').setValue('DO');
-    eu.getRange('B1').setValue('FIRST');  eu.getRange('C1').setValue('LAST'); 
-    eu.getRange('D1').setValue('EMAIL'); eu.getRange('E1').setValue('PASS'); 
-    eu.getRange('F1').setValue('ORG');  eu.getRange('G1').setValue('GROUPTO'); 
-    eu.getRange('H1').setValue('GROUPFROM'); 
-    eu.setColumnWidth(1,40); eu.setColumnWidth(2,200); eu.setColumnWidth(3,200);
-    eu.setColumnWidth(4,350); eu.setColumnWidth(5,250); eu.setColumnWidth(6,350);
-    eu.setColumnWidth(7,250); eu.setColumnWidth(8,250); eu.deleteColumns(9,18);
-    eu.setFrozenColumns(1);
+    lu.setColumnWidth(4,250); lu.setColumnWidth(5,250); lu.setColumnWidth(6,350);
+    lu.setColumnWidth(7,100); lu.setColumnWidth(8,200); lu.setColumnWidth(9,200); 
+    lu.setColumnWidth(10,100); lu.setColumnWidth(11,200); lu.setColumnWidth(12,200); 
+    lu.deleteColumns(13,14); lu.setFrozenColumns(1);
 
   var lo = sh.insertSheet().activate();
     lo.setName('LORG').setFrozenRows(1); lo.getRange('1:1').setFontWeight('bold')
@@ -172,11 +174,11 @@ var sh = SpreadsheetApp.openById(s);
     lcl.getRange('M1').setValue('CREATED'); lcl.getRange('N1').setValue('EDITED'); 
     lcl.setColumnWidth(1,40); lcl.setColumnWidth(2,100); lcl.setColumnWidth(3,250);
     lcl.setColumnWidth(4,250); lcl.setColumnWidth(5,100); lcl.setColumnWidth(6,100); 
-    lcl.setColumnWidth(7,100); lcl.setColumnWidth(8,100); lcl.setColumnWidth(9,60);
+    lcl.setColumnWidth(7,100); lcl.setColumnWidth(8,250); lcl.setColumnWidth(9,60);
     lcl.setColumnWidth(10,100); lcl.setColumnWidth(11,100); lcl.setColumnWidth(12,100);
     lcl.setColumnWidth(13,100); lcl.deleteColumns(14,13); 
     lcl.deleteRows(550,450); lcl.setFrozenColumns(1);
-    lcl.getRange('I2').setFormula('=IFERROR(INDEX(LUSER!D$2:D,MATCH(H2,LUSER!D$2:D,0)),"")');
+    lcl.getRange('I2').setFormula('=IFERROR(INDEX(LUSER!D$2:D,MATCH(H2,LUSER!G$2:G,0)),"")');
     lcl.getRange('I2').autoFill(lcl.getRange('I2:I520'),
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
     
@@ -292,7 +294,7 @@ var sh = SpreadsheetApp.openById(s);
     la.setColumnWidth(10,150); la.setColumnWidth(11,150); la.setColumnWidth(12,150);
     la.setColumnWidth(13,150); la.setColumnWidth(14,250); la.setColumnWidth(15,250); 
     la.setColumnWidth(16,250);  la.setColumnWidth(17,250); la.deleteColumns(18,9);
-    la.getRange('H2').setFormula('=IFERROR(INDEX(LUSER!D$2:D,MATCH(G2,LUSER!D$2:D,0)),"")');
+    la.getRange('H2').setFormula('=IFERROR(INDEX(LUSER!D$2:D,MATCH(G2,LUSER!G$2:G,0)),"")');
     la.getRange('H2').autoFill(la.getRange('H2:H1000'),
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
 
@@ -324,7 +326,6 @@ var sh = SpreadsheetApp.openById(s);
     cp.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
     cp.deleteRows(350,650);
 
-
   var cal = sh.insertSheet().activate(); 
     cal.setName('CALENDAR').setFrozenRows(1); cal.getRange('1:1').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00');
@@ -353,17 +354,176 @@ var sh = SpreadsheetApp.openById(s);
     ll.getRange('A391:A416').setValue('O'); ll.getRange('A417:A442').setValue('P');
     ll.getRange('A443:468').setValue('Q'); ll.getRange('A469:A494').setValue('R');
     ll.getRange('A495:A520').setValue('S'); ll.getRange('C1:C520').setValue('3');
-    ll.getRange('D1:D520').setValue(':'); 
-    var alfa2 = ll.getRange('A1:A520').getValues();
-    ll.getRange('E1:E520').setValues(alfa2);
-    var alfa3 = ll.getRange('B1:B520').getValues(); 
-    ll.getRange('F1:F520').setValues(alfa3);
-    ll.getRange('G1:G520').setValue('500');
+    ll.getRange('D1:D520').setValue(':'); var alfa2 = ll.getRange('A1:A520').getValues();
+    ll.getRange('E1:E520').setValues(alfa2); var alfa3 = ll.getRange('B1:B520').getValues(); 
+    ll.getRange('F1:F520').setValues(alfa3); ll.getRange('G1:G520').setValue('500');
     ll.getRange('H1').setFormula('=CONCATENATE(A1:G1)');
     ll.getRange('H1').autoFill(ll.getRange('H1:H520'), 
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
     var alfa4 = ll.getRange('H1:H520').getValues();
-    ccl.getRange('M2:M521').setValues(alfa4); 
-    ll.hideSheet();
+    ccl.getRange('M2:M521').setValues(alfa4); ll.hideSheet();
+}
 
+
+
+function createUserSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();  
+  for (x=1; x<nr; x++){ var i = d[x][30]; var l = 1 + x; 
+    if (i === 'x') {
+      try {
+        var user = { primaryEmail:d[x][23], name:{givenName: d[x][20], familyName:d[x][21]},
+          password: d[x][24], changePasswordAtNextLogin: d[x][4],
+          includeInGlobalAddressList: d[x][5], orgUnitPath: d[x][25] };
+        var org = AdminDirectory.Users.insert(user); 
+        var userEmail = d[x][23];
+        var groupKey = d[x][26];
+        var resource = {email: userEmail, role: 'MEMBER'};
+        var gr = AdminDirectory.Members.insert(resource, groupKey);   
+        var end = s.getRange(l, 31).setValue(''); 
+        Utilities.sleep(1000);
+      } catch (e){continue;}
+    }   
+  }  
+}
+
+
+
+function listUsersSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
+  var dom = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CUSER');
+  var school = dom.getRange('X1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();  
+  var pageToken = null, urs = []; 
+  do{
+    var us = AdminDirectory.Users.list({
+    domain: school, pageToken: pageToken, pageSize:100});
+    pageToken = us.nextPageToken;
+    urs = urs.concat(us.users);  
+    } while(pageToken); 
+  var arr = [];
+      for (i = 0; i < urs.length; i++) {
+        var ur = urs[i]; 
+        var first = ur.name.givenName;
+        var last = ur.name.familyName;
+        var email = ur.primaryEmail;
+        var pass = ur.password;
+        var org = ur.orgUnitPath;
+        var id = ur.id;
+        var suspend = ur.suspended;
+        var changepass = ur.changePasswordAtNextLogin;
+        var global = ur.includeInGlobalAddressList;
+        arr.push([first,last,email,pass,org,id,suspend,changepass,global]); 
+      }
+      s.getRange(2, 2, arr.length, arr[0].length).setValues(arr);  
+}
+
+
+
+function updateUserSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();  
+  for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;   
+    if (i === 'x') {
+      try{
+        var user = d[x][3];
+        var resource = {primaryEmail: d[x][3], name: {givenName: d[x][1],
+          familyName: d[x][2]},
+          includeInGlobalAddressList: d[x][9]};
+        var org = AdminDirectory.Users.update(resource, user);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}
+    }  
+  }  
+}
+
+
+
+function changeUserOrgSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;   
+    if (i === 'x') {
+      try{
+        var user = d[x][3];
+        var resource = {orgUnitPath: d[x][5]};
+        var org = AdminDirectory.Users.update(resource, user);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}
+    } 
+  }  
+}
+
+
+
+function updateUserPassSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;   
+    if (i === 'x') {
+      try{
+        var user = d[x][3];
+        var resource = {password: d[x][4],changePasswordAtNextLogin: d[0][8]};
+        var org = AdminDirectory.Users.update(resource, user);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}
+    } 
+  }  
+}
+
+
+
+function addGroupMemberSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;  
+   if (i === 'x') {
+      try{ 
+        var userEmail = d[x][3]; var groupKey = d[x][10];
+        var resource = {email: userEmail, role: 'MEMBER'};
+        var gr = AdminDirectory.Members.insert(resource, groupKey);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000); 
+         } catch (e){continue;} 
+    }
+  }
+}
+
+
+
+function removeGroupMemberSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;  
+    if (i === 'x') {
+      try{ 
+        var userEmail = d[x][3]; var groupKey = d[x][10];
+        var resource = {email: userEmail, role: 'MEMBER'};
+        var gr = AdminDirectory.Members.remove(groupKey, userEmail);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000); 
+         } catch (e){continue;}  
+    }
+  }
+}
+
+
+
+function suspendUserSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;   
+    if (i === 'x') {
+      try{
+        var user = d[x][3];
+        var resource = {suspended: d[x][7]};
+        var org = AdminDirectory.Users.update(resource, user);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}
+    } 
+  }  
 }
