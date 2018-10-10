@@ -11,7 +11,7 @@ sudo apt update -y && sudo apt-get update -y && sudo apt-get upgrade -y && sudo 
 
 ## VIM
 vim .vimrc
-(The configuration below allows you to type double tt to escape and shift q to exit.
+(The configuration below allows you to type double ff to escape, gg to autocomplete, and shift q to exit.
 ```
 set nocompatible
 filetype off
@@ -38,16 +38,17 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set cursorline
-set colorcolumn=85
+set colorcolumn=92
 
-nnoremap <C-h> <C-W><C-W>
-let mapleader="g"
-inoremap <leader>g <C-x><C-o>
-inoremap ff <Esc>
+nnoremap <C-h> <C-W><C-W> 
+let mapleader="g" 
+inoremap <leader>g <C-x><C-o>   
+inoremap ff <Esc> 
 map Q :qa<CR>
-map W :Vex<CR>
-map E <C-f>
+map W :Vex<CR> 
+map E <C-f>  
 map R <C-b>
+map S :s/\<\>//g<left><left><left><left><left> 
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -66,7 +67,7 @@ ru macros/justify.vim
 ## INSTALL VIMPROC
 cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
 
-## INSTALL DRIVE IN VIM
+## INSTALL GOOGLE DRIVE IN VIM
 1. In APIs, Install Drive API in project and Create Credentials (OAuth client ID)
 2. Choose "Other" and put product name, e.g "My OCAMLDrive".
 3. Click "Create". You will get a Client ID, a Client Secret.
