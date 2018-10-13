@@ -1,9 +1,46 @@
 // This is still a rough draft. It will be used to administer almost everything in the Google Admin Console.
 
+
+
+
+// ALWAYS CHECK TO SEE IF YOU ARE USING UPPER CASE AND SPANISH OR THE DOC WILL GO CRAZY!!
+
+
+function onOpen(){ 
+var s = SpreadsheetApp.getUi().createMenu('Scripts'); 
+s.addItem('CREATE USER', 'createUserCUMBRES').addToUi(); 
+s.addItem('LIST USERS', 'listUsersCUMBRES').addToUi();  
+s.addItem('UPDATE USER', 'updateUserCUMBRES').addToUi();
+s.addItem('CHANGE USER ORG', 'changeUserOrgCUMBRES').addToUi();  
+s.addItem('CHANGE USER PASS', 'updateUserPassCUMBRES').addToUi();
+s.addItem('ADD USER GROUP', 'addGroupMemberCUMBRES').addToUi();
+s.addItem('REMOVE USER GROUP', 'removeGroupMemberCUMBRES').addToUi();  
+s.addItem('SUSPEND USER', 'suspendUserCUMBRES').addToUi();
+s.addItem('CREATE GROUP', 'createGroupCUMBRES').addToUi();
+s.addItem('LIST GROUPS', 'listGroupCUMBRES').addToUi();
+s.addItem('LIST USERS GROUPS', 'listUsersInGroupCUMBRES').addToUi();  
+s.addItem('EDIT GROUP CONFIG', 'editGroupConfigCUMBRES').addToUi();
+s.addItem('EDIT GROUP INFO', 'editGroupInfoCUMBRES').addToUi();
+s.addItem('DELETE GROUP','deleteGroupCUMBRES').addToUi();  
+s.addItem('CREATE ORG', 'createOrgCUMBRES').addToUi();
+s.addItem('LIST ORGS', 'listOrgCUMBRES').addToUi();  
+s.addItem('EDIT ORG', 'editOrgCUMBRES').addToUi();
+s.addItem('DELETE ORG', 'deleteOrgCUMBRES').addToUi(); 
+s.addItem('LIST CHROMEOS', 'listChromeOsCUMBRES').addToUi();
+s.addItem('MOVE CHROMEOS', 'moveChromeOsCUMBRES').addToUi();  
+s.addItem('EDIT CHROMEOS', 'editChromeOsCUMBRES').addToUi();
+s.addItem('SUSPEND CHROMEOS', 'suspendChromeOsCUMBRES').addToUi();   
+  
+}
+
+
 function createTemplate(){
 var f = DriveApp.createFolder('DOMAIN ADMIN').getId();
-var s = SpreadsheetApp.create('USERS CLASSES CHROMEBOKS').getId();
-var sf =  DriveApp.getFileById(s); 
+var s = SpreadsheetApp.create('USERS CLASSES CHROMEBOKS SCHOOL').getId();
+var sf =  DriveApp.getFileById(s);
+var sn =  DriveApp.getFileById(s).getName();
+var sname = sn.split(" ").pop();
+
   DriveApp.getFolderById(f).addFile(sf);
   DriveApp.getRootFolder().removeFile(sf);  
 var sh = SpreadsheetApp.openById(s);
@@ -23,10 +60,6 @@ var sh = SpreadsheetApp.openById(s);
     cu.getRange('Q1:T1').mergeAcross(); 
     cu.getRange('U1').setValue('FIRST NAME'); cu.getRange('V1')
       .setValue('LAST NAME'); cu.getRange('W1').setValue('USER');  
-    cu.getRange('X1').setDataValidation(SpreadsheetApp.newDataValidation()
-      .setAllowInvalid(false).requireValueInList(['cumbresleon.edu.mx','oyg.edu.mx',
-      'mirafloresleon.edu.mx','institutohispanoingles.edu.mx','bms.edu.mx',
-      'amagno.edu.mx','cadc.edu.mx','institutooviedo.edu.mx'],true).build());  
     cu.getRange('Y1').setValue('PASSWORD'); cu.getRange('Z1').setValue('ORG'); 
     cu.getRange('AA1').setValue('GROUP');
     cu.getRange('AB1').setDataValidation(SpreadsheetApp.newDataValidation()
@@ -53,7 +86,23 @@ var sh = SpreadsheetApp.openById(s);
     cu.getRange('Y2').setFormula('=IF(X2<>"", CONCATENATE(W2,12345),"")'); 
     cu.getRange('AA2').setFormula('=IF(Z2<>"",LOWER(TRIM(CONCATENATE(SUBSTITUTE(RIGHT(Z2,10)," ",""),$X$1))),"")');
     cu.getRange('A2:AD2').autoFill(cu.getRange('A2:AD1000'),
-      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
+      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+    if(sname === 'CUMBRES'){cu.getRange('X1').setValue('cumbresleon.edu.mx')};
+    else if(sname === 'MIRAFLORES'){cu.getRange('X1').setValue('mirafloresleon.edu.mx')};
+    else if(sname === 'IHI'){cu.getRange('X1').setValue('institutohispanoingles.edu.mx')};
+    else if(sname === 'OYG'){cu.getRange('X1').setValue('oyg.edu.mx')};
+    else if(sname === 'OVIEDO'){cu.getRange('X1').setValue('institutooviedo.edu.mx')};
+    else if(sname === 'MONCLAIR'){cu.getRange('X1').setValue('colegiomonclair.edu.mx')};
+    else if(sname === 'HA'){cu.getRange('X1').setValue('hispanoamericano.edu.mx')};
+    else if(sname === 'JFKL'){cu.getRange('X1').setValue('jfkl.edu.mx')};
+    else if(sname === 'MAGNO'){cu.getRange('X1').setValue('amagno.edu.mx')};
+    else if(sname === 'BMS'){cu.getRange('X1').setValue('bms.edu.mx')};
+    else if(sname === 'CADC'){cu.getRange('X1').setValue('cadc.edu.mx')};
+    else if(sname === 'IOG'){cu.getRange('X1').setValue('iog.edu.mx')};
+    else if(sname === 'TENDENZA'){cu.getRange('X1').setValue('tendenzajoyeria.com')};
+    else if(sname === 'SPORTIF'){cu.getRange('X1').setValue('sportif.mx')};
+    else if(sname === 'JJIR'){cu.getRange('X1').setValue('jjir.org')};
+    else if(sname === 'SCHOOL'){cu.getRange('X1').setValue('school.edu.mx')};
 
   var lu = sh.insertSheet().activate(); 
     lu.setName('LUSER').setFrozenRows(1); lu.getRange('1:1').setFontWeight('bold')
@@ -62,43 +111,41 @@ var sh = SpreadsheetApp.openById(s);
     lu.getRange('A1').setValue('DO'); lu.getRange('B1').setValue('FIRST');  
     lu.getRange('C1').setValue('LAST'); lu.getRange('D1').setValue('EMAIL'); 
     lu.getRange('E1').setValue('PASS'); lu.getRange('F1').setValue('ORG'); 
-    lu.getRange('G1').setValue('ID'); 
-    lu.getRange('H1').setDataValidation(SpreadsheetApp.newDataValidation()
+    lu.getRange('G1').setValue('ID'); lu.getRange('H1').setValue('SUSPEND'); 
+    lu.getRange('I1').setValue('CHANGEPASS'); lu.getRange('J1').setValue('GLOBAL'); 
+    lu.getRange('H2').setDataValidation(SpreadsheetApp.newDataValidation()
       .setAllowInvalid(false).requireValueInList(['true','false'],true).build()); 
-    lu.getRange('I1').setDataValidation(SpreadsheetApp.newDataValidation()
+    lu.getRange('I2').setDataValidation(SpreadsheetApp.newDataValidation()
       .setAllowInvalid(false).requireValueInList(['true','false'],true).build()); 
-    lu.getRange('J1').setDataValidation(SpreadsheetApp.newDataValidation()
+    lu.getRange('J2').setDataValidation(SpreadsheetApp.newDataValidation()
       .setAllowInvalid(false).requireValueInList(['true','false'],true).build());  
+    lu.getRange.('H3').setFormula('=$H$2');lu.getRange.('I3').setFormula('=$I$2');
+    lu.getRange.('J3').setFormula('=$J$2');
     lu.getRange('K1').setValue('GROUPTO'); lu.getRange('L1').setValue('GROUPFROM');
+    lu.getRange('H3:J3').autoFill(lu.getRange('H3:J1000'),
+      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
+    lu.getRange('L2').setFormula('=IF(F2<>"",LOWER(TRIM(CONCATENATE(SUBSTITUTE(RIGHT(F2,10)," ",""),CUSER!$X$1))),"")');
+    lu.getRange('L2').autoFill(lu.getRange('L2:L1000'),
+      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
     lu.setColumnWidth(1,40) ;lu.setColumnWidth(2,200); lu.setColumnWidth(3,200); 
     lu.setColumnWidth(4,250); lu.setColumnWidth(5,250); lu.setColumnWidth(6,350);
     lu.setColumnWidth(7,100); lu.setColumnWidth(8,200); lu.setColumnWidth(9,200); 
     lu.setColumnWidth(10,100); lu.setColumnWidth(11,200); lu.setColumnWidth(12,200); 
     lu.deleteColumns(13,14); lu.setFrozenColumns(1);
 
-  var lo = sh.insertSheet().activate();
-    lo.setName('LORG').setFrozenRows(1); lo.getRange('1:1').setFontWeight('bold')
+  var cg = sh.insertSheet().activate();
+    cg.setName('CGROUP').setFrozenRows(1); cg.getRange('1:1').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00'); 
-    lo.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
-    lo.getRange('A1').setValue('DO'); 
-    lo.getRange('B1').setValue('NAME'); lo.getRange('C1').setValue('DESCRIPTION');
-    lo.getRange('D1').setValue('PATH'); lo.getRange('E1').setValue('PARENT PATH');
-    lo.getRange('F1').setValue('ID'); lo.setFrozenColumns(1);
-    lo.setColumnWidth(1,40); lo.setColumnWidth(2,200);  lo.setColumnWidth(3,200); 
-    lo.setColumnWidth(4,350); lo.setColumnWidth(5,250); lo.setColumnWidth(6,150);
-    lo.deleteColumns(7,20); lo.deleteRows(350,650);
-
-  var co = sh.insertSheet().activate();
-    co.setName('CORG').setFrozenRows(1); co.getRange('1:1').setFontWeight('bold')
-      .setHorizontalAlignment('center').setBackground('#00ff00'); 
-    co.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
-    co.getRange('A1').setValue('DO'); 
-    co.getRange('B1').setValue('NAME'); co.getRange('C1').setValue('DESCRIPTION');
-    co.getRange('D1').setValue('PATH'); co.getRange('E1').setValue('PARENT PATH'); 
-    co.getRange('F1').setValue('ID');  co.setFrozenColumns(1); 
-    co.setColumnWidth(1,40); co.setColumnWidth(2,200); co.setColumnWidth(3,200);
-    co.setColumnWidth(4,350); co.setColumnWidth(5,250); co.setColumnWidth(6,150);
-    co.deleteColumns(7,20); co.deleteRows(350,650);
+    cg.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
+    cg.getRange('A1').setValue('DO'); cg.getRange('B1').setValue('EMAIL');
+    cg.getRange('C1').setValue('NAME'); cg.getRange('D1').setValue('DESCRIPTION');
+    cg.getRange('E1').setValue('ID');    
+    cg.setColumnWidth(1,40); cg.setColumnWidth(2,250); cg.setColumnWidth(3,200); 
+    cg.setColumnWidth(4,200); cg.setColumnWidth(5,200); cg.deleteColumns(6,21); 
+    cg.deleteRows(350,650); cg.setFrozenColumns(1);
+    cg.getRange('D2').setFormula('=C2'); 
+    cg.getRange('D2').autoFill(cg.getRange('D2:D350'), 
+      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
 
   var lg = sh.insertSheet().activate();
     lg.setName('LGROUP').setFrozenRows(1); lg.getRange('1:1').setFontWeight('bold')
@@ -111,23 +158,55 @@ var sh = SpreadsheetApp.openById(s);
     lg.setColumnWidth(4,200); lg.setColumnWidth(5,200); lg.setColumnWidth(6,60);
     lg.deleteColumns(7,20); lg.deleteRows(350,650); lg.setFrozenColumns(1);
 
-  var cg = sh.insertSheet().activate();
-    cg.setName('CGROUP').setFrozenRows(1); cg.getRange('1:1').setFontWeight('bold')
-      .setHorizontalAlignment('center').setBackground('#00ff00'); 
-    cg.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
-    cg.getRange('A1').setValue('DO'); cg.getRange('B1').setValue('EMAIL');
-    cg.getRange('C1').setValue('NAME'); cg.getRange('D1').setValue('DESCRIPTION');
-    cg.getRange('E1').setValue('ID');    
-    cg.setColumnWidth(1,40); cg.setColumnWidth(2,250); cg.setColumnWidth(3,200); 
-    cg.setColumnWidth(4,200); cg.setColumnWidth(5,200); cg.deleteColumns(6,21); 
-    cg.deleteRows(350,650); cg.setFrozenColumns(1);
-
   var ug = sh.insertSheet().activate();
     ug.setName('UGROUP').setFrozenRows(1); ug.getRange('1:1').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00'); 
     ug.getRange('A1').setFormula('=TRANSPOSE(LGROUP!A2:A)'); 
     ug.insertColumns(26,600); ug.setColumnWidths(1,626,250);
     ug.deleteRows(350,650);
+
+  var co = sh.insertSheet().activate();
+    co.setName('CORG').setFrozenRows(1); co.getRange('1:1').setFontWeight('bold')
+      .setHorizontalAlignment('center').setBackground('#00ff00'); 
+    co.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
+    co.getRange('A1').setValue('DO'); 
+    co.getRange('B1').setValue('NAME'); co.getRange('C1').setValue('DESCRIPTION');
+    co.getRange('D1').setValue('PATH'); co.getRange('E1').setValue('PARENT PATH'); 
+    co.getRange('F1').setDataValidation(SpreadsheetApp.newDataValidation()
+      .setAllowInvalid(false).requireValueInList(['true','false'],true).build());  
+    co.setFrozenColumns(1); co.setColumnWidth(1,40); co.setColumnWidth(2,200); 
+    co.setColumnWidth(3,200); co.setColumnWidth(4,350); co.setColumnWidth(5,250); 
+    co.setColumnWidth(6,150); co.deleteColumns(7,20); co.deleteRows(350,650); 
+    co.getRange('C2').setFormula('=B2'); 
+    co.getRange('C2').autoFill(co.getRange('C2:C350'), 
+      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
+    
+  var lo = sh.insertSheet().activate();
+    lo.setName('LORG').setFrozenRows(1); lo.getRange('1:1').setFontWeight('bold')
+      .setHorizontalAlignment('center').setBackground('#00ff00'); 
+    lo.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
+    lo.getRange('A1').setValue('DO'); 
+    lo.getRange('B1').setValue('NAME'); lo.getRange('C1').setValue('DESCRIPTION');
+    lo.getRange('D1').setValue('PATH'); lo.getRange('E1').setValue('PARENT PATH');
+    lo.setFrozenColumns(1);
+    lo.setColumnWidth(1,40); lo.setColumnWidth(2,200);  lo.setColumnWidth(3,200); 
+    lo.setColumnWidth(4,350); lo.setColumnWidth(5,250); lo.setColumnWidth(6,150);
+    lo.deleteColumns(7,20); lo.deleteRows(350,650);
+    if(sname === 'CUMBRES'){lo.getRange('F1').setValue('C01zl7b8s')};
+    else if(sname === 'MIRAFLORES'){lo.getRange('F1').setValue('C035o5nao')};
+    else if(sname === 'IHI'){lo.getRange('F1').setValue('C00sk3uhi')};
+    else if(sname === 'OYG'){lo.getRange('F1').setValue('C04blr3gm')};
+    else if(sname === 'OVIEDO'){lo.getRange('F1').setValue('C0182crtt')};
+    else if(sname === 'MONCLAIR'){lo.getRange('F1').setValue('C04be904r')};
+    else if(sname === 'HA'){lo.getRange('F1').setValue('C00kzp09z')};
+    else if(sname === 'JFKL'){lo.getRange('F1').setValue('C039ricr9')};
+    else if(sname === 'MAGNO'){lo.getRange('F1').setValue('C034u269g')};
+    else if(sname === 'BMS'){lo.getRange('F1').setValue('C04d40k8m')};
+    else if(sname === 'CADC'){lo.getRange('F1').setValue('C03xi6djv')};
+    else if(sname === 'IOG'){lo.getRange('F1').setValue('C011zepvb')};
+    else if(sname === 'TENDENZA'){lo.getRange('F1').setValue('C02bwtugn')};
+    else if(sname === 'SPORTIF'){lo.getRange('F1').setValue('C01ofl6f4')};
+    else if(sname === 'JJIR'){lo.getRange('F1').setValue('C03w4ojwv')};
 
   var lc = sh.insertSheet().activate();
     lc.setName('LCB').setFrozenRows(1); lc.getRange('1:1').setFontWeight('bold')
@@ -137,29 +216,16 @@ var sh = SpreadsheetApp.openById(s);
     lc.getRange('C1').setValue('SERIAL'); 
     lc.getRange('D1').setValue('USER'); lc.getRange('E1').setValue('MAC');
     lc.getRange('F1').setValue('MODEL'); lc.getRange('G1').setValue('PATH');
-    lc.getRange('H1').setValue('NOTES'); lc.getRange('I1').setValue('STATUS'); 
-    lc.getRange('J1').setValue('OS'); lc.getRange('K1').setValue('RECENT USERS');
+    lc.getRange('H1').setValue('NOTES'); lc.getRange('I1').setValue('OS'); 
+    lc.getRange('J1').setValue('USERS'); lc.getRange('K1').setValue('STATUS');
+    lc.getRange('L1').setValue('ACTION'); lc.getRange('M1').setValue('REASON');
     lc.setColumnWidth(1,40); lc.setColumnWidth(2,250); lc.setColumnWidth(3,100);
     lc.setColumnWidth(4,250); lc.setColumnWidth(5,100); lc.setColumnWidth(6,250);
-    lc.setColumnWidth(7,350); lc.setColumnWidth(8,250); lc.setColumnWidth(8,100); 
-    lc.setColumnWidth(10,100); lc.setColumnWidth(11,250); lc.deleteColumns(12,15);
+    lc.setColumnWidth(7,350); lc.setColumnWidth(8,250); lc.setColumnWidth(9,100); 
+    lc.setColumnWidth(10,250); lc.setColumnWidth(11,100); lc.setColumnWidth(12,150); 
+    lc.setColumnWidth(13,250);     
+    lc.setColumnWidth(10,100); lc.setColumnWidth(11,250); lc.deleteColumns(14,13);
     lc.deleteRows(500,500); lc.setFrozenColumns(1);
-
-  var cc = sh.insertSheet().activate();
-    cc.setName('CCB').setFrozenRows(1); cc.getRange('1:1').setFontWeight('bold')
-      .setHorizontalAlignment('center').setBackground('#00ff00');
-    cc.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
-    cc.getRange('A1').setValue('DO'); cc.getRange('B1').setValue('DEVICE ID'); 
-    cc.getRange('C1').setValue('SERIAL'); 
-    cc.getRange('D1').setValue('USER'); cc.getRange('E1').setValue('MAC');
-    cc.getRange('F1').setValue('MODEL'); cc.getRange('G1').setValue('PATH');
-    cc.getRange('H1').setValue('NOTES'); cc.getRange('I1').setValue('STATUS'); 
-    cc.getRange('J1').setValue('OS'); cc.getRange('K1').setValue('RECENT USERS');
-    cc.setColumnWidth(1,40); cc.setColumnWidth(2,250); cc.setColumnWidth(3,100);
-    cc.setColumnWidth(4,250); cc.setColumnWidth(5,100); cc.setColumnWidth(6,250);
-    cc.setColumnWidth(7,350); cc.setColumnWidth(8,250); cc.setColumnWidth(8,100); 
-    cc.setColumnWidth(10,100); cc.setColumnWidth(11,250); cc.deleteColumns(12,15);
-    cc.deleteRows(500,500); cc.setFrozenColumns(1);
 
   var lcl = sh.insertSheet().activate();
     lcl.setName('LCLASS').setFrozenRows(1); lcl.getRange('1:1').setFontWeight('bold')
@@ -354,6 +420,10 @@ var sh = SpreadsheetApp.openById(s);
     ll.getRange('A391:A416').setValue('O'); ll.getRange('A417:A442').setValue('P');
     ll.getRange('A443:468').setValue('Q'); ll.getRange('A469:A494').setValue('R');
     ll.getRange('A495:A520').setValue('S'); ll.getRange('C1:C520').setValue('3');
+    ll.getRange('I12').setValue('BMS'); ll.getRange('J12').setValue('C04d40k8m'); 
+    ll.getRange('I13').setValue('CADC'); ll.getRange('J13').setValue('C03xi6djv'); 
+    ll.getRange('I14').setValue('JFKL'); ll.getRange('J14').setValue('C039ricr9'); 
+    ll.getRange('I15').setValue('JJIR'); ll.getRange('J15').setValue('C03w4ojwv'); 
     ll.getRange('D1:D520').setValue(':'); var alfa2 = ll.getRange('A1:A520').getValues();
     ll.getRange('E1:E520').setValues(alfa2); var alfa3 = ll.getRange('B1:B520').getValues(); 
     ll.getRange('F1:F520').setValues(alfa3); ll.getRange('G1:G520').setValue('500');
@@ -372,7 +442,7 @@ function createUserSCHOOL() {
   for (x=1; x<nr; x++){ var i = d[x][30]; var l = 1 + x; 
     if (i === 'x') {
       try {
-        var user = { primaryEmail:d[x][23], name:{givenName: d[x][20], familyName:d[x][21]},
+       var user = { primaryEmail:d[x][23], name:{givenName: d[x][20], familyName:d[x][21]},
           password: d[x][24], changePasswordAtNextLogin: d[x][4],
           includeInGlobalAddressList: d[x][5], orgUnitPath: d[x][25] };
         var org = AdminDirectory.Users.insert(user); 
@@ -420,7 +490,7 @@ function listUsersSCHOOL() {
 
 
 
-function updateUserSCHOOL() {
+function updateUserNameSCHOOL() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();  
   for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;   
@@ -428,8 +498,25 @@ function updateUserSCHOOL() {
       try{
         var user = d[x][3];
         var resource = {primaryEmail: d[x][3], name: {givenName: d[x][1],
-          familyName: d[x][2]},
-          includeInGlobalAddressList: d[x][9]};
+          familyName: d[x][2]} };
+        var org = AdminDirectory.Users.update(resource, user);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}
+    }  
+  }  
+}
+
+
+// THIS NEEDS TO BE TESTED STILL!!
+function updateUserEmailSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();  
+  for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;   
+    if (i === 'x') {
+      try{
+        var user = d[x][6];
+        var resource = {primaryEmail: d[x][3]};
         var org = AdminDirectory.Users.update(resource, user);
         var end = s.getRange(l, 1).setValue(''); 
         Utilities.sleep(1000);
@@ -465,7 +552,7 @@ function updateUserPassSCHOOL() {
     if (i === 'x') {
       try{
         var user = d[x][3];
-        var resource = {password: d[x][4],changePasswordAtNextLogin: d[0][8]};
+        var resource = {password: d[x][4], changePasswordAtNextLogin: d[0][8]};
         var org = AdminDirectory.Users.update(resource, user);
         var end = s.getRange(l, 1).setValue(''); 
         Utilities.sleep(1000);
@@ -482,8 +569,8 @@ function addGroupMemberSCHOOL() {
   for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;  
    if (i === 'x') {
       try{ 
-        var userEmail = d[x][3]; var groupKey = d[x][10];
-        var resource = {email: userEmail, role: 'MEMBER'};
+        var user = d[x][3]; var groupKey = d[x][10];
+        var resource = {email: user, role: 'MEMBER'};
         var gr = AdminDirectory.Members.insert(resource, groupKey);
         var end = s.getRange(l, 1).setValue(''); 
         Utilities.sleep(1000); 
@@ -494,15 +581,18 @@ function addGroupMemberSCHOOL() {
 
 
 
-function removeGroupMemberSCHOOL() {
+function MoveGroupMemberSCHOOL() {
   var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LUSER');
   var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
   for (x=1; x<nr; x++){ var i = d[x][0];  var l = 1 + x;  
     if (i === 'x') {
       try{ 
-        var userEmail = d[x][3]; var groupKey = d[x][10];
-        var resource = {email: userEmail, role: 'MEMBER'};
-        var gr = AdminDirectory.Members.remove(groupKey, userEmail);
+        var user = d[x][3]; 
+        var gk1 = d[x][10];
+        var resource = {email: user, role: 'MEMBER'};
+        var gr = AdminDirectory.Members.insert(resource, gk1);
+        var gk2 = d[x][11];
+        var gr = AdminDirectory.Members.remove(gk2, user);
         var end = s.getRange(l, 1).setValue(''); 
         Utilities.sleep(1000); 
          } catch (e){continue;}  
@@ -527,3 +617,645 @@ function suspendUserSCHOOL() {
     } 
   }  
 }
+
+
+
+function createGroupSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CGROUP');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;   
+    if (i === 'x'){
+      try{
+        var gr = {email: d[x][1], name: d[x][2], description: d[x][3]};
+        var gro = AdminDirectory.Groups.insert(gr);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}
+    } 
+  }  
+}
+
+
+
+function listGroupSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LGROUP');
+  var dom = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CUSER');
+  var school = dom.getRange('X1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  var pageToken = null, grs = []; 
+  do{
+    var gr = AdminDirectory.Groups.list({domain: school, 
+      pageToken: pageToken, pageSize:100}); pageToken = gr.nextPageToken;
+      grs = grs.concat(gr.groups);  
+  } while(pageToken); 
+  var arr = [];
+      for (i = 0; i < grs.length; i++) {
+        var or = grs[i]; 
+        var email = or.email;
+        var names = or.name;
+        var des = or.description; 
+        var ids = or.id;
+        arr.push([email,names,des,ids]); 
+      }
+      s.getRange(2, 2, arr.length, arr[0].length).setValues(arr);  
+}
+      
+
+
+function editGroupInfoSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LGROUP');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;   
+    if (i === 'x'){
+      try{
+        var groupKey = d[x][4];  
+        var gr = {email: d[x][1], name: d[x][2], description: d[x][3]};
+        var gro = AdminDirectory.Groups.update(gr, groupKey);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}
+    } 
+  }  
+}
+
+
+
+function editGroupConfigSCHOOL(){ 
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LGROUP');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;     
+    if (i === 'x') {
+      try{
+        var groupId = d[x][1]; // This is ONLY the email username, NOT the ID.
+        var group = AdminGroupsSettings.newGroups();
+        group.whoCanAdd = 'NONE_CAN_ADD';
+        group.whoCanJoin = 'INVITED_CAN_JOIN';
+        group.whoCanViewMembership = 'ALL_MEMBERS_CAN_VIEW';
+        group.whoCanViewGroup = 'ALL_MEMBERS_CAN_VIEW';
+        group.whoCanInvite = 'ALL_MANAGERS_CAN_INVITE';
+        group.allowExternalMembers = false;
+        group.whoCanPostMessage = 'ALL_MEMBERS_CAN_POST';
+        group.allowWebPosting = true;
+        group.showInGroupDirectory = false;
+        group.allowGoogleCommunication = false;
+        group.membersCanPostAsTheGroup = false;
+        group.includeInGlobalAddressList = false;
+        group.whoCanLeaveGroup = 'NONE_CAN_LEAVE'; 
+        AdminGroupsSettings.Groups.patch(group, groupId);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+      } catch (e){continue;}
+    } 
+  }  
+}
+
+
+
+function deleteGroupSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LGROUP');
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;   
+    if (i === 'x'){
+      try{
+        var groupKey = d[x][4];  
+        var gro = AdminDirectory.Groups.remove(groupKey);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}
+    } 
+  }  
+}
+
+
+
+function listUsersInGroupSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('GROUPS');
+  var dom = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CUSER');
+  var school = dom.getRange('X1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  for (x=1; x<nr; x++){ var b = d[x][0]; var l = 1 + x;
+  if (b === 'x') {
+    try{
+     var s1 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('UGROUP');
+     var pageToken; var gr = AdminDirectory.Members.list(d[x][1], {domain: school,
+        maxResults: 500, pageToken: pageToken});
+     var grs = gr.members;  var arr = [];
+        for (i = 0; i < grs.length; i++) {
+          var or = grs[i]; 
+          var email = or.email;
+          arr.push([email]); 
+        }
+        s1.getRange(2, d[x][5], arr.length, arr[0].length).setValues(arr);  
+      } catch (e){continue;} 
+  }
+var end = s.getRange(l, 1).setValue('');   
+  }
+}
+
+
+  
+function createOrgSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CORG');
+  var ID = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LORG');
+  var adminId = ID.getRange('F1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;   
+    if (i === 'x') {
+      try{
+        var or = {name: d[x][1], description: d[x][2], parentOrgUnitPath: d[x][2],
+          blockInheritance: false}
+        var me = adminId;
+        var org = AdminDirectory.Orgunits.insert(or, me);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}  
+    } 
+  }  
+}
+
+  
+
+function listOrgSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LORG');
+  var adminId = s.getRange('F1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  var org = AdminDirectory.Orgunits.list(me, {orgUnitPath: '/', type: 'all'});
+  var orgs = org.organizationUnits; var arr = []; var me = adminId;
+      for (i = 0; i < orgs.length; i++) {
+        var or = orgs[i]; 
+        var names = or.name;
+        var des = or.description;
+        var path = or.orgUnitPath;
+        var pp = or.parentOrgUnitPath;
+        var ids = or.orgUnitId;
+        arr.push([names,des,path,pp,ids]); 
+      }
+      s.getRange(2, 2, arr.length, arr[0].length).setValues(arr);  
+}
+        
+
+
+function editOrgSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LORG');
+  var adminId = s.getRange('F1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;   
+    if (i === 'x') {
+      try{  
+        var or = {name: d[x][1], description: d[x][2], parentOrgUnitPath: d[x][4],
+          blockInheritance: false}
+        var orgUnitPath = d[x][3];
+        var me = adminId;
+        var org = AdminDirectory.Orgunits.update(or, me, orgUnitPath);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}  
+    } 
+  }  
+}
+
+
+
+function deleteOrgSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LORG');
+  var adminId = s.getRange('F1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;   
+    if (i === 'x') {
+      try{  
+        var orgUnitPath = d[x][3];
+        var me = adminId;
+        var org = AdminDirectory.Orgunits.remove(me, orgUnitPath);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}  
+    } 
+  }  
+}
+
+
+
+function listChromeOsSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LCB');
+  var ID = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LORG');
+  var adminId = ID.getRange('F1').getValue();
+  var dom = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CUSER');
+  var school = dom.getRange('X1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();
+  var pageToken; var me = adminId; var pageToken = null, orgs = []; var arr = [];
+  do{
+    var org = AdminDirectory.Chromeosdevices.list(me,{domain: school, 
+      pageToken: pageToken, pageSize:100});
+    pageToken = org.nextPageToken;
+    orgs = orgs.concat(org.chromeosdevices);  
+    } while (pageToken);
+      for (i = 0; i < orgs.length; i++) {
+        var or = orgs[i]; 
+        var ids = or.deviceId;
+        var ser = or.serialNumber;
+        var user = or.annotatedUser;
+        var mac = or.macAddress;
+        var mod = or.model;
+        var path = or.orgUnitPath;
+        var note = or.notes;
+        var ver = or.osVersion;
+        var use = or.recentUsers; 
+        var stat = or.status;
+        arr.push([ids,ser,user,mac,mod,path,note,ver,use,stat]); 
+      }
+      s.getRange(2, 2, arr.length, arr[0].length).setValues(arr);  
+}
+
+
+
+function moveChromeOsSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LCB');
+  var ID = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LORG');
+  var adminId = ID.getRange('F1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();  
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;   
+    if (i === 'x') {
+      try{  
+        var cb = {deviceIds: [d[x][1]]};  
+        var orgUnitPath = d[x][6];
+        var me = adminId;
+        var org = AdminDirectory.Chromeosdevices.moveDevicesToOu(cb, me, orgUnitPath);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+      } catch (e){continue;}  
+    } 
+  }  
+}
+
+
+
+function editChromeOsSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LCB');
+  var ID = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LORG');
+  var adminId = ID.getRange('F1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows(); 
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;   
+    if (i === 'x') {
+      try{  
+        var resource = {annotatedUser: d[x][3], notes: d[x][7], orgUnitPath: d[x][6]} 
+        var me = adminId;
+        var deviceId = d[x][1];
+        var org = AdminDirectory.Chromeosdevices.update(resource, me, deviceId);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}  
+    } 
+  }  
+}
+
+
+
+function suspendChromeOsSCHOOL() {
+  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LCB');
+  var ID = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LORG');
+  var adminId = ID.getRange('F1').getValue();
+  var r = s.getDataRange(); var d = r.getValues(); var nr = r.getNumRows();  
+  for (x=1; x<nr; x++){ var i = d[x][0]; var l = 1 + x;  
+    if (i === 'x') {
+      try{  
+        var resource = {action: d[x][11], deprovisionReason: d[x][12]} 
+        /* action can take: "deprovision","disable","reenable". deprovisionReason can
+         take "different_model_replacement","retiring_device","same_model_replacement"
+         You can comment out deprovisionReason if you are only going to use action.
+        */
+        var me = admimId;
+        var deviceId = d[x][1];   
+        var org = AdminDirectory.Chromeosdevices.action(resource, me, deviceId);
+        var end = s.getRange(l, 1).setValue(''); 
+        Utilities.sleep(1000);
+         } catch (e){continue;}  
+    } 
+  }  
+}
+
+
+
+function listCals() {
+    var s = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var r = s.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+    var cal = CalendarApp.getAllCalendars();
+    var arr = [];
+    for (x=0; x<cal.length; x++){ var i = d[x][0]; var l = 1 + x;
+          var ca = cal[x];
+          var id = ca.getId();
+          var name = ca.getName();
+          arr.push([id,name]); 
+        }
+    s.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+}
+
+
+
+function editCals() {
+    var s = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var r = s.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+    for (x=0; x<n; x++) {var i=d[x][0]; var l = 1 + x; var color = d[x][3];
+          if(i==''){continue;} else if (i=='D'){ 
+             var cal = CalendarApp.getCalendarById(d[x][1]); 
+             var hid = cal.setHidden(true); 
+             var sel = cal.setSelected(false);
+             var col = cal.setColor(color);
+             var end = s.getRange(l, 1).setValue(''); 
+               Utilities.sleep(2000);  
+          }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+function onOpen() {
+  var s = SpreadsheetApp.getUi().createMenu('Scripts');
+  s.addItem('CREATE COURSE', 'createCoursesSCHOOL').addToUi();
+  s.addItem('LIST COURSES', 'listCoursesSCHOOL').addToUi();
+  s.addItem('UPDATE COURSE', 'updateDataSCHOOL').addToUi();
+  s.addItem('CHANGE COURSE STATE', 'changeStateSCHOOL').addToUi();
+  s.addItem('DELETE COURSE', 'deleteCoursesSCHOOL').addToUi();
+  s.addItem('ADD ST/TE', 'addStudentsTeachersSCHOOL').addToUi();
+  s.addItem('DELETE STUDENTS', 'deleteStudentsSCHOOL').addToUi();
+  s.addItem('DELETE TEACHERS', 'deleteTeachersSCHOOL').addToUi();
+  s.addItem('ADD ASSIGNMENTS', 'addAssignmentsSCHOOL').addToUi();
+  s.addItem('LIST ASSIGNMENTS', 'listAssignmentsSCHOOL').addToUi();
+  s.addItem('LIST ALL ASSIGNMENTS', 'listAllAssignmentsSCHOOL').addToUi();
+  s.addItem('DELETE ASSIGNMENTS', 'deleteAssignmentsSCHOOL').addToUi();
+  s.addItem('CHANGE OWNER', 'changeOwnerSCHOOL').addToUi();
+  s.addItem('LIST STUDENTS', 'listStudentsSCHOOL').addToUi();
+  s.addItem('LIST PROFES', 'listProfesSCHOOL').addToUi();
+  s.addItem('LIST USERS', 'listUsersSCHOOLC').addToUi();
+  
+  s.addItem('COPY FORMS O6', 'copyFormsOver6SCHOOL').addToUi();
+  s.addItem('ADD PROGRAM ASSIGNMENTS O6', 'addAssignmentsOver6SCHOOL').addToUi();
+  s.addItem('COPY SYNOPSIS', 'copySynopsisSCHOOL').addToUi();
+  s.addItem('SCHEDULE CLOSE FORMS', 'trigcloseFormsSCHOOL').addToUi();
+  
+  s.addItem('CREATE COURSES O6', 'createClassesOver6SCHOOL').addToUi();
+  s.addItem('DELETE STUDENTS O6', 'deleteStudentsOver6SCHOOL').addToUi();
+  s.addItem('GRADES FORMS TO CLASSROOM', 'putFormGradeSCHOOL').addToUi();
+  s.addItem('GRADES CLASSROOM TO SHEETS', 'pullGradesSCHOOL').addToUi();
+  s.addItem('CHANGE OWNER O6', 'changeOwnerOver6SCHOOL').addToUi();
+  s.addItem('ADD STUDENTS O6', 'studentsOver6SCHOOL').addToUi();
+  s.addItem('ADD STUDENTS O6', 'addTeachersOverSixSCHOOL').addToUi();
+}
+
+
+
+
+function createCoursesSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('CLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x;
+  if(i==''){continue;} else if (i=='D'){   
+    var course = Classroom.newCourse(); 
+    course.name = d[x][1];
+    course.section = d[x][2];
+    course.room = d[x][3];
+    course.descriptionHeading = d[x][4];
+    course.description = d[x][5];
+    course.ownerId = d[x][6];
+    course.courseState = d[x][7]; 
+    course = Classroom.Courses.create(course);
+    var c = course.id;
+    var id = sh.getRange(d[x][12]).setValue(c); 
+    var end = sh.getRange(l, 1).setValue('');  
+    var color = sh.getRange(l, 1,1,sh.getLastColumn()).setBackground('#d0e0e3'); 
+    }
+  }
+}
+
+
+
+function listCoursesSCHOOL() {
+var ss = SpreadsheetApp.getActiveSpreadsheet(); var sh = ss.getSheetByName('LISTS');
+var response = Classroom.Courses.list(); var courses = response.courses; var arr=[];
+  for (i = 0; i < courses.length; i++) {
+    var course = courses[i];
+    var ids = course.id;
+    var title = course.name;
+    var sec = course.section;
+    var room = course.room;
+    var head = course.descriptionHeading;
+    var des = course.description;
+    var state = course.courseState;
+    var owner = course.ownerId; 
+    arr.push([ids,title,sec,room,head,des,state,owner]);
+  }
+  sh.getRange(2, 1, arr.length, arr[0].length).setValues(arr);   
+}
+
+
+
+function updateDataSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('CLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='D'){   
+      try {
+        var course = Classroom.Courses.get(d[x][8]);
+        course.name = d[x][1];
+        course.section = d[x][2];
+        course.room = d[x][3];
+        course.descriptionHeading = d[x][4];
+        course.description = d[x][5];
+        Classroom.Courses.update(course, d[x][8]);
+          } catch(e){continue;}
+    var end = sh.getRange(l, 1).setValue('');  
+    var color = sh.getRange(l, 1,1,sh.getLastColumn()).setBackground('#d0e0e3'); 
+    }
+  }
+}
+
+
+
+function changeStateSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('CLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='D'){   
+      try {
+        var course = Classroom.Courses.get(d[x][8]);
+        course.courseState = d[x][7];
+        Classroom.Courses.update(course, d[x][8]);
+        var end = sh.getRange(l, 1).setValue('');  
+        var color = sh.getRange(l, 1,1,sh.getLastColumn()).setBackground('#d0e0e3');
+          } catch (e){continue;}
+    }
+  }
+}
+  
+
+
+function deleteCoursesSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('CLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;}  
+    else if (i=='D'){  
+      Classroom.Courses.remove(d[x][8]); 
+      var end = sh.getRange(l, 1).setValue('');  
+      var color = sh.getRange(l, 1,1,sh.getLastColumn()).setBackground('#d0e0e3'); 
+    }
+  }
+}
+
+
+
+function addStudentsTeachersSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('CLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='D'){ 
+      var s = SpreadsheetApp.getActiveSpreadsheet(); 
+      var sh2 = s.getSheetByName('STUDENTS');
+      var lr = sh2.getLastRow();
+      var a = sh2.getRange(d[x][10] + lr).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        if (b[k] !== ""){  
+          try {  
+            Classroom.Courses.Students.create({userId: list,}, d[x][8]);  
+          } catch (e){continue;} 
+        }       
+      }
+      var s = SpreadsheetApp.getActiveSpreadsheet();
+      var sh2 = s.getSheetByName('PROFES');
+      var lr = sh2.getLastRow();
+      var a = sh2.getRange(d[x][11] + lr).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        if (b[k] !== ""){ 
+          try {   
+            Classroom.Courses.Teachers.create({userId: list,}, d[x][8]);
+          } catch (e){continue;}
+        }
+      }  
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  var color = sh.getRange(l, 1,1,sh.getLastColumn()).setBackground('#d0e0e3');                    
+  }
+}
+
+
+
+function deleteStudentsSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('CLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='D'){    
+      var s = SpreadsheetApp.getActiveSpreadsheet();
+      var sh2 = s.getSheetByName('STUDENTS');
+      var lr = sh2.getLastRow();
+      var a = sh2.getRange(d[x][10] + lr).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        if (b[k] !== ""){ 
+          try {  
+            Classroom.Courses.Students.remove(d[x][8], list);
+          } catch (e){continue;}
+        }
+      } 
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  var color = sh.getRange(l, 1,1,sh.getLastColumn()).setBackground('#d0e0e3');                 
+  }
+}
+
+
+
+function deleteTeachersSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('CLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='D'){    
+      var s = SpreadsheetApp.getActiveSpreadsheet();
+      var sh2 = s.getSheetByName('PROFES');
+      var lr = sh2.getLastRow();
+      var a = sh2.getRange(d[x][10] + lr).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        Logger.log(list);
+        if (b[k] !== ""){ 
+          try {  
+            Classroom.Courses.Teachers.remove(d[x][8], list);
+          }
+          catch (e){continue;}
+        }
+      }
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  var color = sh.getRange(l, 1,1,sh.getLastColumn()).setBackground('#d0e0e3');                   
+  }
+}
+
+
+
+function addAssignmentsSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('ASSIGNMENTS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x;if(i==''){continue;}                   
+    else if (i=='DD'){   
+      var assignment = {
+        workType: d[x][4], state: d[x][5], title: d[x][6],description: d[x][7],
+        materials: [{ 
+          driveFile: { driveFile: {id: d[x][8], title: d[x][10]}, shareMode: d[x][9] } 
+        }],
+        maxPoints: d[x][11],scheduledTime: d[x][14], 
+        dueDate: { year: d[x][15], month: d[x][16], day: d[x][17]},
+        dueTime: {hours: d[x][18], minutes: d[x][19], seconds: d[x][20]},
+      }; 
+      var a = Classroom.Courses.CourseWork.create(assignment, d[x][1]);
+      var c = a.id;
+      var id = sh.getRange(d[x][3]).setValue(c);   
+    }
+  }
+}
+
+
+function listAssignmentsSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('CLASS');  
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1 + x; if(i==''){continue;} 
+    else if (i=='D'){
+      try {                   
+        var ss = SpreadsheetApp.getActiveSpreadsheet();
+        var sh2 = ss.getSheetByName('TAREAS');
+        var clas = Classroom.Courses.CourseWork.list(d[x][8]);
+        var w = clas.courseWork;
+        var arr=[];
+        for (q = 0; q < w.length; q++) {
+          var c = w[q];
+          var ids = c.id;
+          var cour = c.courseId  
+          var type = c.workType;
+          var ti = c.title;
+          var des = c.description;
+          var st = c.state;
+          var sch = c.scheduledTime;
+          var due = c.dueDate;
+          var cre = c.creatorUserId;
+          arr.push([ids,cour,type,ti,des,st,sch,due,cre]);
+        }
+      } catch (e){continue;}    
+  
+    sh2.getRange(2, 1, arr.length, arr[0].length).setValues(arr);
+    var end = sh.getRange(l, 1).setValue('');  
+    var color = sh.getRange(l, 1,1,sh.getLastColumn()).setBackground('#d0e0e3'); 
+    }
+  }
+}
+
+
