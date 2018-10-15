@@ -1,34 +1,6 @@
 // ROUGH DRAFT
 
 
-function onOpen(){ 
-var s = SpreadsheetApp.getUi().createMenu('Scripts'); 
-s.addItem('CREATE USER', 'createUserCUMBRES').addToUi(); 
-s.addItem('LIST USERS', 'listUsersCUMBRES').addToUi();  
-s.addItem('UPDATE USER', 'updateUserCUMBRES').addToUi();
-s.addItem('CHANGE USER ORG', 'changeUserOrgCUMBRES').addToUi();  
-s.addItem('CHANGE USER PASS', 'updateUserPassCUMBRES').addToUi();
-s.addItem('ADD USER GROUP', 'addGroupMemberCUMBRES').addToUi();
-s.addItem('REMOVE USER GROUP', 'removeGroupMemberCUMBRES').addToUi();  
-s.addItem('SUSPEND USER', 'suspendUserCUMBRES').addToUi();
-s.addItem('CREATE GROUP', 'createGroupCUMBRES').addToUi();
-s.addItem('LIST GROUPS', 'listGroupCUMBRES').addToUi();
-s.addItem('LIST USERS GROUPS', 'listUsersInGroupCUMBRES').addToUi();  
-s.addItem('EDIT GROUP CONFIG', 'editGroupConfigCUMBRES').addToUi();
-s.addItem('EDIT GROUP INFO', 'editGroupInfoCUMBRES').addToUi();
-s.addItem('DELETE GROUP','deleteGroupCUMBRES').addToUi();  
-s.addItem('CREATE ORG', 'createOrgCUMBRES').addToUi();
-s.addItem('LIST ORGS', 'listOrgCUMBRES').addToUi();  
-s.addItem('EDIT ORG', 'editOrgCUMBRES').addToUi();
-s.addItem('DELETE ORG', 'deleteOrgCUMBRES').addToUi(); 
-s.addItem('LIST CHROMEOS', 'listChromeOsCUMBRES').addToUi();
-s.addItem('MOVE CHROMEOS', 'moveChromeOsCUMBRES').addToUi();  
-s.addItem('EDIT CHROMEOS', 'editChromeOsCUMBRES').addToUi();
-s.addItem('SUSPEND CHROMEOS', 'suspendChromeOsCUMBRES').addToUi();   
-  
-}
-
-
 function createTemplate(){
 var f = DriveApp.createFolder('DOMAIN ADMIN').getId();
 var s = SpreadsheetApp.create('USERS CLASSES CHROMEBOKS SCHOOL').getId();
@@ -82,7 +54,7 @@ var sh = SpreadsheetApp.openById(s);
     cu.getRange('AA2').setFormula('=IF(Z2<>"",LOWER(TRIM(CONCATENATE(SUBSTITUTE(RIGHT(Z2,10)," ",""),$X$1))),"")');
     cu.getRange('A2:AD2').autoFill(cu.getRange('A2:AD1000'),
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
-    
+   
 
   var lu = sh.insertSheet().activate(); 
     lu.setName('LUSER').setFrozenRows(1); lu.getRange('1:1').setFontWeight('bold')
@@ -99,8 +71,8 @@ var sh = SpreadsheetApp.openById(s);
       .setAllowInvalid(false).requireValueInList(['true','false'],true).build()); 
     lu.getRange('J2').setDataValidation(SpreadsheetApp.newDataValidation()
       .setAllowInvalid(false).requireValueInList(['true','false'],true).build());  
-    lu.getRange.('H3').setFormula('=$H$2');lu.getRange.('I3').setFormula('=$I$2');
-    lu.getRange.('J3').setFormula('=$J$2');
+    lu.getRange('H3').setFormula('=$H$2');lu.getRange('I3').setFormula('=$I$2');
+    lu.getRange('J3').setFormula('=$J$2');
     lu.getRange('K1').setValue('GROUPTO'); lu.getRange('L1').setValue('GROUPFROM');
     lu.getRange('H3:J3').autoFill(lu.getRange('H3:J1000'),
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
@@ -192,6 +164,25 @@ var sh = SpreadsheetApp.openById(s);
     lc.setColumnWidth(13,250);     
     lc.setColumnWidth(10,100); lc.setColumnWidth(11,250); lc.deleteColumns(14,13);
     lc.deleteRows(500,500); lc.setFrozenColumns(1);
+  
+  var ccl = sh.insertSheet().activate();
+    ccl.setName('CCLASS').setFrozenRows(1); ccl.getRange('1:1').setFontWeight('bold')
+      .setHorizontalAlignment('center').setBackground('#00ff00');
+    ccl.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
+    ccl.getRange('A1').setValue('DO'); ccl.getRange('B1').setValue('ID'); 
+    ccl.getRange('C1').setValue('CLASS'); ccl.getRange('D1').setValue('SECTION'); 
+    ccl.getRange('E1').setValue('ROOM'); ccl.getRange('F1').setValue('HEADING'); 
+    ccl.getRange('G1').setValue('DESCRIPT'); ccl.getRange('H1').setValue('STATE');
+    ccl.getRange('I1').setValue('OWNER');  
+    ccl.setColumnWidth(1,40); ccl.setColumnWidth(2,100); ccl.setColumnWidth(3,250);
+    ccl.setColumnWidth(4,250); ccl.setColumnWidth(5,100); ccl.setColumnWidth(6,100)
+    ccl.setColumnWidth(7,100); ccl.setColumnWidth(8,100); ccl.setColumnWidth(9,60);
+    ccl.deleteColumns(10,16);
+    ccl.getRange('H2').setDataValidation(SpreadsheetApp.newDataValidation()
+      .setAllowInvalid(false).requireValueInList(['ACTIVE','ARCHIVED'],true).build());  
+    ccl.getRange('H2').autoFill(ccl.getRange('H2:H521'),
+      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
+    ccl.deleteRows(522,478); ccl.setFrozenColumns(1);
 
   var lcl = sh.insertSheet().activate();
     lcl.setName('LCLASS').setFrozenRows(1); lcl.getRange('1:1').setFontWeight('bold')
@@ -200,52 +191,20 @@ var sh = SpreadsheetApp.openById(s);
     lcl.getRange('A1').setValue('DO'); lcl.getRange('B1').setValue('ID'); 
     lcl.getRange('C1').setValue('CLASS'); lcl.getRange('D1').setValue('SECTION');
     lcl.getRange('E1').setValue('ROOM'); lcl.getRange('F1').setValue('HEADING'); 
-    lcl.getRange('G1').setValue('DESCRIPT'); lcl.getRange('H1').setValue('OWNER ID'); 
-    lcl.getRange('I1').setValue('OWNER'); lcl.getRange('J1').setValue('CODE'); 
-    lcl.getRange('K1').setValue('LINK'); lcl.getRange('L1').setValue('FOLDER'); 
-    lcl.getRange('M1').setValue('CREATED'); lcl.getRange('N1').setValue('EDITED'); 
+    lcl.getRange('G1').setValue('DESCRIPT'); lcl.getRange('H1').setValue('STATE'); 
+    lcl.getRange('I1').setValue('CODE'); lcl.getRange('J1').setValue('LINK'); 
+    lcl.getRange('K1').setValue('FOLDER'); lcl.getRange('L1').setValue('CREATED'); 
+    lcl.getRange('M1').setValue('EDITED'); lcl.getRange('N1').setValue('OWNER ID'); 
+    lcl.getRange('O1').setValue('OWNER'); 
     lcl.setColumnWidth(1,40); lcl.setColumnWidth(2,100); lcl.setColumnWidth(3,250);
     lcl.setColumnWidth(4,250); lcl.setColumnWidth(5,100); lcl.setColumnWidth(6,100); 
-    lcl.setColumnWidth(7,100); lcl.setColumnWidth(8,250); lcl.setColumnWidth(9,60);
+    lcl.setColumnWidth(7,100); lcl.setColumnWidth(8,100); lcl.setColumnWidth(9,100);
     lcl.setColumnWidth(10,100); lcl.setColumnWidth(11,100); lcl.setColumnWidth(12,100);
-    lcl.setColumnWidth(13,100); lcl.deleteColumns(14,13); 
-    lcl.deleteRows(550,450); lcl.setFrozenColumns(1);
+    lcl.setColumnWidth(13,100); lcl.setColumnWidth(14,100); lcl.setColumnWidth(15,100);
+    lcl.deleteColumns(16,11); lcl.deleteRows(550,450); lcl.setFrozenColumns(1);
     lcl.getRange('I2').setFormula('=IFERROR(INDEX(LUSER!D$2:D,MATCH(H2,LUSER!G$2:G,0)),"")');
     lcl.getRange('I2').autoFill(lcl.getRange('I2:I520'),
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
-    
-  var ccl = sh.insertSheet().activate();
-    ccl.setName('CCLASS').setFrozenRows(1); ccl.getRange('1:1').setFontWeight('bold')
-      .setHorizontalAlignment('center').setBackground('#00ff00');
-    ccl.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
-    ccl.getRange('A1').setValue('DO');  ccl.getRange('B1').setValue('ID'); 
-    ccl.getRange('C1').setValue('CLASS'); ccl.getRange('D1').setValue('SECTION');
-    ccl.getRange('E1').setValue('ROOM'); ccl.getRange('F1').setValue('HEADING'); 
-    ccl.getRange('G1').setValue('DESCRIPTION'); ccl.getRange('H1')
-      .setValue('OWNER'); ccl.getRange('H1').setValue('STATE'); 
-    ccl.getRange('I1').setValue('R1'); ccl.getRange('J1').setValue('R2'); 
-    ccl.getRange('K1').setValue('R3'); ccl.getRange('L1').setValue('R4');
-    ccl.getRange('M1').setValue('R5'); 
-    ccl.setColumnWidth(1,40); ccl.setColumnWidth(2,100); ccl.setColumnWidth(3,250);
-    ccl.setColumnWidth(4,250); ccl.setColumnWidth(5,100); ccl.setColumnWidth(6,100)
-    ccl.setColumnWidth(7,100); ccl.setColumnWidth(8,100); ccl.setColumnWidth(9,60);
-    ccl.setColumnWidth(10,60); ccl.setColumnWidth(11,60); ccl.setColumnWidth(12,60);
-    ccl.setColumnWidth(13,90); ccl.deleteColumns(14,13);
-    ccl.getRange('I2:I3').setValues([[1],[2]]); ccl.getRange('I2:I3').activate(); 
-    ccl.getActiveRange().autoFill(ccl.getRange('I2:I521'),
-      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
-    ccl.getRange('J2:J3').setValues([['A3'],['A4']]);
-    ccl.getRange('J2:J3').activate();
-    ccl.getActiveRange().autoFill(ccl.getRange('J2:J521'),
-      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
-    ccl.getRange('K2:K3').setValues([['B3'],['B4']]);
-    ccl.getRange('K2:K3').activate();
-    ccl.getActiveRange().autoFill(ccl.getRange('K2:K521'),
-      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
-    ccl.getRange('L2').setValue(4);
-    ccl.getRange('L2').autoFill(ccl.getRange('L2:L521'),
-      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
-    ccl.deleteRows(522,478); ccl.setFrozenColumns(1);
     
   var ca = sh.insertSheet().activate();
     ca.setName('CASSIGN').setFrozenRows(1); ca.getRange('1:1').setFontWeight('bold')
@@ -306,16 +265,18 @@ var sh = SpreadsheetApp.openById(s);
     ca.getRange('A2:X2').autoFill(ca.getRange('A2:X1000'),
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
     ca.deleteRows(523,477); ca.setFrozenColumns(1); 
- 
+
+
+
   var la = sh.insertSheet().activate();
     la.setName('LASSIGN').setFrozenRows(1); la.getRange('1:1').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00');
     la.getRange('A:A').setFontWeight('bold').setHorizontalAlignment('center');
     la.getRange('A1').setValue('DO');  la.getRange('B1').setValue('CLASS'); 
+    la.getRange('H1').setValue('CREATOR'); la.getRange('G1').setValue('CREATOR ID');  
     la.getRange('C1').setValue('ID CLASS'); la.getRange('D1').setValue('ID ASSIGN'); 
     la.getRange('E1').setValue('ASSIGN'); la.getRange('F1').setValue('DESCRIPT'); 
-    la.getRange('G1').setValue('CREATOR ID'); la.getRange('H1').setValue('CREATOR'); 
-    la.getRange('I1').setValue('STATE');  la.getRange('J1').setValue('LINK'); 
+    la.getRange('I1').setValue('STATE'); la.getRange('J1').setValue('LINK'); 
     la.getRange('K1').setValue('CREATED'); la.getRange('L1').setValue('EDITED'); 
     la.getRange('M1').setValue('SCHEDULED');  la.getRange('N1').setValue('DUE DATE'); 
     la.getRange('O1').setValue('DUE TIME');  la.getRange('P1').setValue('WORKTYPE'); 
@@ -330,26 +291,19 @@ var sh = SpreadsheetApp.openById(s);
     la.getRange('H2').autoFill(la.getRange('H2:H1000'),
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES); 
 
-  var ls = sh.insertSheet().activate();
-   ls.setName('LSTUDENT').setFrozenRows(3); ls.getRange('1:3').setFontWeight('bold')
-      .setHorizontalAlignment('center').setBackground('#00ff00');
-    ls.insertColumns(26,300); ls.setColumnWidths(1,326,250); 
-    ls.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
-    ls.deleteRows(350,650);
-
-  var cs = sh.insertSheet().activate(); cs.setName('CSTUDENT').setFrozenRows(3); 
+  var cs = sh.insertSheet().activate(); cs.setName('CSTUD').setFrozenRows(3); 
     cs.getRange('1:3').setFontWeight('bold').setHorizontalAlignment('center')
       .setBackground('#00ff00');
     cs.insertColumns(26,300); cs.setColumnWidths(1,326,250);  
     cs.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
     cs.deleteRows(350,650);
-
-  var lp = sh.insertSheet().activate();
-    lp.setName('LPROF').setFrozenRows(3); lp.getRange('1:3').setFontWeight('bold')
+ 
+  var ls = sh.insertSheet().activate();
+   ls.setName('LSTUD').setFrozenRows(3); ls.getRange('1:3').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00');
-    lp.insertColumns(26,300); lp.setColumnWidths(1,326,250);  
-    lp.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
-    lp.deleteRows(350,650);
+    ls.insertColumns(26,300); ls.setColumnWidths(1,326,250); 
+    ls.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
+    ls.deleteRows(350,650);
 
   var cp = sh.insertSheet().activate();
     cp.setName('CPROF').setFrozenRows(3); cp.getRange('1:3').setFontWeight('bold')
@@ -357,6 +311,13 @@ var sh = SpreadsheetApp.openById(s);
     cp.insertColumns(26,300); cp.setColumnWidths(1,326,250); 
     cp.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
     cp.deleteRows(350,650);
+
+  var lp = sh.insertSheet().activate();
+    lp.setName('LPROF').setFrozenRows(3); lp.getRange('1:3').setFontWeight('bold')
+      .setHorizontalAlignment('center').setBackground('#00ff00');
+    lp.insertColumns(26,300); lp.setColumnWidths(1,326,250);  
+    lp.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
+    lp.deleteRows(350,650);
 
   var cal = sh.insertSheet().activate(); 
     cal.setName('CALENDAR').setFrozenRows(1); cal.getRange('1:1').setFontWeight('bold')
@@ -369,35 +330,47 @@ var sh = SpreadsheetApp.openById(s);
     cal.setColumnWidth(4,100); cal.setFrozenColumns(1);
 
   var ll = sh.insertSheet().activate();
-    ll.setName('CONSTRUCT'); ll.getRange('B1').setValue('A'); ll.getRange('B2')
-      .setFormula("=CHAR(CODE(B1)+1)"); 
-    ll.getRange('B2').autoFill(ll.getRange('B2:B26'), 
+    ll.setName('CONSTRUCT'); ll.getRange('B2').setValue('A'); ll.getRange('B3')
+      .setFormula("=CHAR(CODE(B2)+1)"); 
+    ll.getRange('B3').autoFill(ll.getRange('B3:B27'), 
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);    
-    ll.getRange('B1:B520').activate();
-    ll.getRange('B1:B26').copyTo(ll.getActiveRange(), 
+    ll.getRange('B2:B521').activate();
+    ll.getRange('B2:B27').copyTo(ll.getActiveRange(), 
       SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
-    ll.getRange('A27:A52').setValue('A'); ll.getRange('A53:A78').setValue('B');
-    ll.getRange('A79:A104').setValue('C'); ll.getRange('A105:A130').setValue('D');
-    ll.getRange('A131:A156').setValue('E'); ll.getRange('A157:A182').setValue('F');
-    ll.getRange('A183:A208').setValue('G'); ll.getRange('A209:A234').setValue('H');
-    ll.getRange('A235:A260').setValue('I'); ll.getRange('A261:A286').setValue('J');
-    ll.getRange('A287:A312').setValue('K'); ll.getRange('A313:A338').setValue('L');
-    ll.getRange('A339:A364').setValue('M'); ll.getRange('A365:A390').setValue('N');
-    ll.getRange('A391:A416').setValue('O'); ll.getRange('A417:A442').setValue('P');
-    ll.getRange('A443:468').setValue('Q'); ll.getRange('A469:A494').setValue('R');
-    ll.getRange('A495:A520').setValue('S'); ll.getRange('C1:C520').setValue('3');
-    ll.getRange('I12').setValue('BMS'); ll.getRange('J12').setValue('C04d40k8m'); 
-    ll.getRange('I13').setValue('CADC'); ll.getRange('J13').setValue('C03xi6djv'); 
-    ll.getRange('I14').setValue('JFKL'); ll.getRange('J14').setValue('C039ricr9'); 
-    ll.getRange('I15').setValue('JJIR'); ll.getRange('J15').setValue('C03w4ojwv'); 
-    ll.getRange('D1:D520').setValue(':'); var alfa2 = ll.getRange('A1:A520').getValues();
-    ll.getRange('E1:E520').setValues(alfa2); var alfa3 = ll.getRange('B1:B520').getValues(); 
-    ll.getRange('F1:F520').setValues(alfa3); ll.getRange('G1:G520').setValue('500');
-    ll.getRange('H1').setFormula('=CONCATENATE(A1:G1)');
-    ll.getRange('H1').autoFill(ll.getRange('H1:H520'), 
+    ll.getRange('A28:A53').setValue('A'); ll.getRange('A54:A79').setValue('B');
+    ll.getRange('A80:A105').setValue('C'); ll.getRange('A106:A131').setValue('D');
+    ll.getRange('A132:A157').setValue('E'); ll.getRange('A158:A183').setValue('F');
+    ll.getRange('A184:A209').setValue('G'); ll.getRange('A210:A235').setValue('H');
+    ll.getRange('A236:A261').setValue('I'); ll.getRange('A262:A287').setValue('J');
+    ll.getRange('A288:A313').setValue('K'); ll.getRange('A314:A339').setValue('L');
+    ll.getRange('A340:A365').setValue('M'); ll.getRange('A366:A391').setValue('N');
+    ll.getRange('A392:A417').setValue('O'); ll.getRange('A419:A444').setValue('P');
+    ll.getRange('A444:469').setValue('Q'); ll.getRange('A470:A495').setValue('R');
+    ll.getRange('A496:A521').setValue('S'); ll.getRange('C2:C521').setValue('4'); 
+    ll.getRange('D2:D521').setValue(':'); var alfa2 = ll.getRange('A2:A521').getValues();
+    ll.getRange('E2:E521').setValues(alfa2); var alfa3 = ll.getRange('B2:B521').getValues(); 
+    ll.getRange('F2:F521').setValues(alfa3); ll.getRange('G2:G521').setValue('500');
+    ll.getRange('H2').setFormula('=CONCATENATE(A2:G2)');
+    ll.getRange('H2').autoFill(ll.getRange('H2:H521'), 
       SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
-    var alfa4 = ll.getRange('H1:H520').getValues();
-    ccl.getRange('M2:M521').setValues(alfa4); ll.hideSheet();
+    var alfa4 = ll.getRange('H2:H521').getValues(); ll.hideSheet();
+/*
+
+    ccl.getRange('J1').setValue('R1'); 
+    ccl.getRange('K1').setValue('R2'); ccl.getRange('L1').setValue('R3'); 
+    ccl.getRange('M1').setValue('R4'); ccl.getRange('N1').setValue('R5'); 
+    ccl.getRange('J2:J3').setValues([['A3'],['A4']]);
+    ccl.getRange('J2:J3').activate();
+    ccl.getActiveRange().autoFill(ccl.getRange('J2:J521'),
+      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+    ccl.getRange('K2:K3').setValues([['B3'],['B4']]);
+    ccl.getRange('K2:K3').activate();
+    ccl.getActiveRange().autoFill(ccl.getRange('K2:K521'),
+      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+    ccl.getRange('L2').setValue(4);
+    ccl.getRange('L2').autoFill(ccl.getRange('L2:L521'),
+      SpreadsheetApp.AutoFillSeries.DEFAULT_SERIES);
+*/
 }
 
 
@@ -897,6 +870,456 @@ function suspendChromeOsSCHOOL() {
          } catch (e){continue;}  
     } 
   }  
+}
+
+
+
+function createCoursesSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('CCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x;
+  if(i==''){continue;} else if (i=='x'){   
+    var course = Classroom.newCourse(); 
+    course.name = d[x][2];
+    course.section = d[x][3];
+    course.room = d[x][4];
+    course.descriptionHeading = d[x][5];
+    course.description = d[x][6];
+    course.courseState = d[x][7]; 
+    course.ownerId = d[x][8];
+    course = Classroom.Courses.create(course);
+    var c = course.id;
+    var id = sh.getRange(l, 2).setValue(c);  
+    var end = sh.getRange(l, 1).setValue('');  
+    }
+  }
+}
+
+
+
+function listCoursesSCHOOL() {
+var ss = SpreadsheetApp.getActiveSpreadsheet(); var sh = ss.getSheetByName('LCLASS');
+var response = Classroom.Courses.list(); var courses = response.courses; var arr=[];
+  for (i = 0; i < courses.length; i++) {
+    var course = courses[i];
+    var ids = course.id;
+    var title = course.name;
+    var sec = course.section;
+    var room = course.room;
+    var head = course.descriptionHeading;
+    var des = course.description;
+    var state = course.courseState;
+    var code = course.enrollmentCode;
+    var link = course.link;
+    var folder = course.teacherFolder;
+    var created = course.creationTime;
+    var edited = course.updateTime;
+    var owner = course.ownerId; 
+    arr.push([ids,title,sec,room,head,des,state,code,link,folder,created,edited,owner]);
+  }
+  sh.getRange(2, 2, arr.length, arr[0].length).setValues(arr);   
+}
+
+
+
+function updateDataSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){   
+      try {
+        var course = Classroom.Courses.get(d[x][1]);
+        course.name = d[x][2];
+        course.section = d[x][3];
+        course.room = d[x][4];
+        course.descriptionHeading = d[x][5];
+        course.description = d[x][6];
+        Classroom.Courses.update(course, d[x][1]);
+          } catch(e){continue;}
+    var end = sh.getRange(l, 1).setValue('');  
+    }
+  }
+}
+
+
+
+function changeStateSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){   
+      try {
+        var course = Classroom.Courses.get(d[x][1]);
+        course.courseState = d[x][7];
+        Classroom.Courses.update(course, d[x][1]);
+        var end = sh.getRange(l, 1).setValue('');  
+          } catch (e){continue;}
+    }
+  }
+}
+
+
+
+function changeOwnerSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){   
+      try {
+        var course = {'ownerId': d[x][13]};
+        Classroom.Courses.patch(course, d[x][1], {'updateMask':'ownerId'});   
+          } catch(e){continue;}
+    var end = sh.getRange(l, 1).setValue('');  
+    }
+  }
+}
+
+
+
+function deleteCoursesSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){  
+      Classroom.Courses.remove(d[x][1]); 
+      var end = sh.getRange(l, 1).setValue('');  
+    }
+  }
+}
+
+
+
+// NEEDS TO BE TESTED
+
+function addStudentsSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+var sh2 = s.getSheetByName('CONSTRUCT');
+var r2 = sh2.getDataRange(); var n2 = r2.getNumRows(); var d2 = r2.getValues();
+var sh3 = s.getSheetByName('CSTUD');
+var r3 = sh3.getDataRange(); var n3 = r3.getNumRows(); var d3 = r3.getValues();
+var lr = sh3.getLastRow();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){    
+      var a = sh3.getRange(d2[x][10] + lr).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        if (b[k] !== ""){ 
+          try {  
+            Classroom.Courses.Students.create({userId: list,}, d[x][1]);  
+          } catch (e){continue;}
+        }
+      } 
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  }
+}
+
+
+
+
+function addProfesSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+var sh2 = s.getSheetByName('CONSTRUCT');
+var r2 = sh2.getDataRange(); var n2 = r2.getNumRows(); var d2 = r2.getValues();
+var sh3 = s.getSheetByName('CPROF');
+var r3 = sh3.getDataRange(); var n3 = r3.getNumRows(); var d3 = r3.getValues();
+var lr = sh3.getLastRow();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){    
+      var a = sh3.getRange(d2[x][10] + lr).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        if (b[k] !== ""){ 
+          try {  
+            Classroom.Courses.Teachers.create({userId: list,}, d[x][1]);
+          } catch (e){continue;}
+        }
+      } 
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  }
+}
+
+
+
+function addStudentsTeachersSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+var sh2 = s.getSheetByName('CONSTRUCT');
+var r2 = sh2.getDataRange(); var n2 = r2.getNumRows(); var d2 = r2.getValues();
+var sh3 = s.getSheetByName('CPROF');
+var r3 = sh3.getDataRange(); var n3 = r3.getNumRows(); var d3 = r3.getValues();
+var lr = sh3.getLastRow();
+var sh4 = s.getSheetByName('CSTUD');
+var r4 = sh4.getDataRange(); var n4 = r4.getNumRows(); var d4 = r4.getValues();
+var lr2 = sh4.getLastRow();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){    
+      var a = sh3.getRange(d2[x][10] + lr).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        if (b[k] !== ""){ 
+          try {  
+            Classroom.Courses.Teachers.create({userId: list,}, d[x][1]);
+          } catch (e){continue;}
+        }
+      } 
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){    
+      var a = sh4.getRange(d2[x][10] + lr2).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        if (b[k] !== ""){ 
+          try {  
+            Classroom.Courses.Students.create({userId: list,}, d[x][1]);  
+          } catch (e){continue;}
+        }
+      } 
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  }
+}
+
+
+
+function listStudentsSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+var sh2 = s.getSheetByName('LSTUD');
+var r2 = sh2.getDataRange(); var n2 = r2.getNumRows(); var d2 = r2.getValues();
+var lr = sh2.getLastRow();
+var sh3 = s.getSheetByName('CONSTRUCT');
+var r3 = sh3.getDataRange(); var n3 = r3.getNumRows(); var d3 = r3.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){ 
+    var page = null; var t = []; var arr=[];
+    do{
+      var tea = Classroom.Courses.Students.list(d[x][1], {pageToken: page, pageSize:100});
+      page = tea.nextPageToken; t = t.concat(tea.students);  
+      } while(page); 
+        try {
+          for (i = 0; i < t.length; i++) {
+            var c = t[i]; var ids = c.profile; var em = ids.emailAddress; 
+            arr.push([em]);   
+          }
+        } catch (e){continue;} 
+  
+    sh2.getRange(d3[x][14], d3[x][15], arr.length, arr[0].length).setValues(arr);
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  }
+}
+
+
+
+function listProfesSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+var sh2 = s.getSheetByName('LPROF');
+var r2 = sh2.getDataRange(); var n2 = r2.getNumRows(); var d2 = r2.getValues();
+var lr = sh2.getLastRow();
+var sh3 = s.getSheetByName('CONSTRUCT');
+var r3 = sh3.getDataRange(); var n3 = r3.getNumRows(); var d3 = r3.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){ 
+    var page = null; var t = []; var arr=[];
+    do{
+      var tea = Classroom.Courses.Teachers.list(d[x][1], {pageToken: page, pageSize:100});
+      page = tea.nextPageToken; t = t.concat(tea.teachers);  
+      } while(page); 
+        try {
+          for (i = 0; i < t.length; i++) {
+            var c = t[i]; var ids = c.profile; var em = ids.emailAddress; 
+            arr.push([em]);   
+          }
+        } catch (e){continue;} 
+  
+    sh2.getRange(d3[x][14], d3[x][15], arr.length, arr[0].length).setValues(arr);
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  }
+}
+
+
+
+function deleteStudentsSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+var sh2 = s.getSheetByName('CONSTRUCT');
+var r2 = sh2.getDataRange(); var n2 = r2.getNumRows(); var d2 = r2.getValues();
+var sh3 = s.getSheetByName('LSTUD');
+var r3 = sh3.getDataRange(); var n3 = r3.getNumRows(); var d3 = r3.getValues();
+var lr = sh3.getLastRow();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){    
+      var a = sh3.getRange(d2[x][10] + lr).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        if (b[k] !== ""){ 
+          try {  
+            Classroom.Courses.Students.remove(d[x][1], list);
+          } catch (e){continue;}
+        }
+      } 
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  }
+}
+
+
+
+function deleteProfesSCHOOL() { 
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('LCLASS');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+var sh2 = s.getSheetByName('CONSTRUCT');
+var r2 = sh2.getDataRange(); var n2 = r2.getNumRows(); var d2 = r2.getValues();
+var sh3 = s.getSheetByName('LPROF');
+var r3 = sh3.getDataRange(); var n3 = r3.getNumRows(); var d3 = r3.getValues();
+var lr = sh3.getLastRow();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; 
+    if(i==''){continue;} else if (i=='x'){    
+      var a = sh3.getRange(d2[x][10] + lr).getValues();
+      var b = [].concat.apply([], a); 
+      for (k=0; k<a.length; k++){
+        var list = b[k];
+        if (b[k] !== ""){ 
+          try {  
+            Classroom.Courses.Teachers.remove(d[x][1], list);
+          } catch (e){continue;}
+        }
+      } 
+    }
+  var end = sh.getRange(l, 1).setValue('');  
+  }
+}
+
+
+
+function addAssignmentsSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('CASSIGN');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+var sh2 = s.getSheetByName('CONSTRUCT');
+var r2 = sh2.getDataRange(); var n2 = r2.getNumRows(); var d2 = r2.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; if(i==''){continue;}                   
+    else if (i=='x'){   
+      var assignment = {
+        workType: d[x][9], state: d[x][10], title: d[x][11], description: d[x][12],
+        materials: [{ 
+          driveFile: {driveFile: {id: d[x][4], title: d[x][6]}, shareMode: d[x][13]} }],
+        maxPoints: d[x][14], scheduledTime: d[x][16], 
+        dueDate: {year: d[x][18], month: d[x][19], day: d[x][20]},
+        dueTime: {hours: d[x][21], minutes: d[x][22], seconds: d[x][23]} }; 
+      var a = Classroom.Courses.CourseWork.create(assignment, d[x][1]);
+      var c = a.id;
+      var id = sh.getRange(d2[x][3]).setValue(c);   
+      var end = sh.getRange(l, 1).setValue('');  
+    }
+  }
+}
+
+
+
+function listAssignmentsSCHOOL() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('LCLASS'); var sh2 = s.getSheetByName('LASSIGN');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1 + x; if(i==''){continue;} 
+    else if (i=='x'){
+      try {                   
+        var clas = Classroom.Courses.CourseWork.list(d[x][1]);
+        var w = clas.courseWork; var arr=[];
+        for (q = 0; q < w.length; q++) {
+          var c = w[q];
+          var cre = c.creatorUserId;
+          var cour = c.courseId;  
+          var ids = c.id;
+          var ti = c.title;
+          var des = c.description;
+          var st = c.state;
+          var link = c.alternateLink;
+          var create = c.creationTime; 
+          var edit = c.updateTime; 
+          var sch = c.scheduledTime;
+          var due = c.dueDate;
+          var duet = c.dueTime;
+          var typ = c.workType;
+          var poi = c.maxPoints; 
+          arr.push([cre,cour,ids,ti,des,st,link,create,edit,sch,due,duet,typ,poi]);
+        }
+      } catch (e){continue;}     
+    sh2.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+    var end = sh.getRange(l, 1).setValue('');  
+    }
+  }
+}
+
+
+
+function listAllAssignmentsSHCOOL() {
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+var sh = s.getSheetByName('LCLASS'); var sh2 = s.getSheetByName('LASSIGN');
+var lr = sh.getRange('B2:B').getLastRow(); var aa = sh.getRange('B2:B' + lr).getValues();
+var a = aa.filter(String); var b = [].concat.apply([], a); 
+  for (i=0; i<b.length; i++){ var list = b[i]; var page = null; var t = []; var arr=[];
+    do{
+      var tea = Classroom.Courses.CourseWork.list(list, {pageToken: page, pageSize:100});
+      page = tea.nextPageToken; t = t.concat(tea.courseWork);  
+      } while(page);  
+        try {
+          var w = class.courseWork;
+          for (k = 0; k < w.length; k++) {
+            var c = w[k]; 
+            var cre = c.creatorUserId;
+            var cour = c.courseId;  
+            var ids = c.id;
+            var ti = c.title;
+            var des = c.description;
+            var st = c.state;
+            var link = c.alternateLink;
+            var create = c.creationTime; 
+            var edit = c.updateTime; 
+            var sch = c.scheduledTime;
+            var due = c.dueDate;
+            var duet = c.dueTime;
+            var typ = c.workType;
+            var poi = c.maxPoints; 
+            arr.push([cre,cour,ids,ti,des,st,link,create,edit,sch,due,duet,typ,poi]);
+            }
+          } catch (e){continue;} 
+        }
+    sh.getRange(2, 2, arr.length, arr[0].length).setValues(arr); 
+}
+
+
+
+function deleteAssignmentsCUMBRES() {
+var s = SpreadsheetApp.getActiveSpreadsheet(); 
+var sh = s.getSheetByName('LASSIGN');
+var r = sh.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x; if(i==''){continue;}                   
+  else if (i=='D'){
+    Classroom.Courses.CourseWork.remove(d[x][2], d[x][3]);
+  }
+  else if (i=='L'){
+    Classroom.Courses.CourseWork.remove(d[x][2], d[x][3]);
+  } 
+ }
+var end = sh.getRange(l, 1).setValue('');  
 }
 
 
