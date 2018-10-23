@@ -195,7 +195,7 @@ var r = sh1.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
   var ug = sh.insertSheet().activate();
     ug.setName('UGROUP').setFrozenRows(1); ug.getRange('1:1').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00'); 
-    ug.getRange('A1').setFormula('=TRANSPOSE(LGROUP!A2:A)'); 
+    ug.getRange('A1').setFormula('=TRANSPOSE(LGROUP!B2:B)'); 
     ug.insertColumns(26,600); ug.setColumnWidths(1,626,250);
     ug.deleteRows(350,650);
 
@@ -389,28 +389,28 @@ var r = sh1.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
   var cs = sh.insertSheet().activate(); cs.setName('CSTUD').setFrozenRows(3); 
     cs.getRange('1:3').setFontWeight('bold').setHorizontalAlignment('center')
       .setBackground('#00ff00');
-    cs.insertColumns(26,300); cs.setColumnWidths(1,326,250);  
+    cs.insertColumns(26,500); cs.setColumnWidths(1,326,250);  
     cs.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
     cs.deleteRows(350,650);
  
   var ls = sh.insertSheet().activate();
    ls.setName('LSTUD').setFrozenRows(3); ls.getRange('1:3').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00');
-    ls.insertColumns(26,300); ls.setColumnWidths(1,326,250); 
+    ls.insertColumns(26,500); ls.setColumnWidths(1,326,250); 
     ls.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
     ls.deleteRows(350,650);
 
   var cp = sh.insertSheet().activate();
     cp.setName('CPROF').setFrozenRows(3); cp.getRange('1:3').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00');
-    cp.insertColumns(26,300); cp.setColumnWidths(1,326,250); 
+    cp.insertColumns(26,500); cp.setColumnWidths(1,326,250); 
     cp.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
     cp.deleteRows(350,650);
 
   var lp = sh.insertSheet().activate();
     lp.setName('LPROF').setFrozenRows(3); lp.getRange('1:3').setFontWeight('bold')
       .setHorizontalAlignment('center').setBackground('#00ff00');
-    lp.insertColumns(26,300); lp.setColumnWidths(1,326,250);  
+    lp.insertColumns(26,500); lp.setColumnWidths(1,326,250);  
     lp.getRange('A1').setFormula('=TRANSPOSE(LCLASS!C2:E)'); 
     lp.deleteRows(350,650);
 
