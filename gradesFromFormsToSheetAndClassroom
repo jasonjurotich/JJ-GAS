@@ -1,0 +1,89 @@
+// THIS IS A ROUGH DRAFT!
+
+function formToClassQTO(){
+var s = SpreadsheetApp.getActiveSpreadsheet();
+var sh = s.getSheetByName('PROGRAMQTO');
+var r = sh.getDataRange();
+var n = r.getNumRows();
+var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; if(i==''){continue;} else if (i=='x'){  
+    var form = FormApp.openById(d[x][7]);
+    var formResponses = form.getResponses();
+       if(formResponses.length !== 0) { 
+        var todo = []; var output = [];
+          for(var i = 0; i < formResponses.length ; i++){
+            var itemResponses = formResponses[i].getGradableItemResponses();
+            var email = formResponses[i].getRespondentEmail(); var scores = [];
+               for(var j = 0; j < itemResponses.length; j++){
+               var score = itemResponses[j].getScore();
+               scores.push(score);
+               }
+            var sum = scores.reduce(function(a, b) { return a + b; });
+            var avg = Number((sum / scores.length / 2 * 1.43).toFixed(1)); 
+  
+            try {    
+              var courseId = d[x][10]; var courseWorkId = d[x][12];
+              var studentSubmissions = Classroom.Courses.CourseWork.StudentSubmissions.list(courseId, courseWorkId,{'userId': email});
+              var id = studentSubmissions['studentSubmissions'][0].id;
+              var studentSubmission = {'assignedGrade': avg, 'draftGrade': avg}
+              Classroom.Courses.CourseWork.StudentSubmissions.patch(studentSubmission,courseId,courseWorkId,id,{'updateMask':'assignedGrade,draftGrade'});
+            } catch (e) {continue;}
+            
+          }
+       }
+     }
+   }
+gradesToSheetQTO();
+}
+
+
+
+function gradesToSheetQTO(){
+var s1 = SpreadsheetApp.openById('ID');
+var sh1 = s1.getSheetByName('AS');
+var s2 = SpreadsheetApp.openById('ID');
+var sh2 = s2.getSheetByName('PROGRAMQTO');
+var courseId = ID;
+
+var st = Classroom.Courses.Students.list(courseId);
+var w = st.students;
+var arr1=[]; var arr2=[];
+  for (i = 0; i < w.length; i++) {
+    var c = w[i];
+    var us = c.profile;
+    var gr = us.emailAddress;
+    arr1.push([gr]);  
+  }  
+sh1.getRange(1, 1, arr1.length, arr1[0].length).setValues(arr1);
+   
+// emails   
+var lr1 = sh1.getLastRow();
+var a1 = sh1.getRange(1, 1, + lr1).getValues();
+    
+// assign ids    
+var lr2 = sh2.getLastRow();
+var a2 = sh2.getRange(13, 13,  + lr2).getValues(); 
+Logger.log(a2);
+      
+for (var p = 0; p < a2.length; p++) {
+    var courseWorkId = a2[p]; 
+  
+  for (k=0; k<a1.length; k++){
+    var list = a1[k]; 
+    var assign = Classroom.Courses.CourseWork.StudentSubmissions.list(courseId, courseWorkId, {'userId': list}); 
+    var x = assign.studentSubmissions;
+    
+       for (j = 0; j < x.length; j++) {
+        var d = x[j];
+        var su = d.assignedGrade;
+        arr2.push([su]); 
+        }  
+    }
+  for (var m in arr2) {
+        if (arr2[m] == '') { arr2[m] = [0]; } 
+  }
+  sh1.getRange(1, sh1.getLastColumn()+1, arr2.length, arr2[0].length).setValues(arr2);
+  arr2=[];
+ }
+ 
+}
