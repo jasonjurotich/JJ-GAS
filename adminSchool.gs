@@ -1053,30 +1053,42 @@ for (x=0; x<n; x++) {var i=d[x][0]; var l = 1+x;
 
 
 function listCourseSCHOOL() {
-var ss = SpreadsheetApp.getActiveSpreadsheet(); var sh = ss.getSheetByName('LCLASS');
-var sh3 = ss.getSheetByName('CONSTRUCT');                                                                                                              var r3 = sh3.getDataRange(); var n3 = r3.getNumRows(); var d3 = r3.getValues();
-var response = Classroom.Courses.list(); var courses = response.courses; var arr=[];
-  for (i = 0; i < courses.length; i++) {
-    var course = courses[i];
-    var ids = course.id;
-    var title = course.name;
-    var sec = course.section;
-    var room = course.room;
-    var head = course.descriptionHeading;
-    var des = course.description;
-    var state = course.courseState;
-    var code = course.enrollmentCode;
-    var link = course.link;
-    var folder = course.teacherFolder;
-    var created = course.creationTime;
-    var edited = course.updateTime;
-    var owner = course.ownerId; 
-    arr.push([ids,title,sec,room,head,des,state,code,link,folder,created,edited,owner]);
-  }
-  sh.getRange(2, 2, arr.length, arr[0].length).setValues(arr);  
-    if (sh3.getRange('Q2:Q') !== '') {                                                                                                                 
-      var em1 = sh3.getRange(2,17, sh3.getLastRow(), 1).getValues(); 
-      sh.getRange(2,15,em1.length,1).setValues(em1); 
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = ss.getSheetByName('LCLASS');
+    var sh3 = ss.getSheetByName('CONSTRUCT');
+    var r3 = sh3.getDataRange();
+    var n3 = r3.getNumRows();
+    var d3 = r3.getValues();
+    var arr = [];
+    var page = null;
+    var courses = [];      
+   do {   
+        var response = Classroom.Courses.list({ pageToken: page, pageSize: 100 });
+        page = response.nextPageToken;
+        courses = courses.concat(response.courses);
+      } while (page);
+  
+    for (i = 0; i < courses.length; i++) {
+        var course = courses[i];
+        var ids = course.id;
+        var title = course.name;
+        var sec = course.section;
+        var room = course.room;
+        var head = course.descriptionHeading;
+        var des = course.description;
+        var state = course.courseState;
+        var code = course.enrollmentCode;
+        var link = course.link;
+        var folder = course.teacherFolder;
+        var created = course.creationTime;
+        var edited = course.updateTime;
+        var owner = course.ownerId;
+        arr.push([ids, title, sec, room, head, des, state, code, link, folder, created, edited, owner]);
+    }
+    sh.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+    if (sh3.getRange('Q2:Q') !== '') {
+        var em1 = sh3.getRange(2, 17, sh3.getLastRow(), 1).getValues();
+        sh.getRange(2, 15, em1.length, 1).setValues(em1);
     }
 }
 
