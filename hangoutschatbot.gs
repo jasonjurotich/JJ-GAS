@@ -1,5 +1,5 @@
 // I will be adding more functions to the bot as time goes on. It will include sending emails, creating docs, forms, classes en Classroom, etc.
-// Right now, it can create calendar events. 
+// Right now, it can create calendar events and send an email. 
 
 
 function onAddToSpace(e) {
@@ -15,7 +15,7 @@ var m = e.message.text;
     var r = sp[1];
     bcal(r);  
   } 
- else if (m.indexOf('des') > -1){
+ else if (m.indexOf('cdes') > -1){
     var sp = m.split('-');
     var r = sp[1];
     var s = sp[2];
@@ -23,6 +23,13 @@ var m = e.message.text;
     var d = sp[4];
     var g = sp[5];
     bcaldes(r,s,f,d,g);
+  }
+ else if (m.indexOf('email') > -1){
+    var sp = m.split('-');
+    var em = sp[1];
+    var su = sp[2];
+    var me = sp[3];
+   sendMessage(em,su,me); 
   }
     
 return {"text": "Done."};   
@@ -35,8 +42,13 @@ function bcal(r) {
 
 function bcaldes(r,s,f,d,g){
  var event = CalendarApp.createEvent(r,
-   new Date(s), new Date(f),
-   {description: d, guests:g, sendInvites: true}); 
+    new Date(s),
+    new Date(f),
+{description: d, guests:g, sendInvites: true}); 
+}
+
+function sendMessage(em,su,me){
+  GmailApp.sendEmail(em, su, me);
 }
 
 
