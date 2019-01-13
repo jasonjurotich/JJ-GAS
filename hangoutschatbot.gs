@@ -13,20 +13,18 @@ var m = e.message.text;
   if (m.indexOf('cal') > -1) {  
     var sp = m.split('-');
     var r = sp[1];
-    Logger.log(r);
     bcal(r);  
   } 
  else if (m.indexOf('des') > -1){
     var sp = m.split('-');
     var r = sp[1];
-    Logger.log(r);
     var s = sp[2];
     var f = sp[3];
     var d = sp[4];
     var g = sp[5];
     bcaldes(r,s,f,d,g);
   }
- 
+    
 return {"text": "Done."};   
 }
 
@@ -37,9 +35,8 @@ function bcal(r) {
 
 function bcaldes(r,s,f,d,g){
  var event = CalendarApp.createEvent(r,
-    new Date(s),
-    new Date(f),
-{description: d, guests:g, sendInvites: true}); 
+   new Date(s), new Date(f),
+   {description: d, guests:g, sendInvites: true}); 
 }
 
 
