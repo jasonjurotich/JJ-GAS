@@ -1,0 +1,57 @@
+function createCourseSCHOOL() {
+    var s = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = s.getSheetByName('CCLASS');
+    var r = sh.getDataRange();
+    var n = r.getNumRows();
+    var d = r.getValues();
+    for (x = 0; x < n; x++) { var i = d[x][0]; var l = 1 + x;
+      if (i == '') {continue;}
+      else if (i == 'c') {
+        var course = Classroom.newCourse();
+        course.name = d[x][2];
+        course.section = d[x][3];
+        course.room = d[x][4];
+        course.courseState = 'ACTIVE';
+        course.ownerId = 'me';
+        course = Classroom.Courses.create(course);
+        var c = course.id;
+        var id = sh.getRange(l, 2).setValue(c);
+        
+         try {     
+           var pageToken;
+           var gr = AdminDirectory.Members.list(d[x][5],
+             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken});
+           var grs = gr.members; var arr1 = [];
+           for (i = 0; i < grs.length; i++) {
+             var or = grs[i];
+             var email = or.email;
+             arr1.push([email]);
+             }
+           for (k = 0; k < arr1.length; k++) {
+             var list = arr1[k];
+             Classroom.Courses.Teachers.create({userId: list}, d[x][1]);
+             }  
+           Classroom.Courses.Teachers.create({userId: d[x][6]}, d[x][1]);
+         } catch (e){continue;}
+
+         try {     
+           var pageToken;
+           var gr = AdminDirectory.Members.list(d[x][7],
+             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken});
+           var grs = gr.members; var arr2 = [];
+           for (i = 0; i < grs.length; i++) {
+             var or = grs[i];
+             var email = or.email;
+             arr2.push([email]);
+             }
+           for (k = 0; k < arr2.length; k++) {
+             var list = arr2[k];
+             Classroom.Courses.Students.create({userId: list}, d[x][1]);
+             }
+         } catch (e){continue;} 
+        
+       var end = sh.getRange(l, 1).setValue('');
+        
+        }
+    }
+}
