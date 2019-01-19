@@ -6,16 +6,28 @@ You must make the text a variable and use that for the rest of the code instead 
 the text from the cell, because it will not be there in time to use it.
 */
 
+
+function onOpen() {
+var s1 = SpreadsheetApp.getUi().createMenu('Class');
+  s1.addItem('CREATE CLASS', 'createCourse').addToUi();
+  s1.addItem('LIST COURSES', 'listCourses').addToUi();
+  s1.addItem('ARCHIVE CLASS', 'archiveClass').addToUi();
+  s1.addItem('LIST GROUPS', 'listGroups').addToUi();
+  s1.addItem('CLASS OVER 6', 'createClassOver6').addToUi();
+  s1.addItem('DELETE TRIG', 'deleteTriggers_').addToUi();
+}
+
+
 function createCourse() {
-    var s = SpreadsheetApp.openById('ID');
-    var sh = s.getSheetByName('NAME');
+    var s = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = s.getSheetByName('CCLASS');
     var r = sh.getDataRange();
     var n = r.getNumRows();
     var d = r.getValues();
     for (x = 0; x < n; x++) { var i = d[x][0]; var l = 1 + x;
       if (i == '') {continue;}
-      else if (sh.getRange(l,3,1,1).getBackground() === "#ea9999" || sh.getRange(l,4,1,1).getBackground() === "#ea9999") {continue;}                        
-      else if (i == 'c' && sh.getRange(l,3,1,1).getBackground() !== "#ea9999" && sh.getRange(l,4,1,1).getBackground() !== "#ea9999") {
+      else if (sh.getRange(l,3,1,1).getBackground() === "#ea9999" || sh.getRange(l,4,1,1).getBackground() === "#ea9999" || sh.getRange(l,5,1,1).getBackground() === "#ea9999") {continue;}                        
+      else if (i == 'c' && sh.getRange(l,3,1,1).getBackground() !== "#ea9999" && sh.getRange(l,4,1,1).getBackground() !== "#ea9999" && sh.getRange(l,5,1,1).getBackground() !== "#ea9999") {
         var course = Classroom.newCourse();
         course.name = d[x][2];
         course.section = d[x][3];
@@ -29,7 +41,7 @@ function createCourse() {
        
            var pageToken;
            var gr = AdminDirectory.Members.list(d[x][5],
-             {domain: 'school.edu.mx', maxResults: 500, pageToken: pageToken});
+             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken});
            var grs = gr.members; var arr1 = [];
            for (t = 0; t < grs.length; t++) {
              var or = grs[t];
@@ -43,7 +55,7 @@ function createCourse() {
     
            var pageToken2;
            var gr2 = AdminDirectory.Members.list(d[x][7],
-             {domain: 'school.edu.mx', maxResults: 500, pageToken: pageToken2});
+             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken2});
            var grs2 = gr2.members; var arr2 = [];
            for (q = 0; q < grs2.length; q++) {
              var or2 = grs2[q];
@@ -60,3 +72,159 @@ function createCourse() {
     }
 }
 
+
+function listCourses() {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = ss.getSheetByName('LCLASS');
+    var response = Classroom.Courses.list();
+    var courses = response.courses;
+    var arr = [];
+    for (i = 0; i < courses.length; i++) {
+        var course = courses[i];
+        var ids = course.id;
+        var title = course.name;
+        var sec = course.section;
+        var room = course.room;
+        var state = course.courseState;
+        arr.push([ids, title, sec, room, state]);
+    }
+    sh.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+}
+
+
+
+function archiveClass() {
+    var s = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = s.getSheetByName('LCLASS');
+    var r = sh.getDataRange(); var n = r.getNumRows();
+    var d = r.getValues();
+    for (x = 0; x < n; x++) {
+        var i = d[x][0]; var l = 1 + x;
+        if (i == '') {continue;}
+        else if (i == 'a') {
+            try {
+                var course = Classroom.Courses.get(d[x][1]);
+                course.courseState = 'ARCHIVED';
+                Classroom.Courses.update(course, d[x][1]);
+                var end = sh.getRange(l, 1).setValue('');
+                var end = sh.getRange(l, 6).setValue('ARCHIVED');
+            } catch (e) {continue;}
+        }}}
+
+
+
+function listGroups() {
+    var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LGROUP');
+    var pageToken = null, grs = [];
+    do {
+        var gr = AdminDirectory.Groups.list({ domain: 'oyg.edu.mx',
+            pageToken: pageToken, pageSize: 100 });
+        pageToken = gr.nextPageToken;
+        grs = grs.concat(gr.groups);
+    } while (pageToken);
+    var arr = [];
+    for (i = 0; i < grs.length; i++) {
+        var or = grs[i];
+        var email = or.email;
+        var names = or.name;
+        arr.push([email, names]);
+    }
+    s.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+}
+
+
+
+
+
+
+
+function createClassOver6(){
+createTrigger_("over6createClass",10);
+over6createClass();
+}
+
+
+function over6createClass(){
+var s = SpreadsheetApp.getActiveSpreadsheet();
+var ch = s.getSheetByName('CACHE');  
+var elapsedTime, startTime = +new Date();
+var i = ch.getRange('A1').getValue() || 0;
+
+for (; i<1000; i++){ 
+
+
+    var s = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = s.getSheetByName('CCLASS');
+    var r = sh.getDataRange();
+    var n = r.getNumRows();
+    var d = r.getValues();
+    for (x = 0; x < n; x++) { var i = d[x][0]; var l = 1 + x;
+      if (i == '') {continue;}
+      else if (sh.getRange(l,3,1,1).getBackground() === "#ea9999" || sh.getRange(l,4,1,1).getBackground() === "#ea9999" || sh.getRange(l,5,1,1).getBackground() === "#ea9999") {continue;}                        
+      else if (i == 'c' && sh.getRange(l,3,1,1).getBackground() !== "#ea9999" && sh.getRange(l,4,1,1).getBackground() !== "#ea9999" && sh.getRange(l,5,1,1).getBackground() !== "#ea9999") {
+        var course = Classroom.newCourse();
+        course.name = d[x][2];
+        course.section = d[x][3];
+        course.room = d[x][4];
+        course.courseState = 'ACTIVE';
+        course.ownerId = 'me';
+        course = Classroom.Courses.create(course);
+        var c = course.id;
+        var id = sh.getRange(l, 2).setValue(c);
+        var prof1 = Classroom.Courses.Teachers.create({userId: d[x][6]}, c);
+       
+           var pageToken;
+           var gr = AdminDirectory.Members.list(d[x][5],
+             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken});
+           var grs = gr.members; var arr1 = [];
+           for (t = 0; t < grs.length; t++) {
+             var or = grs[t];
+             var email = or.email;
+             arr1.push(email);
+             }
+           for (k = 0; k < arr1.length; k++) {
+             var list = arr1[k];
+             Classroom.Courses.Teachers.create({userId: list}, c);
+             }  
+    
+           var pageToken2;
+           var gr2 = AdminDirectory.Members.list(d[x][7],
+             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken2});
+           var grs2 = gr2.members; var arr2 = [];
+           for (q = 0; q < grs2.length; q++) {
+             var or2 = grs2[q];
+             var email2 = or2.email;
+             arr2.push(email2);
+             }
+           for (m = 0; m < arr2.length; m++) {
+             var list2 = arr2[m];
+             Classroom.Courses.Students.create({userId: list2}, c);
+             } 
+       var end = sh.getRange(l, 1).setValue('');
+        
+        }
+    }
+
+
+elapsedTime =  +new Date() -  startTime;
+    if (elapsedTime>300000){
+    ch.getRange('A1').setValue(i);
+    return;
+    }      
+};
+  deleteTriggers_();     
+} 
+
+
+function deleteTriggers_() {
+var triggers = ScriptApp.getProjectTriggers();
+  triggers.forEach(function (trigger) {ScriptApp.deleteTrigger(trigger);   
+  Utilities.sleep(1000);                                    
+  });  
+}
+
+
+function createTrigger_(funcName,minutes) {
+deleteTriggers_();
+ScriptApp.newTrigger(funcName).timeBased().everyMinutes(minutes).create();  
+}
