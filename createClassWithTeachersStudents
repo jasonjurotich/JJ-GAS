@@ -1,6 +1,14 @@
+
+
+/* DO NOT ERASE!! NOTE TO SELF: When you try and paste data in cells and have other code, 
+the code that follows will continue run BEFORE it pastes the text in the cells, causing an error.
+You must make the text a variable and use that for the rest of the code instead of trying to grabe
+the text from the cell, because it will not be there in time to use it.
+*/
+
 function createCourse() {
-    var s = SpreadsheetApp.getActiveSpreadsheet();
-    var sh = s.getSheetByName('CCLASS');
+    var s = SpreadsheetApp.openById('ID');
+    var sh = s.getSheetByName('NAME');
     var r = sh.getDataRange();
     var n = r.getNumRows();
     var d = r.getValues();
@@ -17,10 +25,11 @@ function createCourse() {
         course = Classroom.Courses.create(course);
         var c = course.id;
         var id = sh.getRange(l, 2).setValue(c);
+        var prof1 = Classroom.Courses.Teachers.create({userId: d[x][6]}, c);
        
            var pageToken;
            var gr = AdminDirectory.Members.list(d[x][5],
-             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken});
+             {domain: 'school.edu.mx', maxResults: 500, pageToken: pageToken});
            var grs = gr.members; var arr1 = [];
            for (t = 0; t < grs.length; t++) {
              var or = grs[t];
@@ -29,14 +38,13 @@ function createCourse() {
              }
            for (k = 0; k < arr1.length; k++) {
              var list = arr1[k];
-             Classroom.Courses.Teachers.create({userId: list}, d[x][1]);
+             Classroom.Courses.Teachers.create({userId: list}, c);
              }  
-           Classroom.Courses.Teachers.create({userId: d[x][6]}, d[x][1]);
     
            var pageToken2;
            var gr2 = AdminDirectory.Members.list(d[x][7],
-             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken2});
-           var grs2 = gr2.members; Logger.log(grs2); var arr2 = [];
+             {domain: 'school.edu.mx', maxResults: 500, pageToken: pageToken2});
+           var grs2 = gr2.members; var arr2 = [];
            for (q = 0; q < grs2.length; q++) {
              var or2 = grs2[q];
              var email2 = or2.email;
@@ -44,10 +52,11 @@ function createCourse() {
              }
            for (m = 0; m < arr2.length; m++) {
              var list2 = arr2[m];
-             Classroom.Courses.Students.create({userId: list2}, d[x][1]);
+             Classroom.Courses.Students.create({userId: list2}, c);
              } 
        var end = sh.getRange(l, 1).setValue('');
         
         }
     }
 }
+
