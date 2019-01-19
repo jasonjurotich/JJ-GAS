@@ -1,4 +1,4 @@
-function createCourseSCHOOL() {
+function createCourse() {
     var s = SpreadsheetApp.getActiveSpreadsheet();
     var sh = s.getSheetByName('CCLASS');
     var r = sh.getDataRange();
@@ -17,40 +17,35 @@ function createCourseSCHOOL() {
         course = Classroom.Courses.create(course);
         var c = course.id;
         var id = sh.getRange(l, 2).setValue(c);
-        
-         try {     
+       
            var pageToken;
            var gr = AdminDirectory.Members.list(d[x][5],
              {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken});
            var grs = gr.members; var arr1 = [];
-           for (i = 0; i < grs.length; i++) {
-             var or = grs[i];
+           for (t = 0; t < grs.length; t++) {
+             var or = grs[t];
              var email = or.email;
-             arr1.push([email]);
+             arr1.push(email);
              }
            for (k = 0; k < arr1.length; k++) {
              var list = arr1[k];
              Classroom.Courses.Teachers.create({userId: list}, d[x][1]);
              }  
            Classroom.Courses.Teachers.create({userId: d[x][6]}, d[x][1]);
-         } catch (e){continue;}
-
-         try {     
-           var pageToken;
-           var gr = AdminDirectory.Members.list(d[x][7],
-             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken});
-           var grs = gr.members; var arr2 = [];
-           for (i = 0; i < grs.length; i++) {
-             var or = grs[i];
-             var email = or.email;
-             arr2.push([email]);
+    
+           var pageToken2;
+           var gr2 = AdminDirectory.Members.list(d[x][7],
+             {domain: 'iog.edu.mx', maxResults: 500, pageToken: pageToken2});
+           var grs2 = gr2.members; Logger.log(grs2); var arr2 = [];
+           for (q = 0; q < grs2.length; q++) {
+             var or2 = grs2[q];
+             var email2 = or2.email;
+             arr2.push(email2);
              }
-           for (k = 0; k < arr2.length; k++) {
-             var list = arr2[k];
-             Classroom.Courses.Students.create({userId: list}, d[x][1]);
-             }
-         } catch (e){continue;} 
-        
+           for (m = 0; m < arr2.length; m++) {
+             var list2 = arr2[m];
+             Classroom.Courses.Students.create({userId: list2}, d[x][1]);
+             } 
        var end = sh.getRange(l, 1).setValue('');
         
         }
