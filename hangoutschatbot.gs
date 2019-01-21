@@ -2,8 +2,10 @@
 
 
 var i1 = 'ID';
+var d1 = 'school.edu.mx';
 //var i2 = 'ID';
 //var i3 = 'ID';
+
 
 function onAddToSpace(e) {
 var mes = "Added and ready to serve."; 
@@ -38,7 +40,7 @@ var email;
     sendFactura(m,email);
   }
   else if (m.indexOf('cc') > -1){
-    createCourse(i1);
+    createCourse(i1,d1);
   }
   else if (m.indexOf('lc') > -1){
     listCourses(i1);
@@ -52,7 +54,9 @@ var email;
   else if (m.indexOf('dd') > -1){
     deleteData(i1);
   }
- 
+  else if (m.indexOf('asp') > -1){
+    addStudentsProfs(i1,d1);
+  }
 return {"text": "Done."};   
 }
 
@@ -78,7 +82,7 @@ function sendMessage(em,su,me){
 }
 
 
-//   var t = "fac_SCHOOL_20.45_ADF-FYG:1,FYG-ADP:2,ASDD-SD:4_a3wrwefqw3wese";
+//   var t = "fac_CUMBRES_20.45_ADF-FYG:1,FYG-ADP:2,ASDD-SD:4_a3wrwefqw3wese";
 
 function sendFactura(s2,email,m){  
 var shurl = s2.getSheetByName('Pre Factura');
@@ -134,7 +138,7 @@ var o;
   
  var destFolder = DriveApp.getFolderById("ID");
  var numf = shurl.getRange('D1').getValue();
- var sc = SpreadsheetApp.create('Factura sin OC USER '+ numf);
+ var sc = SpreadsheetApp.create('Factura sin OC jjurotich '+ numf);
  var newnumf = shurl.getRange('D1').setValue(numf+1);
  var ssid = sc.getId();
  var ssurl = sc.getUrl();
@@ -186,11 +190,10 @@ function createCourse(i1) {
         var id = sh.getRange(l, 2).setValue(c);
         }
     }
-  ScriptApp.newTrigger('addStudents').timeBased().after(500).create();
 }
 
 
-function addStudents(i1){
+function addStudentsProfs(i1,d1){
 var s1 = SpreadsheetApp.openById(i1);
     var sh = s1.getSheetByName('CLASS');
     var r = sh.getDataRange();
@@ -203,7 +206,7 @@ var s1 = SpreadsheetApp.openById(i1);
       
       var pageToken;
       var gr = AdminDirectory.Members.list(d[x][5],
-        {domain: 'ogy.edu.mx', maxResults: 500, pageToken: pageToken});
+        {domain: d1, maxResults: 500, pageToken: pageToken});
       var grs = gr.members; 
       for (t = 0; t < grs.length; t++) {
         var or = grs[t];
@@ -213,7 +216,7 @@ var s1 = SpreadsheetApp.openById(i1);
       
       var pageToken2;
       var gr2 = AdminDirectory.Members.list(d[x][6],
-        {domain: 'oyg.edu.mx', maxResults: 500, pageToken: pageToken2});
+        {domain: d1, maxResults: 500, pageToken: pageToken2});
       var grs2 = gr2.members; 
       for (q = 0; q < grs2.length; q++) {
         var or2 = grs2[q];
@@ -240,6 +243,7 @@ var s1 = SpreadsheetApp.openById(i1);
       } catch(e){continue;}
         
       var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
       
     }
   }
@@ -309,11 +313,12 @@ var r = sh.getRange(2, 1, sh.getLastRow(), sh.getLastColumn()).setValue('');
 }
 
 
-
 function deleteTriggers_() {
 var triggers = ScriptApp.getProjectTriggers();
 triggers.forEach(function (trigger) {ScriptApp.deleteTrigger(trigger);   
 Utilities.sleep(1000);});  }
+
+
 
 
 /* DO NOT ERASE!! NOTE TO SELF: When you try and paste data in cells and have other code, 
