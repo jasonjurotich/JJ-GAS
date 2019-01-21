@@ -1,6 +1,10 @@
 
 
 
+var i1 = 'ID';
+//var i2 = 'ID';
+//var i3 = 'ID';
+
 function onAddToSpace(e) {
 var mes = "Added and ready to serve."; 
 return {"text": mes};  
@@ -34,16 +38,19 @@ var email;
     sendFactura(m,email);
   }
   else if (m.indexOf('cc') > -1){
-    createCourse();
+    createCourse(i1);
   }
   else if (m.indexOf('lc') > -1){
-    listCourses();
+    listCourses(i1);
   }
   else if (m.indexOf('ac') > -1){
-    archiveClass();
+    archiveClass(i1);
   }
   else if (m.indexOf('dc') > -1){
-    deleteCourses();
+    deleteCourses(i1);
+  }
+  else if (m.indexOf('dd') > -1){
+    deleteData(i1);
   }
  
 return {"text": "Done."};   
@@ -71,12 +78,11 @@ function sendMessage(em,su,me){
 }
 
 
-//   var t = "fac_CUMBRES_20.45_ADF-FYG:1,FYG-ADP:2,ASDD-SD:4_a3wrwefqw3wese";
+//   var t = "fac_SCHOOL_20.45_ADF-FYG:1,FYG-ADP:2,ASDD-SD:4_a3wrwefqw3wese";
 
-function sendFactura(m,email){ 
-var ss = SpreadsheetApp.openById('ID'); 
-var shurl =  ss.getSheetByName('Pre Factura');
-var sheet = ss.getSheetByName('Factura');
+function sendFactura(s2,email,m){  
+var shurl = s2.getSheetByName('Pre Factura');
+var sheet = s2.getSheetByName('Factura');
 
 var em = email;   
 var sp = m.split('_');
@@ -128,7 +134,7 @@ var o;
   
  var destFolder = DriveApp.getFolderById("ID");
  var numf = shurl.getRange('D1').getValue();
- var sc = SpreadsheetApp.create('Factura sin OC jjurotich '+ numf);
+ var sc = SpreadsheetApp.create('Factura sin OC USER '+ numf);
  var newnumf = shurl.getRange('D1').setValue(numf+1);
  var ssid = sc.getId();
  var ssurl = sc.getUrl();
@@ -143,13 +149,13 @@ var o;
  DriveApp.getFolderById(destFolder.getId()).addFile(sf);
  DriveApp.getRootFolder().removeFile(sf);
   
-var s2 = SpreadsheetApp.openById('ID').getSheets()[0];
+var s33 = s3.getSheets()[0];
 arr2 = [];  
 var date = new Date();    
 var link = s.getRange('E2').getValue();
 arr2.push([date,em,link]);
-var lr = s2.getLastRow();
-var a1 = s2.getRange(lr+1,1,arr2.length,arr2[0].length).setValues(arr2);    
+var lr = s33.getLastRow();
+var a1 = s33.getRange(lr+1,1,arr2.length,arr2[0].length).setValues(arr2);    
 }
 
 
@@ -159,9 +165,9 @@ function sortEntrances() {
 }
 
 
-function createCourse() {
-    var s = SpreadsheetApp.openById('ID');
-    var sh = s.getSheetByName('CCLASS');
+function createCourse(i1) {
+  var s1 = SpreadsheetApp.openById(i1);
+    var sh = s1.getSheetByName('CLASS');
     var r = sh.getDataRange();
     var n = r.getNumRows();
     var d = r.getValues();
@@ -184,9 +190,9 @@ function createCourse() {
 }
 
 
-function addStudents(){
-var s = SpreadsheetApp.openById('ID');
-    var sh = s.getSheetByName('CCLASS');
+function addStudents(i1){
+var s1 = SpreadsheetApp.openById(i1);
+    var sh = s1.getSheetByName('CLASS');
     var r = sh.getDataRange();
     var n = r.getNumRows();
     var d = r.getValues();
@@ -197,7 +203,7 @@ var s = SpreadsheetApp.openById('ID');
       
       var pageToken;
       var gr = AdminDirectory.Members.list(d[x][5],
-        {domain: 'school.edu.mx', maxResults: 500, pageToken: pageToken});
+        {domain: 'ogy.edu.mx', maxResults: 500, pageToken: pageToken});
       var grs = gr.members; 
       for (t = 0; t < grs.length; t++) {
         var or = grs[t];
@@ -207,7 +213,7 @@ var s = SpreadsheetApp.openById('ID');
       
       var pageToken2;
       var gr2 = AdminDirectory.Members.list(d[x][6],
-        {domain: 'school.edu.mx', maxResults: 500, pageToken: pageToken2});
+        {domain: 'oyg.edu.mx', maxResults: 500, pageToken: pageToken2});
       var grs2 = gr2.members; 
       for (q = 0; q < grs2.length; q++) {
         var or2 = grs2[q];
@@ -217,12 +223,16 @@ var s = SpreadsheetApp.openById('ID');
         
       for (k = 0; k < arr1.length; k++) {
         var list = arr1[k];
+        try {
         Classroom.Courses.Teachers.create({userId: list}, d[x][1]);
+        } catch(e){continue;}
       } 
       
       for (m = 0; m < arr2.length; m++) {
         var list2 = arr2[m];
+        try{
         Classroom.Courses.Students.create({userId: list2}, d[x][1]);
+          } catch(e){continue;}
       } 
       
       try {
@@ -237,9 +247,9 @@ var s = SpreadsheetApp.openById('ID');
 }
 
 
-function listCourses() {
-    var ss = SpreadsheetApp.openById('ID');
-    var sh = ss.getSheetByName('LCLASS');
+function listCourses(i1) {
+  var s1 = SpreadsheetApp.openById(i1);
+    var sh = s1.getSheetByName('CLASS');
     var response = Classroom.Courses.list();
     var courses = response.courses;
     var arr = [];
@@ -256,10 +266,9 @@ function listCourses() {
 }
 
 
-
-function archiveClass() {
-    var s = SpreadsheetApp.openById('ID');
-    var sh = s.getSheetByName('LCLASS');
+function archiveClass(i1) {
+  var s1 = SpreadsheetApp.openById(i1);
+    var sh = s1.getSheetByName('CLASS');
     var r = sh.getDataRange(); var n = r.getNumRows();
     var d = r.getValues();
     for (x = 0; x < n; x++) {
@@ -276,9 +285,9 @@ function archiveClass() {
         }}}
 
 
-function deleteCourses() {
-    var s = SpreadsheetApp.openById('ID');
-    var sh = s.getSheetByName('LCLASS');
+function deleteCourses(i1) {
+  var s1 = SpreadsheetApp.openById(i1);
+    var sh = s1.getSheetByName('CLASS');
     var r = sh.getDataRange(); var n = r.getNumRows();
     var d = r.getValues();
     for (x = 0; x < n; x++) {
@@ -293,12 +302,18 @@ function deleteCourses() {
         }}}
 
 
+function deleteData(i1){
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getActiveSheet();
+var r = sh.getRange(2, 1, sh.getLastRow(), sh.getLastColumn()).setValue('');
+}
+
+
 
 function deleteTriggers_() {
 var triggers = ScriptApp.getProjectTriggers();
 triggers.forEach(function (trigger) {ScriptApp.deleteTrigger(trigger);   
 Utilities.sleep(1000);});  }
-
 
 
 /* DO NOT ERASE!! NOTE TO SELF: When you try and paste data in cells and have other code, 
