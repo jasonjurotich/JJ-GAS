@@ -2,7 +2,7 @@
 
 
 var i1 = 'ID';
-var d1 = 'oyg.edu.mx';
+var d1 = 'school.edu.mx';
 //var i2 = 'ID';
 //var i3 = 'ID';
 
