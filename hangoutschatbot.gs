@@ -1,8 +1,8 @@
 
 
 
-var i1 = 'ID';
-var d1 = 'school.edu.mx';
+var i1 = '1XoqxwdCf8O0EXTX6_h4W9tnOMcq2AYTmVOfTk_kiFgE';
+var d1 = 'oyg.edu.mx';
 //var i2 = 'ID';
 //var i3 = 'ID';
 
@@ -14,7 +14,7 @@ return {"text": mes};
     
 function onMessage(e) {
 var m = e.message.text;
-var email;  
+var email = e.user.email;  
   if (m.indexOf('cal') > -1) {  
     var sp = m.split('_');
     var r = sp[1];
@@ -63,7 +63,8 @@ var email;
     deleteStudents(i1);
   }
   else if (m.indexOf('la') > -1){
-    listAssignments(i1);
+    listAssign(i1);
+
   }
   
   
@@ -93,6 +94,13 @@ function bcaldes(r,s,f,d,g){
 
 function sendMessage(em,su,me){
   GmailApp.sendEmail(em, su, me);
+}
+
+
+function listAssign(i1){
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CACHE');
+sh.getRange('B1').setValue('la'); 
 }
 
 
@@ -183,6 +191,14 @@ function sortEntrances() {
 }
 
 
+
+/* DO NOT ERASE!! NOTE TO SELF: When you try and paste data in cells and have other code, 
+the code that follows will continue run BEFORE it pastes the text in the cells, causing an error.
+You must make the text a variable and use that for the rest of the code instead of trying to grabe
+the text from the cell, because it will not be there in time to use it.
+*/
+
+
 function createCourse(i1) {
   var s1 = SpreadsheetApp.openById(i1);
     var sh = s1.getSheetByName('CLASS');
@@ -207,8 +223,8 @@ function createCourse(i1) {
 }
 
 
-function addStudentsProfs(i1,d1){
 
+function addStudentsProfs(i1,d1){
 var s1 = SpreadsheetApp.openById(i1);
 var sh = s1.getSheetByName('CLASS'); var r = sh.getDataRange();
 var n = r.getNumRows(); var d = r.getValues();
@@ -262,6 +278,7 @@ var n = r.getNumRows(); var d = r.getValues();
 }
 
 
+
 function listCourses(i1) {
   var s1 = SpreadsheetApp.openById(i1);
     var sh = s1.getSheetByName('CLASS');
@@ -281,6 +298,7 @@ function listCourses(i1) {
 }
 
 
+
 function archiveClass(i1) {
   var s1 = SpreadsheetApp.openById(i1);
     var sh = s1.getSheetByName('CLASS');
@@ -298,6 +316,8 @@ function archiveClass(i1) {
                 var end = sh.getRange(l, 6).setValue('ARCHIVED');
             } catch (e) {continue;}
         }}}
+
+
 
 
 function deleteCourses(i1) {
@@ -361,11 +381,23 @@ for (x = 0; x < n; x++) {var i = d[x][0]; var l = 1 + x;
 }
 
 
+/* the laa function and the listAssignments function must be put in the spreadsheet itself where you list the assignments for this to work, 
+it will not run here. For this to work you must put an importrange function in the sheet that imports itself (the ID of the importrange
+is just the same spreadsheet, but another cell), you can use the CACHE sheet that you might have to use for going over six minutes.
+It is the only way to have a trigger so that this can work. No other trigger works. The importrange triggers the "on change" trigger that you add
+to the sheet.
+*/
+
+function laa(){
+var s1 = SpreadsheetApp.getActiveSpreadsheet();
+var sh = s1.getSheetByName('CACHE');
+var r = sh.getRange('C1').getValue();  
+if(r === 'la'){listAssignments();}
+}
 
 
-
-function listAssignments(i1) {
-var s1 = SpreadsheetApp.openById(i1);
+function listAssignments() {
+var s1 = SpreadsheetApp.getActiveSpreadsheet();
 var sh = s1.getSheetByName('LA');
 var response = Classroom.Courses.list();
 var courses = response.courses;
@@ -379,7 +411,6 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
     arr1.push([ids,title,state]);
   }
   
-  
  for (i = 0; i < arr1.length; i++) {
    if (arr1[i][2] !== 'ARCHIVED'){
      var list = arr1[i][0];
@@ -392,7 +423,6 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
             for (q = 0; q < t.length; q++) {
                 var c = t[q];
                 var name = arr1[i][1];
-                var ids = c.id;
                 var ti = c.title;
                 var des = c.description;
                 var st = c.state;
@@ -402,32 +432,24 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
                 var create = c.creationTime;
                 var due = c.dueDate;
                 var duet = c.dueTime;
+                var cour = c.courseId;
+                var ids = c.id;
                 var user = c.creatorUserId;
-                arr2.push([name,ids,ti,des,st,link,typ,poi,create,due,duet]); 
+                arr2.push([name,ti,des,st,link,typ,poi,create,due,duet,cour,ids]); 
                 arr3.push(user);
             }
-        } catch (e) {continue;}    
-      }
+        } catch (e) {continue;}  
+     }
   }
   for (r=0; r < arr3.length; r++){ var eu = arr3[r];
   var us = AdminDirectory.Users.get(eu).primaryEmail;
   arr5.push([us]);
   }
-  
   sh.getRange(2, 2, arr5.length, arr5[0].length).setValues(arr5);
   sh.getRange(2, 3, arr2.length, arr2[0].length).setValues(arr2);
-     
+  s1.getSheetName('CACHE').getRange('B1').setValue('');  
 }
 
-
-
-
-
-/* DO NOT ERASE!! NOTE TO SELF: When you try and paste data in cells and have other code, 
-the code that follows will continue run BEFORE it pastes the text in the cells, causing an error.
-You must make the text a variable and use that for the rest of the code instead of trying to grabe
-the text from the cell, because it will not be there in time to use it.
-*/
 
 // You need to add this to the appscript.json file, remember to activate all APIs in the GCP beforehand.
 // Review the example Google gives if you need to start from zero. https://codelabs.developers.google.com/codelabs/chat-apps-script/#0
