@@ -52,11 +52,25 @@ var email;
     deleteCourses(i1);
   }
   else if (m.indexOf('dd') > -1){
-    deleteData(i1);
+    var sp = m.split(' ');
+    var em = sp[1];
+    deleteData(i1,em);
   }
   else if (m.indexOf('asp') > -1){
     addStudentsProfs(i1,d1);
   }
+  else if (m.indexOf('ds') > -1){
+    deleteStudents(i1);
+  }
+  else if (m.indexOf('la') > -1){
+    listAssignments(i1);
+  }
+  
+  
+  else if (m.indexOf('codes') > -1){
+   return {"text": "la = list assignments \nasp = add students and professors \ndc = delete classes \ndd = delete data \nfac = send factura \ncc = create course \nlc = list courses \nac = archive classes \nds = delete students"}; 
+  }
+  
 return {"text": "Done."};   
 }
 
@@ -194,19 +208,17 @@ function createCourse(i1) {
 
 
 function addStudentsProfs(i1,d1){
+
 var s1 = SpreadsheetApp.openById(i1);
-    var sh = s1.getSheetByName('CLASS');
-    var r = sh.getDataRange();
-    var n = r.getNumRows();
-    var d = r.getValues();
+var sh = s1.getSheetByName('CLASS'); var r = sh.getDataRange();
+var n = r.getNumRows(); var d = r.getValues();
     for (x = 0; x < n; x++) { var i = d[x][0]; var l = 1 + x;
-    if (i == '') {continue;}
-    else if (i == 'c'){
+    if (i == '') {continue;} else if (i == 'c'){
     var arr1 =[]; var arr2 = [];
       
       var pageToken;
-      var gr = AdminDirectory.Members.list(d[x][5],
-        {domain: d1, maxResults: 500, pageToken: pageToken});
+      var gr = AdminDirectory.Members.list(d[x][6],
+       {domain: d1, maxResults: 500, pageToken: pageToken});
       var grs = gr.members; 
       for (t = 0; t < grs.length; t++) {
         var or = grs[t];
@@ -215,39 +227,38 @@ var s1 = SpreadsheetApp.openById(i1);
       }
       
       var pageToken2;
-      var gr2 = AdminDirectory.Members.list(d[x][6],
-        {domain: d1, maxResults: 500, pageToken: pageToken2});
+      var gr2 = AdminDirectory.Members.list(d[x][7],
+       {domain: d1, maxResults: 500, pageToken: pageToken2});
       var grs2 = gr2.members; 
       for (q = 0; q < grs2.length; q++) {
         var or2 = grs2[q];
         var email2 = or2.email;
         arr2.push(email2);
       }
-        
+      
       for (k = 0; k < arr1.length; k++) {
         var list = arr1[k];
         try {
-        Classroom.Courses.Teachers.create({userId: list}, d[x][1]);
+          Classroom.Courses.Teachers.create({userId: list}, d[x][1]);
         } catch(e){continue;}
       } 
       
       for (m = 0; m < arr2.length; m++) {
         var list2 = arr2[m];
         try{
-        Classroom.Courses.Students.create({userId: list2}, d[x][1]);
-          } catch(e){continue;}
+          Classroom.Courses.Students.create({userId: list2}, d[x][1]);
+        } catch(e){continue;}
       } 
       
       try {
-        var prof1 = Classroom.Courses.Teachers.create({userId: d[x][7]}, d[x][1]);
+        var prof1 = Classroom.Courses.Teachers.create({userId: d[x][8]}, d[x][1]);
       } catch(e){continue;}
-        
+      
       var end = sh.getRange(l, 1).setValue('');
       Utilities.sleep(1000);
       
     }
   }
-  deleteTriggers_();
 }
 
 
@@ -297,7 +308,7 @@ function deleteCourses(i1) {
     for (x = 0; x < n; x++) {
         var i = d[x][0]; var l = 1 + x;
         if (i == '') {continue;}
-        else if (i == 'd') {
+        else if (i == 'dc') {
           try {
             Classroom.Courses.remove(d[x][1]);
             var end = sh.getRange(l, 1).setValue('');
@@ -306,9 +317,9 @@ function deleteCourses(i1) {
         }}}
 
 
-function deleteData(i1){
+function deleteData(i1,em){
 var s1 = SpreadsheetApp.openById(i1);
-var sh = s1.getActiveSheet();
+var sh = s1.getSheetByName(em);  
 var r = sh.getRange(2, 1, sh.getLastRow(), sh.getLastColumn()).setValue('');
 }
 
@@ -317,6 +328,97 @@ function deleteTriggers_() {
 var triggers = ScriptApp.getProjectTriggers();
 triggers.forEach(function (trigger) {ScriptApp.deleteTrigger(trigger);   
 Utilities.sleep(1000);});  }
+
+
+
+function deleteStudents(i1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CLASS'); var r = sh.getDataRange();
+var n = r.getNumRows(); var d = r.getValues();
+for (x = 0; x < n; x++) {var i = d[x][0]; var l = 1 + x;
+  if (i == '') {continue} else if (i == 'ds') {
+    
+    var page = null; var t = [];var arr = [];
+    do {
+      var tea = Classroom.Courses.Students.list(d[x][1], {pageToken: page, pageSize: 100});
+      page = tea.nextPageToken; t = t.concat(tea.students);
+      } while (page);
+    try {
+      for (i = 0; i < t.length; i++) {
+        var c = t[i]; var ids = c.profile;
+        var em = ids.emailAddress;
+        arr.push(em);
+      }
+    } catch (e){continue;}
+    for (k = 0; k < arr.length; k++) {
+      var list = arr[k];
+        try { Classroom.Courses.Students.remove(d[x][1], list);
+        } catch (e){continue;} 
+    }  
+  }                    
+ var end = sh.getRange(l, 1).setValue('');
+  }
+}
+
+
+
+
+
+function listAssignments(i1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('LA');
+var response = Classroom.Courses.list();
+var courses = response.courses;
+var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
+ 
+  for (i = 0; i < courses.length; i++) {
+    var course = courses[i];
+    var ids = course.id;
+    var title = course.name;
+    var state = course.courseState;
+    arr1.push([ids,title,state]);
+  }
+  
+  
+ for (i = 0; i < arr1.length; i++) {
+   if (arr1[i][2] !== 'ARCHIVED'){
+     var list = arr1[i][0];
+     var page = null, t = [];
+     do {
+       var tea = Classroom.Courses.CourseWork.list(list, {pageToken: page, pageSize: 100});
+       page = tea.nextPageToken; var t = t.concat(tea.courseWork);
+     } while (page);
+     try {
+            for (q = 0; q < t.length; q++) {
+                var c = t[q];
+                var name = arr1[i][1];
+                var ids = c.id;
+                var ti = c.title;
+                var des = c.description;
+                var st = c.state;
+                var link = c.alternateLink;
+                var typ = c.workType;
+                var poi = c.maxPoints;
+                var create = c.creationTime;
+                var due = c.dueDate;
+                var duet = c.dueTime;
+                var user = c.creatorUserId;
+                arr2.push([name,ids,ti,des,st,link,typ,poi,create,due,duet]); 
+                arr3.push(user);
+            }
+        } catch (e) {continue;}    
+      }
+  }
+  for (r=0; r < arr3.length; r++){ var eu = arr3[r];
+  var us = AdminDirectory.Users.get(eu).primaryEmail;
+  arr5.push([us]);
+  }
+  
+  sh.getRange(2, 2, arr5.length, arr5[0].length).setValues(arr5);
+  sh.getRange(2, 3, arr2.length, arr2[0].length).setValues(arr2);
+     
+}
+
 
 
 
