@@ -1,7 +1,7 @@
 
 
 
-var i1 = '1XoqxwdCf8O0EXTX6_h4W9tnOMcq2AYTmVOfTk_kiFgE';
+var i1 = 'ID';
 var d1 = 'oyg.edu.mx';
 //var i2 = 'ID';
 //var i3 = 'ID';
@@ -447,7 +447,7 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
   }
   sh.getRange(2, 2, arr5.length, arr5[0].length).setValues(arr5);
   sh.getRange(2, 3, arr2.length, arr2[0].length).setValues(arr2);
-  s1.getSheetName('CACHE').getRange('B1').setValue('');  
+  s1.getSheetByName('CACHE').getRange('B1').setValue('');   
 }
 
 
