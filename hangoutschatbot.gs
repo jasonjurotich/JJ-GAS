@@ -107,20 +107,20 @@ var email = e.user.email;
   }
   
   else if (sp2[0] === 'pu'){
-    var use = sp2[1];
-    var pass = sp2[2];
-    changeUserPassChat(use,pass);
+    var user = sp2[1];
+    changeUserPassChat(user);
   }
   
   else if (sp2[0] === 'sust'){
-  var use = sp2[1];
-  suspendUsersChat(i1,use);
+  var user = sp2[1];
+  suspendUsersChat(user);
   }
   
   else if (sp2[0] === 'susf'){
-    var use = sp2[1];
-    unsuspendUsersChat(use);
+    var user = sp2[1];
+    unsuspendUsersChat(user);
   }
+    
   else if (sp2[0] === 'cbl'){
     listCb(i1,d1,a1);
   }
