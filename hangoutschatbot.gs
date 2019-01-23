@@ -2,9 +2,8 @@
 
 
 var i1 = 'ID';
-var d1 = 'school.edu.mx';
-//var i2 = 'ID';
-//var i3 = 'ID';
+var d1 = 'sch.edu.mx';
+var a1 = 'ID';
 
 
 function onAddToSpace(e) {
@@ -12,69 +11,168 @@ var mes = "Added and ready to serve.";
 return {"text": mes};  
 } 
     
+/* I had to change the indexOf to === because it was grabbing parts of other words and activating other functions. 
+IndexOf is very good if you are going to have a conversation with the bot, but if you are only giving it commands, it is useless.
+*/
+
+
 function onMessage(e) {
 var m = e.message.text;
-var email = e.user.email;  
-  if (m.indexOf('cal') > -1) {  
-    var sp = m.split('_');
-    var r = sp[1];
+var sp1 = m.split('_');
+var sp2 = m.split(' ');
+var email = e.user.email; 
+  
+  if (sp1[0] === 'cal') {  
+    var r = sp1[1];
     bcal(r);  
   } 
- else if (m.indexOf('cdes') > -1){
-    var sp = m.split('_');
-    var r = sp[1];
-    var s = sp[2];
-    var f = sp[3];
-    var d = sp[4];
-    var g = sp[5];
+  
+ else if (sp1[0] === 'cdes'){
+    var r = sp1[1];
+    var s = sp1[2];
+    var f = sp1[3];
+    var d = sp1[4];
+    var g = sp1[5];
     bcaldes(r,s,f,d,g);
   }
- else if (m.indexOf('email') > -1){
-    var sp = m.split('_');
-    var em = sp[1];
-    var su = sp[2];
-    var me = sp[3];
+  
+ else if (sp1[0] === 'email'){
+    var em = sp1[1];
+    var su = sp1[2];
+    var me = sp1[3];
    sendMessage(em,su,me); 
   }
-  else if (m.indexOf('fac') > -1){
+  
+  else if (sp1[0] === 'fac'){
     sendFactura(m,email);
   }
-  else if (m.indexOf('cc') > -1){
-    createCourse(i1,d1);
-  }
-  else if (m.indexOf('lc') > -1){
-    listCourses(i1);
-  }
-  else if (m.indexOf('ac') > -1){
-    archiveClass(i1);
-  }
-  else if (m.indexOf('dc') > -1){
-    deleteCourses(i1);
-  }
-  else if (m.indexOf('dd') > -1){
-    var sp = m.split(' ');
-    var em = sp[1];
+  
+  else if (sp2[0] === 'dd'){
+    var em = sp2[1];
     deleteData(i1,em);
   }
-  else if (m.indexOf('asp') > -1){
+  
+  else if (sp2[0] === 'sd'){
+    var em = sp2[1];
+    var so = sp2[2];
+    sortData(i1,em,so);
+  }
+  
+  else if (sp2[0] === 'cc'){
+    createCourse(i1,d1);
+  }
+  
+  else if (sp2[0] === 'lc'){
+    listCourses(i1);
+  }
+  
+  else if (sp2[0] === 'ac'){
+    archiveClass(i1);
+  }
+  
+  else if (sp2[0] === 'dc'){
+    deleteCourses(i1);
+  }
+  
+  else if (sp2[0] === 'asp'){
     addStudentsProfs(i1,d1);
   }
-  else if (m.indexOf('ds') > -1){
+  
+  else if (sp2[0] === 'ds'){
     deleteStudents(i1);
   }
-  else if (m.indexOf('la') > -1){
+  
+  else if (sp2[0] === 'la'){
     listAssign(i1);
   }
-  else if (m.indexOf('lu') > -1){
+  
+  else if (sp2[0] === 'lu'){
     listUsers(i1,d1);
   }
-  else if (m.indexOf('cu') > -1){
+  
+  else if (sp2[0] === 'cu'){
     createUsers(i1);
   }
   
+  else if (sp2[0] === 'mmg'){
+    moveGroupMembers(i1);
+  }
   
-  else if (m.indexOf('codes') > -1){
-   return {"text": "cu = create users \nlu = list users \nla = list assignments \nasp = add students and professors \ndc = delete classes \ndd = delete data \nfac = send factura \ncc = create course \nlc = list courses \nac = archive classes \nds = delete students"}; 
+  else if (sp2[0] === 'upc'){
+    changeUserPass(i1);
+  }
+  
+  else if (sp2[0] === 'sru'){
+    suspendUsers(i1);
+  }
+  
+  else if (sp2[0] === 'pu'){
+    var use = sp2[1];
+    var pass = sp2[2];
+    changeUserPassChat(use,pass);
+  }
+  
+  else if (sp2[0] === 'sust'){
+  var use = sp2[1];
+  suspendUsersChat(i1,use);
+  }
+  
+  else if (sp2[0] === 'susf'){
+    var use = sp2[1];
+    unsuspendUsersChat(use);
+  }
+  else if (sp2[0] === 'cbl'){
+    listCb(i1,d1,a1);
+  }
+  
+  else if (sp2[0] === 'mcb'){
+    moveCb(i1,a1);
+  }
+  
+  else if (sp2[0] === 'ecb'){
+    editCb(i1,a1);
+  }
+  
+  else if (sp2[0] === 'lo'){
+    listOrgs(i1,a1);
+  }
+  
+  else if (sp2[0] === 'co'){
+    createOrgs(i1,a1);
+  }
+  
+  else if (sp2[0] === 'eo'){
+    editOrgs(i1,a1);
+  }
+  
+  else if (sp2[0] === 'od'){
+    deleteOrgs(i1,a1);
+  }
+  
+  else if (sp2[0] === 'cg'){
+    createGroups(i1);
+  }
+  
+  else if (sp2[0] === 'lg'){
+    listGroups(i1,d1);
+  }
+  
+  else if (sp2[0] === 'ceg'){
+    editGroupConfig(i1);
+  }
+  
+  else if (sp2[0] === 'eg'){
+    editGroupInfo(i1);
+  }
+  
+  else if (sp2[0] === 'dg'){
+    deleteGroups(i1);
+  }
+ 
+  
+// Be careful of the letters. If two commands start with the same letters, it will take the shorter one (if one is 'lc', and another 'lcb', it will run the first.
+  else if (m.indexOf('cs') > -1){
+   return {"text": " ac = archive classes  \n asp = add students and professors  \n cal = create event from description \n cbl = list cb  \n cc = create course  \n cdes = create event from info \n ceg = edit groups  \n cg = create group  \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = delete students \n ecb = edit cb \n eg = edit group info  \n email = send email with subject and text \n eo = edit orgs  \n fac = send factura  \n la = list assignments  \n lc = list courses  \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n pu = change password user in chat  \n sd = sort data  \n sru = suspend user  \n suff = unsuspend user in chat \n sust = suspend user in chat  \n upc = change user password"}; 
   }
   
 return {"text": "Done."};   
@@ -98,7 +196,7 @@ function bcaldes(r,s,f,d,g){
 }
 
 function sendMessage(em,su,me){
-  GmailApp.sendEmail(em, su, me);
+  GmailApp.sendEmail(em,su,me);
 }
 
 
@@ -106,6 +204,42 @@ function listAssign(i1){
 var s1 = SpreadsheetApp.openById(i1);
 var sh = s1.getSheetByName('CACHE');
 sh.getRange('B1').setValue('la'); 
+}
+
+
+function deleteData(i1,em){
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName(em);  
+var r = sh.getRange(2, 1, sh.getLastRow(), sh.getLastColumn()).setValue('');
+}
+
+function sortData(i1,em,so) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName(em);
+var rr = sh.getRange(2, 1, sh.getLastRow(), sh.getLastColumn()); 
+var int = parseInt(so, 10);  
+rr.sort(int);
+}
+
+
+function changeUserPassChat(use,pass) {
+      var user = use;
+      var resource = {password: pass, changePasswordAtNextLogin: true};
+      var org = AdminDirectory.Users.update(resource, user); 
+}
+
+
+function suspendUsersChat(i1,use) {
+  var user = use;
+  var resource = {suspended: true};
+  var org = AdminDirectory.Users.update(resource, user);
+}
+
+
+function unsuspendUsersChat(use) {
+  var user = use;
+  var resource = {suspended: false};
+  var org = AdminDirectory.Users.update(resource, user);
 }
 
 
@@ -303,7 +437,6 @@ function listCourses(i1) {
 }
 
 
-
 function archiveClass(i1) {
   var s1 = SpreadsheetApp.openById(i1);
     var sh = s1.getSheetByName('CL');
@@ -323,8 +456,6 @@ function archiveClass(i1) {
         }}}
 
 
-
-
 function deleteCourses(i1) {
   var s1 = SpreadsheetApp.openById(i1);
     var sh = s1.getSheetByName('CL');
@@ -341,12 +472,6 @@ function deleteCourses(i1) {
             } catch (e) {continue;}
         }}}
 
-
-function deleteData(i1,em){
-var s1 = SpreadsheetApp.openById(i1);
-var sh = s1.getSheetByName(em);  
-var r = sh.getRange(2, 1, sh.getLastRow(), sh.getLastColumn()).setValue('');
-}
 
 
 function deleteTriggers_() {
@@ -418,7 +543,7 @@ var d = r.getValues(); var nr = r.getNumRows();
 sh.getRange('F1').setValue(d1);  
 sh.getRange('F2').setFormula('=IF(B2<>"",LOWER(CONCATENATE(LEFT(B2,FIND(" ",B2&" ")-1),LEFT(C2,FIND(" ",C2&" ")-1),LEFT(TRIM(RIGHT(SUBSTITUTE(C2," ",REPT(" ",LEN(C2))),LEN(C2))),1),"@",$D$1)),"")');  
 sh.getRange('G2').setFormula('=IF(B2<>"",LOWER(CONCATENATE(LEFT(B2,FIND(" ",B2&" ")-1),LEFT(C2,FIND(" ",C2&" ")-1),LEFT(TRIM(RIGHT(SUBSTITUTE(C2," ",REPT(" ",LEN(C2))),LEN(C2))),1),"12345")),"")');
-sh.getRange('G2').setFormula('=IF(D2<>"",IF(LEN(D2)>1,CONCATENATE(SUBSTITUTE(LOWER(TRIM(RIGHT(SUBSTITUTE(TRIM(D2),"/",REPT(" ",200)),200)))," ",""),"@",F1),""),"")');
+sh.getRange('G2').setFormula('=IF(D2<>"",IF(LEN(D2)>1,CONCATENATE(SUBSTITUTE(LOWER(TRIM(RIGHT(SUBSTITUTE(TRIM(D2),"/",REPT(" ",200)),200)))," ",""),"@",$F$1),""),"")');
 var fr = sh.getRange('F2:H'); sh.getRange('F2:H2').copyTo(fr);
  for (x = 1; x < nr; x++) {var i = d[x][0]; var l = 1 + x;
    if (i === 'cu') {
@@ -437,6 +562,299 @@ var fr = sh.getRange('F2:H'); sh.getRange('F2:H2').copyTo(fr);
        Utilities.sleep(1000);
      } catch (e){continue;}
 }}}
+
+
+
+function changeUserPass(i1) {
+var s1 = SpreadsheetApp.openById(i1);  
+var sh = s1.getSheetByName('US'); var r = sh.getDataRange();  
+var d = r.getValues(); var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+  if (i === 'upc') {
+    try {
+      var user = d[x][5];
+      var resource = {password: d[x][6], changePasswordAtNextLogin: true};
+      var org = AdminDirectory.Users.update(resource, user);
+      var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
+    } catch (e){continue;}
+}}}
+
+
+
+function suspendUsers(i1) {
+var s1 = SpreadsheetApp.openById(i1);  
+var sh = s1.getSheetByName('US'); var r = sh.getDataRange();  
+var d = r.getValues(); var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+  if (i === 'sru') {
+    try {
+      var user = d[x][5];
+      var resource = {suspended: true};
+      var org = AdminDirectory.Users.update(resource, user);
+      var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
+    } catch (e){continue;}
+}}}
+
+
+function moveGroupMembers(i1) {
+var s1 = SpreadsheetApp.openById(i1);  
+var sh = s1.getSheetByName('US'); var r = sh.getDataRange();  
+var d = r.getValues(); var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+  if (i === 'mmg') {
+    try {
+      var user = d[x][5];
+      var gk1 = d[x][8];
+      var resource = {email: user, role: 'MEMBER'};
+      var gr = AdminDirectory.Members.insert(resource, gk1);
+      var gk2 = d[x][7];
+      var gr = AdminDirectory.Members.remove(gk2, user);
+      var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
+    } catch (e){continue;}
+}}}
+
+
+
+
+function createOrgs(i1,a1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('GO');
+var r = sh.getDataRange(); var d = r.getValues();
+var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+  if (i === 'co') {
+    try {
+      var or = {name: d[x][1], description: d[x][2], 
+      parentOrgUnitPath: d[x][4], blockInheritance: false};
+      var org = AdminDirectory.Orgunits.insert(or, a1);
+      var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
+    } catch (e){continue;}
+}}}
+
+
+function listOrgs(i1,a1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('GO');
+var org = AdminDirectory.Orgunits.list(a1, {orgUnitPath: '/', type: 'all'});
+var orgs = org.organizationUnits; var arr = [];
+  for (i = 0; i < orgs.length; i++) {
+    var or = orgs[i];
+    var names = or.name;
+    var path = or.orgUnitPath;
+    var ids = or.orgUnitId;
+    var pp = or.parentOrgUnitPath;
+    arr.push([names,path,ids,pp]);
+  }
+  sh.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+}
+  
+
+function editOrgs(i1,a1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('GO');
+var r = sh.getDataRange(); var d = r.getValues();
+var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+  if (i === 'eo') {
+    try {
+      var or = {name: d[x][1], description: d[x][1], 
+      parentOrgUnitPath: d[x][4], blockInheritance: false};
+      var orgUnitPath = d[x][2]; //MUST DELETE FIRST DIAGONAL
+      var org = AdminDirectory.Orgunits.update(or, a1, orgUnitPath);
+      var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
+    } catch (e){continue;}
+}}}
+
+
+function deleteOrgs(i1,a1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('GO');
+var r = sh.getDataRange(); var d = r.getValues();
+var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+  if (i === 'od') {
+    try {
+      var orgUnitPath = d[x][2]; //MUST DELETE FIRST DIAGONAL
+      var org = AdminDirectory.Orgunits.remove(a1, orgUnitPath);
+      var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
+    } catch (e){continue;}
+}}}
+
+
+function createGroups(i1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('GO'); var r = sh.getDataRange();
+var d = r.getValues(); var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+  if (i === 'cg') {
+    try {
+      var gr = {email: d[x][2], name: d[x][1], description: d[x][4]};
+      var gro = AdminDirectory.Groups.insert(gr);
+      var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
+    } catch (e){continue;}
+}}}
+
+
+function editGroupInfo(i1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('GO'); var r = sh.getDataRange();
+var d = r.getValues(); var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+  if (i === 'eg') {
+    try {
+      var groupKey = d[x][3];
+      var gr = {email: d[x][2], name: d[x][1], description: d[x][4]};
+      var gro = AdminDirectory.Groups.update(gr, groupKey);
+      var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
+   } catch (e){continue;}
+}}}
+
+
+function listGroups(i1,d1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('GO');
+var pageToken = null, grs = []; var arr = [];
+  do {
+    var gr = AdminDirectory.Groups.list(
+     {domain: d1,pageToken: pageToken, pageSize: 100});
+    pageToken = gr.nextPageToken;
+    grs = grs.concat(gr.groups);
+  } while (pageToken);
+  for (i = 0; i < grs.length; i++) {
+    var or = grs[i];
+    var names = or.name;
+    var email = or.email;
+    var ids = or.id;
+    arr.push([names,email,ids]);
+  }
+  sh.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+}
+
+  
+function editGroupConfig(i1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('GO'); var r = sh.getDataRange();
+var d = r.getValues(); var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+  if (i === 'ceg') {
+    try {
+      var groupId = d[x][2]; // This is ONLY the email username, NOT the ID.
+      var group = AdminGroupsSettings.newGroups();
+      group.whoCanAdd = 'NONE_CAN_ADD';
+      group.whoCanJoin = 'INVITED_CAN_JOIN';
+      group.whoCanViewMembership = 'ALL_MEMBERS_CAN_VIEW';
+      group.whoCanViewGroup = 'ALL_MEMBERS_CAN_VIEW';
+      group.whoCanInvite = 'ALL_MANAGERS_CAN_INVITE';
+      group.allowExternalMembers = false;
+      group.whoCanPostMessage = 'ALL_MEMBERS_CAN_POST';
+      group.allowWebPosting = true;
+      group.showInGroupDirectory = false;
+      group.allowGoogleCommunication = false;
+      group.membersCanPostAsTheGroup = false;
+      group.includeInGlobalAddressList = false;
+      group.whoCanLeaveGroup = 'NONE_CAN_LEAVE';
+      AdminGroupsSettings.Groups.patch(group, groupId);
+      var end = sh.getRange(l, 1).setValue('');
+      Utilities.sleep(1000);
+    } catch (e){continue;}
+}}}
+
+
+function deleteGroups(i1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('GO'); var r = sh.getDataRange();
+var d = r.getValues(); var nr = r.getNumRows();
+for (x = 1; x < nr; x++) {
+var i = d[x][0]; var l = 1 + x;
+if (i === 'dg') {
+  try {
+    var groupKey = d[x][3];
+    var gro = AdminDirectory.Groups.remove(groupKey);
+    var end = sh.getRange(l, 1).setValue('');
+    Utilities.sleep(1000);
+  } catch (e){continue;}
+}}}
+
+
+
+function listCb(i1,d1,a1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CB'); var pageToken;
+var pageToken = null, orgs = []; var arr = [];
+ do {
+   var org = AdminDirectory.Chromeosdevices.list(a1, 
+   {domain: d1,pageToken: pageToken, pageSize: 100});
+   pageToken = org.nextPageToken;
+   orgs = orgs.concat(org.chromeosdevices);
+ } while (pageToken);
+    for (i = 0; i < orgs.length; i++) {
+        var or = orgs[i];
+        var ids = or.deviceId;
+        var ser = or.serialNumber;
+        var user = or.annotatedUser;
+        var mac = or.macAddress;
+        var mod = or.model;
+        var path = or.orgUnitPath;
+        var note = or.notes;
+        var ver = or.osVersion;
+        var use = or.recentUsers;
+        var stat = or.status;
+        arr.push([ids, ser, user, mac, mod, path, note, ver, use, stat]);
+    }
+    sh.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+}
+
+
+function moveCb(i1,a1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CB');
+var r = sh.getDataRange(); var d = r.getValues();
+var nr = r.getNumRows();
+for (x = 1; x < nr; x++) { var i = d[x][0];
+var l = 1 + x; if (i === 'mc') {
+  try {
+    var cb = {deviceIds: [d[x][1]]};
+    var orgUnitPath = d[x][6];
+    var org = AdminDirectory.Chromeosdevices.moveDevicesToOu(cb, a1, orgUnitPath);
+    var end = sh.getRange(l, 1).setValue('');
+    Utilities.sleep(1000);
+  } catch (e){continue;}
+}}}
+
+
+function editCb(i1,a1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CB');
+var r = sh.getDataRange(); var d = r.getValues();
+var nr = r.getNumRows();
+for (x = 1; x < nr; x++) { var i = d[x][0];
+var l = 1 + x; if (i === 'ec') {
+  try {
+    var resource = {annotatedUser: d[x][3], notes: d[x][7], orgUnitPath: d[x][6]};
+    var deviceId = d[x][1];
+    var org = AdminDirectory.Chromeosdevices.update(resource, a1, deviceId);
+    var end = sh.getRange(l, 1).setValue('');
+    Utilities.sleep(1000);
+  } catch (e){continue;}
+}}}
+  
 
 
 
