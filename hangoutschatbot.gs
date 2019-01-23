@@ -64,12 +64,17 @@ var email = e.user.email;
   }
   else if (m.indexOf('la') > -1){
     listAssign(i1);
-
+  }
+  else if (m.indexOf('lu') > -1){
+    listUsers(i1,d1);
+  }
+  else if (m.indexOf('cu') > -1){
+    createUsers(i1);
   }
   
   
   else if (m.indexOf('codes') > -1){
-   return {"text": "la = list assignments \nasp = add students and professors \ndc = delete classes \ndd = delete data \nfac = send factura \ncc = create course \nlc = list courses \nac = archive classes \nds = delete students"}; 
+   return {"text": "cu = create users \nlu = list users \nla = list assignments \nasp = add students and professors \ndc = delete classes \ndd = delete data \nfac = send factura \ncc = create course \nlc = list courses \nac = archive classes \nds = delete students"}; 
   }
   
 return {"text": "Done."};   
@@ -201,7 +206,7 @@ the text from the cell, because it will not be there in time to use it.
 
 function createCourse(i1) {
   var s1 = SpreadsheetApp.openById(i1);
-    var sh = s1.getSheetByName('CLASS');
+    var sh = s1.getSheetByName('CL');
     var r = sh.getDataRange();
     var n = r.getNumRows();
     var d = r.getValues();
@@ -226,7 +231,7 @@ function createCourse(i1) {
 
 function addStudentsProfs(i1,d1){
 var s1 = SpreadsheetApp.openById(i1);
-var sh = s1.getSheetByName('CLASS'); var r = sh.getDataRange();
+var sh = s1.getSheetByName('CL'); var r = sh.getDataRange();
 var n = r.getNumRows(); var d = r.getValues();
     for (x = 0; x < n; x++) { var i = d[x][0]; var l = 1 + x;
     if (i == '') {continue;} else if (i == 'c'){
@@ -281,7 +286,7 @@ var n = r.getNumRows(); var d = r.getValues();
 
 function listCourses(i1) {
   var s1 = SpreadsheetApp.openById(i1);
-    var sh = s1.getSheetByName('CLASS');
+    var sh = s1.getSheetByName('CL');
     var response = Classroom.Courses.list();
     var courses = response.courses;
     var arr = [];
@@ -301,7 +306,7 @@ function listCourses(i1) {
 
 function archiveClass(i1) {
   var s1 = SpreadsheetApp.openById(i1);
-    var sh = s1.getSheetByName('CLASS');
+    var sh = s1.getSheetByName('CL');
     var r = sh.getDataRange(); var n = r.getNumRows();
     var d = r.getValues();
     for (x = 0; x < n; x++) {
@@ -322,7 +327,7 @@ function archiveClass(i1) {
 
 function deleteCourses(i1) {
   var s1 = SpreadsheetApp.openById(i1);
-    var sh = s1.getSheetByName('CLASS');
+    var sh = s1.getSheetByName('CL');
     var r = sh.getDataRange(); var n = r.getNumRows();
     var d = r.getValues();
     for (x = 0; x < n; x++) {
@@ -353,7 +358,7 @@ Utilities.sleep(1000);});  }
 
 function deleteStudents(i1) {
 var s1 = SpreadsheetApp.openById(i1);
-var sh = s1.getSheetByName('CLASS'); var r = sh.getDataRange();
+var sh = s1.getSheetByName('CL'); var r = sh.getDataRange();
 var n = r.getNumRows(); var d = r.getValues();
 for (x = 0; x < n; x++) {var i = d[x][0]; var l = 1 + x;
   if (i == '') {continue} else if (i == 'ds') {
@@ -379,6 +384,60 @@ for (x = 0; x < n; x++) {var i = d[x][0]; var l = 1 + x;
  var end = sh.getRange(l, 1).setValue('');
   }
 }
+
+
+
+function listUsers(i1,d1) {
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('US');
+var pageToken = null, urs = []; var arr = [];
+  do {
+    var us = AdminDirectory.Users.list({
+      domain: d1, pageToken: pageToken, pageSize: 100});
+    pageToken = us.nextPageToken;
+    urs = urs.concat(us.users);
+  } while (pageToken);
+    for (i = 0; i < urs.length; i++) {
+        var ur = urs[i];
+        var first = ur.name.givenName;
+        var last = ur.name.familyName;
+        var org = ur.orgUnitPath;
+        var suspend = ur.suspended;
+        var email = ur.primaryEmail;
+        var pass = ur.password;
+        arr.push([first,last,org,suspend,email,pass]);
+    }
+    sh.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+}
+
+
+function createUsers(i1,d1) {
+var s1 = SpreadsheetApp.openById(i1);  
+var sh = s1.getSheetByName('US'); var r = sh.getDataRange();  
+var d = r.getValues(); var nr = r.getNumRows();
+sh.getRange('F1').setValue(d1);  
+sh.getRange('F2').setFormula('=IF(B2<>"",LOWER(CONCATENATE(LEFT(B2,FIND(" ",B2&" ")-1),LEFT(C2,FIND(" ",C2&" ")-1),LEFT(TRIM(RIGHT(SUBSTITUTE(C2," ",REPT(" ",LEN(C2))),LEN(C2))),1),"@",$D$1)),"")');  
+sh.getRange('G2').setFormula('=IF(B2<>"",LOWER(CONCATENATE(LEFT(B2,FIND(" ",B2&" ")-1),LEFT(C2,FIND(" ",C2&" ")-1),LEFT(TRIM(RIGHT(SUBSTITUTE(C2," ",REPT(" ",LEN(C2))),LEN(C2))),1),"12345")),"")');
+sh.getRange('G2').setFormula('=IF(D2<>"",IF(LEN(D2)>1,CONCATENATE(SUBSTITUTE(LOWER(TRIM(RIGHT(SUBSTITUTE(TRIM(D2),"/",REPT(" ",200)),200)))," ",""),"@",F1),""),"")');
+var fr = sh.getRange('F2:H'); sh.getRange('F2:H2').copyTo(fr);
+ for (x = 1; x < nr; x++) {var i = d[x][0]; var l = 1 + x;
+   if (i === 'cu') {
+     try {
+       var user = { 
+         primaryEmail: d[x][3], name: {givenName: d[x][1], familyName: d[x][2]},
+         password: d[x][4], changePasswordAtNextLogin: false,
+         includeInGlobalAddressList: true, orgUnitPath: d[x][5]};
+       var org = AdminDirectory.Users.insert(user);
+       var userEmail = d[x][3];
+       var groupKey = d[x][7];
+       var resource = {email: userEmail, role: 'MEMBER'};
+       var gr = AdminDirectory.Members.insert(resource, groupKey);
+       var end = sh.getRange(l, 1).setValue('');
+       var title = sh.getRange(1, 4).setValue('EMAIL');
+       Utilities.sleep(1000);
+     } catch (e){continue;}
+}}}
+
 
 
 /* the laa function and the listAssignments function must be put in the spreadsheet itself where you list the assignments for this to work, 
@@ -447,7 +506,7 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
   }
   sh.getRange(2, 2, arr5.length, arr5[0].length).setValues(arr5);
   sh.getRange(2, 3, arr2.length, arr2[0].length).setValues(arr2);
-  s1.getSheetByName('CACHE').getRange('B1').setValue('');   
+  s1.getSheetName('CACHE').getRange('B1').setValue('');  
 }
 
 
