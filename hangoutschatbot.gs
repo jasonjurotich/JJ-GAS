@@ -222,26 +222,23 @@ rr.sort(int);
 }
 
 
-function changeUserPassChat(use,pass) {
-      var user = use;
-      var resource = {password: pass, changePasswordAtNextLogin: true};
-      var org = AdminDirectory.Users.update(resource, user); 
+function changeUserPassChat(user,num) {
+  var pass = em.slice(0,num) + "12345";
+  var resource = {password: pass, changePasswordAtNextLogin: true};
+  var org = AdminDirectory.Users.update(resource, user); 
 }
 
 
-function suspendUsersChat(i1,use) {
-  var user = use;
+function suspendUsersChat(user) {
   var resource = {suspended: true};
   var org = AdminDirectory.Users.update(resource, user);
 }
 
 
-function unsuspendUsersChat(use) {
-  var user = use;
+function unsuspendUsersChat(user) {
   var resource = {suspended: false};
   var org = AdminDirectory.Users.update(resource, user);
 }
-
 
 //   var t = "fac_CUMBRES_20.45_ADF-FYG:1,FYG-ADP:2,ASDD-SD:4_a3wrwefqw3wese";
 
