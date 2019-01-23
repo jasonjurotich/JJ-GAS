@@ -222,8 +222,8 @@ rr.sort(int);
 }
 
 
-function changeUserPassChat(user,num) {
-  var pass = em.slice(0,num) + "12345";
+function changeUserPassChat(user) {
+  var pass = user.substring(0, user.indexOf('@')) + "12345"; 
   var resource = {password: pass, changePasswordAtNextLogin: true};
   var org = AdminDirectory.Users.update(resource, user); 
 }
