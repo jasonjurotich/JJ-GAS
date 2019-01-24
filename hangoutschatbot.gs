@@ -16,7 +16,6 @@ return {"text": mes};
 IndexOf is very good if you are going to have a conversation with the bot, but if you are only giving it commands, it is useless.
 */
 
-
 function onMessage(e) {
 var m = e.message.text;
 var sp1 = m.split('_');
@@ -185,11 +184,15 @@ var email = e.user.email;
   else if (sp2[0] === 'dg'){
     deleteGroups(i1);
   }
- 
+  
+ else if (sp2[0] === 'ruc'){
+    reports(i1);
+  }
+  
   
 // Be careful of the letters. If two commands start with the same letters, it will take the shorter one (if one is 'lc', and another 'lcb', it will run the first.
   else if (m.indexOf('cs') > -1){
-   return {"text": " ac = archive classes  \n asp = add students and professors  \n amu = add and/or remove user from group \n aru = remove user from group \n cal = create event from description \n cbl = list cb  \n cc = create course  \n cdes = create event from info \n ceg = edit groups  \n cg = create group  \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = delete students \n ecb = edit cb \n eg = edit group info  \n email = send email with subject and text \n eo = edit orgs  \n fac = send factura  \n la = list assignments  \n lc = list courses  \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n pu = change password user in chat  \n sd = sort data  \n sru = suspend user  \n susf = unsuspend user in chat"}; 
+   return {"text": " ac = archive classes  \n asp = add students and professors  \n amu = add and/or remove user from group \n aru = remove user from group \n cal = create event from description \n cbl = list cb  \n cc = create course  \n cdes = create event from info \n ceg = edit groups  \n cg = create group  \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = delete students \n ecb = edit cb \n eg = edit group info  \n email = send email with subject and text \n eo = edit orgs  \n fac = send factura  \n la = list assignments  \n lc = list courses  \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n pu = change password user in chat  \n ruc = reports \n sd = sort data  \n sru = suspend user"}; 
   }
   
 return {"text": "Done."};   
@@ -205,12 +208,14 @@ function bcal(r) {
  .createEventFromDescription(r);
 }
 
+
 function bcaldes(r,s,f,d,g){
  var event = CalendarApp.createEvent(r,
     new Date(s),
     new Date(f),
 {description: d, guests:g, sendInvites: true}); 
 }
+
 
 function sendMessage(em,su,me){
   GmailApp.sendEmail(em,su,me);
@@ -229,6 +234,7 @@ var s1 = SpreadsheetApp.openById(i1);
 var sh = s1.getSheetByName(em);  
 var r = sh.getRange(2, 1, sh.getLastRow(), sh.getLastColumn()).setValue('');
 }
+
 
 function sortData(i1,em,so) {
 var s1 = SpreadsheetApp.openById(i1);
@@ -276,10 +282,9 @@ for (i=0; i<1; i++){ try {
 
 
 
-//   var t = "fac_IHI_ACS-EDU-AST:1,ACS-EDU-AST:1,ACS-EDU-AST:1_https://drive.google.com/open?id=ID";
-
 function sendFactura(i2,email,co,ca,re){
- 
+// example "fac_IHI_ACS-EDU-AST:1,ACS-EDU-AST:1,ACS-EDU-AST:1_https://drive.google.com/open?id=ID";
+   
 var shurl = SpreadsheetApp.openById(i2).getSheetByName('Pre Factura');
 var sheet = SpreadsheetApp.openById(i2).getSheetByName('Factura');
   
@@ -356,9 +361,6 @@ so.sort(1); // ordenar la hoja por fechas de entrega
 
 
 
-
-
-
 /* DO NOT ERASE!! NOTE TO SELF: When you try and paste data in cells and have other code, 
 the code that follows will continue run BEFORE it pastes the text in the cells, causing an error.
 You must make the text a variable and use that for the rest of the code instead of trying to grabe
@@ -388,7 +390,6 @@ function createCourse(i1) {
         }
     }
 }
-
 
 
 function addStudentsProfs(i1,d1){
@@ -445,7 +446,6 @@ var n = r.getNumRows(); var d = r.getValues();
 }
 
 
-
 function listCourses(i1) {
   var s1 = SpreadsheetApp.openById(i1);
     var sh = s1.getSheetByName('CL');
@@ -467,46 +467,42 @@ function listCourses(i1) {
 
 function archiveClass(i1) {
   var s1 = SpreadsheetApp.openById(i1);
-    var sh = s1.getSheetByName('CL');
-    var r = sh.getDataRange(); var n = r.getNumRows();
-    var d = r.getValues();
-    for (x = 0; x < n; x++) {
-        var i = d[x][0]; var l = 1 + x;
-        if (i == '') {continue;}
-        else if (i == 'a') {
-            try {
-                var course = Classroom.Courses.get(d[x][1]);
-                course.courseState = 'ARCHIVED';
-                Classroom.Courses.update(course, d[x][1]);
-                var end = sh.getRange(l, 1).setValue('');
-                var end = sh.getRange(l, 6).setValue('ARCHIVED');
-            } catch (e) {continue;}
-        }}}
+  var sh = s1.getSheetByName('CL');
+  var r = sh.getDataRange(); var n = r.getNumRows();
+  var d = r.getValues();
+  for (x = 0; x < n; x++) {
+    var i = d[x][0]; var l = 1 + x;
+    if (i == '') {continue;}
+    else if (i == 'a') {
+      try {
+        var course = Classroom.Courses.get(d[x][1]);
+        course.courseState = 'ARCHIVED';
+        Classroom.Courses.update(course, d[x][1]);
+        var end = sh.getRange(l, 1).setValue('');
+        var end = sh.getRange(l, 6).setValue('ARCHIVED');
+      } catch (e) {continue;} }}}
 
 
 function deleteCourses(i1) {
-  var s1 = SpreadsheetApp.openById(i1);
-    var sh = s1.getSheetByName('CL');
-    var r = sh.getDataRange(); var n = r.getNumRows();
-    var d = r.getValues();
-    for (x = 0; x < n; x++) {
-        var i = d[x][0]; var l = 1 + x;
-        if (i == '') {continue;}
-        else if (i == 'dc') {
-          try {
-            Classroom.Courses.remove(d[x][1]);
-            var end = sh.getRange(l, 1).setValue('');
-            var end = sh.getRange(l, 6).setValue('DELETED');
-            } catch (e) {continue;}
-        }}}
-
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CL');
+var r = sh.getDataRange(); var n = r.getNumRows();
+var d = r.getValues();
+  for (x = 0; x < n; x++) {
+    var i = d[x][0]; var l = 1 + x;
+    if (i == '') {continue;}
+    else if (i == 'dc') {
+      try {
+        Classroom.Courses.remove(d[x][1]);
+        var end = sh.getRange(l, 1).setValue('');
+        var end = sh.getRange(l, 6).setValue('DELETED');
+      } catch (e) {continue;} }}}
 
 
 function deleteTriggers_() {
 var triggers = ScriptApp.getProjectTriggers();
 triggers.forEach(function (trigger) {ScriptApp.deleteTrigger(trigger);   
 Utilities.sleep(1000);});  }
-
 
 
 function deleteStudents(i1) {
@@ -537,7 +533,6 @@ for (x = 0; x < n; x++) {var i = d[x][0]; var l = 1 + x;
  var end = sh.getRange(l, 1).setValue('');
   }
 }
-
 
 
 function listUsers(i1,d1) {
@@ -592,7 +587,6 @@ var fr = sh.getRange('F2:H'); sh.getRange('F2:H2').copyTo(fr);
 }}}
 
 
-
 function changeUserPass(i1) {
 var s1 = SpreadsheetApp.openById(i1);  
 var sh = s1.getSheetByName('US'); var r = sh.getDataRange();  
@@ -608,7 +602,6 @@ var i = d[x][0]; var l = 1 + x;
       Utilities.sleep(1000);
     } catch (e){continue;}
 }}}
-
 
 
 function suspendUsers(i1) {
@@ -646,8 +639,6 @@ var i = d[x][0]; var l = 1 + x;
       Utilities.sleep(1000);
     } catch (e){continue;}
 }}}
-
-
 
 
 function createOrgs(i1,a1) {
@@ -821,7 +812,6 @@ if (i === 'dg') {
 }}}
 
 
-
 function listCb(i1,d1,a1) {
 var s1 = SpreadsheetApp.openById(i1);
 var sh = s1.getSheetByName('CB'); var pageToken;
@@ -883,6 +873,175 @@ var l = 1 + x; if (i === 'ec') {
   } catch (e){continue;}
 }}}
   
+
+
+function reports(i1){
+generateUserUsageReport(i1);
+generateCustomerUsageReport(i1);
+}
+
+
+function generateUserUsageReport(i1) {
+  var today = new Date();
+  var oneWeekAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+  var timezone = Session.getScriptTimeZone();
+  var date = Utilities.formatDate(oneWeekAgo, timezone, 'yyyy-MM-dd');
+  var rows = []; var pageToken; var page;
+  var sh = SpreadsheetApp.openById(i1).getSheetByName('RU');
+  
+  var parameters = [
+    'accounts:is_suspended',
+    'accounts:last_login_time',
+    'accounts:drive_used_quota_in_mb',
+    'gmail:num_emails_exchanged',
+    'drive:num_items_created',
+    'drive:num_google_documents_created',
+    'drive:num_google_spreadsheets_created',
+    'drive:num_google_presentations_created',
+    'drive:num_google_forms_created',
+    'classroom:role',
+    'classroom:num_posts_created',
+    'classroom:timestamp_last_interaction'
+  ];
+ 
+  do {
+    page = AdminReports.UserUsageReport.get('all', date, {
+      parameters: parameters.join(','),
+      maxResults: 500, pageToken: pageToken
+    });
+    
+    var reports = page.usageReports;
+    
+    if (reports) {
+      for (var i = 0; i < reports.length; i++) {
+        var report = reports[i];
+        var parameterValues = getParameterValues(report.parameters);
+        var row = [
+          report.date,
+          report.entity.userEmail,
+          parameterValues['accounts:is_suspended'],
+          parameterValues['accounts:last_login_time'],
+          parameterValues['accounts:drive_used_quota_in_mb'],
+          parameterValues['gmail:num_emails_exchanged'],
+          parameterValues['drive:num_items_created'],
+          parameterValues['drive:num_google_documents_created'],
+          parameterValues['drive:num_google_spreadsheets_created'],
+          parameterValues['drive:num_google_presentations_created'],
+          parameterValues['drive:num_google_forms_created'],
+          parameterValues['classroom:role'],
+          parameterValues['classroom:num_posts_created'],
+          parameterValues['classroom:timestamp_last_interaction']
+        ];
+        rows.push(row);
+      }
+    }
+    pageToken = page.nextPageToken;
+  } while (pageToken);
+
+  if (rows.length > 0) {
+    sh.getRange(2,1,rows.length,rows[0].length).setValues(rows);
+  }
+  
+}
+
+
+function generateCustomerUsageReport(i1) {
+  var today = new Date();
+  var oneWeekAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+  var timezone = Session.getScriptTimeZone();
+  var date = Utilities.formatDate(oneWeekAgo, timezone, 'yyyy-MM-dd');
+  var rows = []; var pageToken; var page;
+  var sh = SpreadsheetApp.openById(i1).getSheetByName('RC');
+  
+  var parameters = [
+    'accounts:num_suspended_users',
+    'accounts:num_30day_logins',
+    'accounts:used_quota_in_mb',
+    'accounts:num_users',
+    'gmail:num_30day_active_users',
+    'gmail:num_emails_exchanged',
+    'drive:num_30day_active_users',
+    'drive:num_items_created',
+    'drive:num_google_documents_created',
+    'drive:num_google_spreadsheets_created',
+    'drive:num_google_presentations_created',
+    'drive:num_google_forms_created',
+    'classroom:num_30day_users',
+    'classroom:num_teacher_posts_created', 
+  ];
+ 
+  do {
+    page = AdminReports.CustomerUsageReports.get(date, {
+      parameters: parameters.join(','),
+      maxResults: 500, pageToken: pageToken
+    });
+    
+    var reports = page.usageReports;
+    
+    if (reports) {
+      for (var i = 0; i < reports.length; i++) {
+        var report = reports[i];
+        var parameterValues = getParameterValues(report.parameters);
+        var row = [
+          report.date,
+          report.entity.userEmail,
+          parameterValues['accounts:num_suspended_users'],
+          parameterValues['accounts:num_30day_logins'],
+          parameterValues['accounts:used_quota_in_mb'],
+          parameterValues['accounts:num_users'],
+          parameterValues['gmail:num_30day_active_users'],
+          parameterValues['gmail:num_emails_exchanged'],
+          parameterValues['drive:num_30day_active_users'],
+          parameterValues['drive:num_items_created'],
+          parameterValues['drive:num_google_documents_created'],
+          parameterValues['drive:num_google_spreadsheets_created'], 
+          parameterValues['drive:num_google_presentations_created'],
+          parameterValues['drive:num_google_forms_created'],
+          parameterValues['classroom:num_30day_users'],
+          parameterValues['classroom:num_teacher_posts_created']
+        ];
+        rows.push(row);
+      }
+    }
+    pageToken = page.nextPageToken;
+  } while (pageToken);
+
+  if (rows.length > 0) {
+    sh.getRange(2,1,rows.length,rows[0].length).setValues(rows);
+  }
+  
+}
+
+
+function getParameterValues(parameters) {
+  return parameters.reduce(function(result, parameter) {
+    var name = parameter.name;
+    var value;
+    if (parameter.intValue !== undefined) {
+      value = parameter.intValue;
+    } else if (parameter.stringValue !== undefined) {
+      value = parameter.stringValue;
+    } else if (parameter.datetimeValue !== undefined) {
+      value = new Date(parameter.datetimeValue);
+    } else if (parameter.boolValue !== undefined) {
+      value = parameter.boolValue;
+    }
+    result[name] = value;
+    return result;
+  }, {});
+}
+
+
+/*parameters
+https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/users-gmail
+https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/users-drive
+https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/users-classroom
+https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/users-accounts
+https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/customers-calendar
+https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/customers-classroom
+https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/customers-drive
+https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/customers-gmail
+*/
 
 
 
