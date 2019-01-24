@@ -1,5 +1,6 @@
 
 
+// image of Jeeves the name of the bot https://i.imgur.com/jnPGigk.png
 
 var i1 = 'ID';
 var i2 = 'ID';
