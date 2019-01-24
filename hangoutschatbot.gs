@@ -2,6 +2,7 @@
 
 
 var i1 = 'ID';
+var i2 = 'ID';
 var d1 = 'sch.edu.mx';
 var a1 = 'ID';
 
@@ -44,7 +45,10 @@ var email = e.user.email;
   }
   
   else if (sp1[0] === 'fac'){
-    sendFactura(m,email);
+    var co = sp1[1];
+    var ca = sp1[2];
+    var re = sp1[3];
+    sendFactura(i2,email,co,ca,re);
   }
   
   else if (sp2[0] === 'dd'){
@@ -270,23 +274,23 @@ for (i=0; i<1; i++){ try {
   } catch(e){continue;}  
 }}
 
-//   var t = "fac_CUMBRES_20.45_ADF-FYG:1,FYG-ADP:2,ASDD-SD:4_a3wrwefqw3wese";
 
-function sendFactura(s2,email,m){  
-var shurl = s2.getSheetByName('Pre Factura');
-var sheet = s2.getSheetByName('Factura');
 
-var em = email;   
-var sp = m.split('_');
-var co = sp[1];
-var cl = sp[2];
-var ca = sp[3];
-var re = sp[4];
+//   var t = "fac_IHI_ACS-EDU-AST:1,ACS-EDU-AST:1,ACS-EDU-AST:1_https://drive.google.com/open?id=ID";
+
+function sendFactura(i2,email,co,ca,re){
+ 
+var shurl = SpreadsheetApp.openById(i2).getSheetByName('Pre Factura');
+var sheet = SpreadsheetApp.openById(i2).getSheetByName('Factura');
+  
+// co es colegio
+// ca son los artículos por facturar  
+// re es enlace al recibo
   
 shurl.getRange('B3').setValue(co);
-shurl.getRange('E7').setValue(cl);
 shurl.getRange('C37').setValue(re);
   
+// esto toma ca y les pone en la hoja  
 var result = [];
 a = ca.split(','); 
 while(a[0]) {result.push(a.splice(0,1));}
@@ -300,34 +304,32 @@ for(i=0;i<result.length;i++){
 for (i=0; i<arr1.length; i++){
   var lr = 16 + i;
   if (arr1[i][0] != '') {    
-  s.getRange(lr,1).setValue(arr1[i][0]);
-  s.getRange(lr,3).setValue(arr1[i][1]);  
+  shurl.getRange(lr,1).setValue(arr1[i][0]);
+  shurl.getRange(lr,3).setValue(arr1[i][1]);  
   } else {continue;}     
 }
    
+// esto toma los datos de la hoja de la pre factura y les pone en la hoja de factura  
 var rows = shurl.getDataRange();
 var numRows = rows.getNumRows() - 1;
 var values = rows.getValues();
 sheet.getRange(2,3).setValue(values[1][2]);
+  
 var i;
 var o;
   
-  for(i=3; i<14; i++){
-    for(o=0;o<5;o++){
-      sheet.getRange(i+1,o+1).setValue(values[i][o]);
-    }
+for(i=3; i<14; i++){
+ for(o=0;o<5;o++){sheet.getRange(i+1,o+1).setValue(values[i][o]);}
   } 
-
-  for(i=14; i< 39; i++){
-    for(o=0;o<4;o++){
-      sheet.getRange(i+1,o+1).setValue(values[i][o]);
-    }
+for(i=14; i<39; i++){
+ for(o=0;o<4;o++){sheet.getRange(i+1,o+1).setValue(values[i][o]);}
   } 
   
+// esto es para copiar la hoja de factura en otro documento y moverlo a una carpeta (y quitandolo del root folder) 
  var destFolder = DriveApp.getFolderById("ID");
  var numf = shurl.getRange('D1').getValue();
  var sc = SpreadsheetApp.create('Factura sin OC jjurotich '+ numf);
- var newnumf = shurl.getRange('D1').setValue(numf+1);
+ var newnumf = shurl.getRange('D1').setValue(numf+1); 
  var ssid = sc.getId();
  var ssurl = sc.getUrl();
  shurl.getRange('E2').setValue(ssurl); 
@@ -336,25 +338,24 @@ var o;
  var del = des.getSheetByName('Sheet1').activate(); 
  des.deleteActiveSheet();
  var sheet2 = des.getSheets()[0]; 
- sheet2.setName('Factura'); 
+ sheet2.setName('Factura');  
  var sf = DriveApp.getFileById(ssid);
  DriveApp.getFolderById(destFolder.getId()).addFile(sf);
  DriveApp.getRootFolder().removeFile(sf);
   
-var s33 = s3.getSheets()[0];
-arr2 = [];  
-var date = new Date();    
-var link = s.getRange('E2').getValue();
-arr2.push([date,em,link]);
+// esto pone el enlace del documento creado en la carpeta en la hoja de respuestas del formulario   
+var s33 = SpreadsheetApp.openById('ID').getSheets()[0]; // hoja del formulario
+var so = s33.getRange('A:C');  
+var arr2 = []; var date = new Date();    
+arr2.push([date,email,ssurl]);
 var lr = s33.getLastRow();
-var a1 = s33.getRange(lr+1,1,arr2.length,arr2[0].length).setValues(arr2);    
+var a1 = s33.getRange(lr+1,1,arr2.length,arr2[0].length).setValues(arr2);
+so.sort(1); // ordenar la hoja por fechas de entrega
+  
 }
 
 
-function sortEntrances() {
-  var s = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0].getRange('A:C');
-  s.sort(1);
-}
+
 
 
 
