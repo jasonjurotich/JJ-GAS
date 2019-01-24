@@ -117,10 +117,23 @@ var email = e.user.email;
   }
   
   else if (sp2[0] === 'susf'){
-    var user = sp2[1];
-    unsuspendUsersChat(user);
+  var user = sp2[1];
+  unsuspendUsersChat(user);
   }
-    
+  
+  else if (sp2[0] === 'amu'){
+  var user = sp2[1];
+  var gr1 = sp2[2];
+  var gr2 = sp2[3];  
+  addMoveUserGroup(user,gr1,gr2);
+  }
+  
+  else if (sp2[0] === 'aru'){
+  var user = sp2[1];
+  var gr1 = sp2[2];  
+  aremoveUserGroup(user,gr1);
+  }
+  
   else if (sp2[0] === 'cbl'){
     listCb(i1,d1,a1);
   }
@@ -172,7 +185,7 @@ var email = e.user.email;
   
 // Be careful of the letters. If two commands start with the same letters, it will take the shorter one (if one is 'lc', and another 'lcb', it will run the first.
   else if (m.indexOf('cs') > -1){
-   return {"text": " ac = archive classes  \n asp = add students and professors  \n cal = create event from description \n cbl = list cb  \n cc = create course  \n cdes = create event from info \n ceg = edit groups  \n cg = create group  \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = delete students \n ecb = edit cb \n eg = edit group info  \n email = send email with subject and text \n eo = edit orgs  \n fac = send factura  \n la = list assignments  \n lc = list courses  \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n pu = change password user in chat  \n sd = sort data  \n sru = suspend user  \n suff = unsuspend user in chat \n sust = suspend user in chat  \n upc = change user password"}; 
+   return {"text": " ac = archive classes  \n asp = add students and professors  \n amu = add and/or remove user from group \n aru = remove user from group \n cal = create event from description \n cbl = list cb  \n cc = create course  \n cdes = create event from info \n ceg = edit groups  \n cg = create group  \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = delete students \n ecb = edit cb \n eg = edit group info  \n email = send email with subject and text \n eo = edit orgs  \n fac = send factura  \n la = list assignments  \n lc = list courses  \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n pu = change password user in chat  \n sd = sort data  \n sru = suspend user  \n susf = unsuspend user in chat"}; 
   }
   
 return {"text": "Done."};   
@@ -239,6 +252,23 @@ function unsuspendUsersChat(user) {
   var resource = {suspended: false};
   var org = AdminDirectory.Users.update(resource, user);
 }
+
+
+function addMoveUserGroup(user,gr1,gr2){ 
+var ad = AdminDirectory.Members;  
+for (i=0; i<1; i++){ try {
+  var resource = {email: user, role: 'MEMBER'};
+  ad.insert(resource, gr1); ad.remove(gr2, user);
+  } catch(e){continue;}  
+}}
+
+
+function removeUserGroup(user,gr1){ 
+var ad = AdminDirectory.Members;  
+for (i=0; i<1; i++){ try {
+   ad.remove(gr1, user);
+  } catch(e){continue;}  
+}}
 
 //   var t = "fac_CUMBRES_20.45_ADF-FYG:1,FYG-ADP:2,ASDD-SD:4_a3wrwefqw3wese";
 
