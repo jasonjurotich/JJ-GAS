@@ -138,6 +138,13 @@ var email = e.user.email;
   aremoveUserGroup(user,gr1);
   }
   
+  else if (sp1[0] === 'uc'){
+  var f1 = sp1[1];
+  var l1 = sp1[2];
+  var o1 = sp1[3];  
+  createUserChat(i1,f1,l1,o1);
+  }  
+    
   else if (sp2[0] === 'cbl'){
     listCb(i1,d1,a1);
   }
@@ -193,7 +200,7 @@ var email = e.user.email;
   
 // Be careful of the letters. If two commands start with the same letters, it will take the shorter one (if one is 'lc', and another 'lcb', it will run the first.
   else if (m.indexOf('cs') > -1){
-   return {"text": " ac = archive classes  \n asp = add students and professors  \n amu = add and/or remove user from group \n aru = remove user from group \n cal = create event from description \n cbl = list cb  \n cc = create course  \n cdes = create event from info \n ceg = edit groups  \n cg = create group  \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = delete students \n ecb = edit cb \n eg = edit group info  \n email = send email with subject and text \n eo = edit orgs  \n fac = send factura  \n la = list assignments  \n lc = list courses  \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n pu = change password user in chat  \n ruc = reports \n sd = sort data  \n sru = suspend user"}; 
+   return {"text": " ac = archive classes  \n asp = add students and professors  \n amu = add and/or remove user from group \n aru = remove user from group \n cal = create event from description \n cbl = list cb  \n cc = create course  \n cdes = create event from info \n ceg = edit groups  \n cg = create group  \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = delete students \n ecb = edit cb \n eg = edit group info  \n email = send email with subject and text \n eo = edit orgs  \n fac = send factura  \n la = list assignments  \n lc = list courses  \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n pu = change password user in chat  \n ruc = reports \n sd = sort data  \n sru = suspend user  \n susf = unsuspend user in chat \n sust = suspend user in chat  \n uc = add user from chat \n upc = change user password"}; 
   }
   
 return {"text": "Done."};   
@@ -281,6 +288,33 @@ for (i=0; i<1; i++){ try {
   } catch(e){continue;}  
 }}
 
+
+function createUserChat(i1,f1,l1,o1) { 
+var s1 = SpreadsheetApp.openById(i1);  
+var sh = s1.getSheetByName('CACHE'); var r = sh.getDataRange();  
+var d = r.getValues(); var nr = r.getNumRows();
+sh.getRange('D2').setValue(f1);
+sh.getRange('E2').setValue(l1);  
+sh.getRange('F2').setValue(o1);  
+var first = sh.getRange('D2').getValue();
+var last = sh.getRange('E2').getValue(); 
+var email = sh.getRange('G2').getValue();
+var pass = sh.getRange('H2').getValue();
+var group = sh.getRange('I2').getValue(); 
+var or = sh.getRange('F2').getValue(); 
+var orr = or.toUpperCase();  
+var org = "/" + orr;  
+ 
+  var user = { 
+    primaryEmail: email, name: {givenName: first, familyName: last},
+    password: pass, changePasswordAtNextLogin: true,
+    includeInGlobalAddressList: true, orgUnitPath: org};
+  var org = AdminDirectory.Users.insert(user);
+       
+  var userEmail = email; var groupKey = group;
+       var resource = {email: userEmail, role: 'MEMBER'};
+       var gr = AdminDirectory.Members.insert(resource, groupKey);      
+}
 
 
 function sendFactura(i2,email,co,ca,re){
