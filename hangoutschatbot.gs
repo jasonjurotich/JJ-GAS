@@ -1140,9 +1140,12 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
         } catch (e) {continue;}  
      }
   }
-  for (r=0; r < arr3.length; r++){ var eu = arr3[r];
-  var us = AdminDirectory.Users.get(eu).primaryEmail;
-  arr5.push([us]);
+  for (r=0; r < arr3.length; r++){ 
+    try {  
+     var eu = arr3[r];
+     var us = AdminDirectory.Users.get(eu).primaryEmail;
+     arr5.push([us]);
+    }catch(e){continue;}
   }
   sh.getRange(2, 2, arr5.length, arr5[0].length).setValues(arr5);
   sh.getRange(2, 3, arr2.length, arr2[0].length).setValues(arr2);
