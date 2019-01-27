@@ -1,10 +1,8 @@
-
-
 // image of Jeeves the name of the bot https://i.imgur.com/jnPGigk.png
 
 var i1 = 'ID';
-var i2 = 'ID';
-var d1 = 'sch.edu.mx';
+//var i2 = 'ID';
+var d1 = 'domain';
 var a1 = 'ID';
 
 
@@ -79,11 +77,11 @@ var email = e.user.email;
   }
   
   else if (sp2[0] === 'asp'){
-    addStudentsProfs(i1,d1);
+    addStPro(i1);
   }
   
   else if (sp2[0] === 'ds'){
-    deleteStudents(i1);
+    delStu(i1);
   }
   
   else if (sp2[0] === 'la'){
@@ -95,7 +93,7 @@ var email = e.user.email;
   }
   
   else if (sp2[0] === 'cu'){
-    createUsers(i1);
+    creUse(i1);
   }
   
   else if (sp2[0] === 'mmg'){
@@ -135,7 +133,7 @@ var email = e.user.email;
   else if (sp2[0] === 'aru'){
   var user = sp2[1];
   var gr1 = sp2[2];  
-  aremoveUserGroup(user,gr1);
+  removeUserGroup(user,gr1);
   }
   
   else if (sp1[0] === 'uc'){
@@ -143,8 +141,8 @@ var email = e.user.email;
   var l1 = sp1[2];
   var o1 = sp1[3];  
   createUserChat(i1,f1,l1,o1);
-  }  
-    
+  }
+   
   else if (sp2[0] === 'cbl'){
     listCb(i1,d1,a1);
   }
@@ -197,10 +195,32 @@ var email = e.user.email;
     reports(i1);
   }
   
+  else if (sp2[0] === 'lcal'){
+    listCals(i1);
+  }
+  
+  else if (sp2[0] === 'ecal'){
+    editCals(i1);
+  }
+  
+  else if (sp2[0] === 'cho'){
+    changeOwner(i1);
+  }
+  
+  else if (sp1[0] === 'cgc'){
+    var na = sp1[1];
+    var em = sp1[2];
+   createGroupChat(i1,na,em); 
+  }
+  
+  else if (sp1[0] === 'cegc'){
+    var em = sp1[1];
+   editGroupConfigChat(i1,em); 
+  }
   
 // Be careful of the letters. If two commands start with the same letters, it will take the shorter one (if one is 'lc', and another 'lcb', it will run the first.
   else if (m.indexOf('cs') > -1){
-   return {"text": " ac = archive classes  \n asp = add students and professors  \n amu = add and/or remove user from group \n aru = remove user from group \n cal = create event from description \n cbl = list cb  \n cc = create course  \n cdes = create event from info \n ceg = edit groups  \n cg = create group  \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = delete students \n ecb = edit cb \n eg = edit group info  \n email = send email with subject and text \n eo = edit orgs  \n fac = send factura  \n la = list assignments  \n lc = list courses  \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n pu = change password user in chat  \n ruc = reports \n sd = sort data  \n sru = suspend user  \n susf = unsuspend user in chat \n sust = suspend user in chat  \n uc = add user from chat \n upc = change user password"}; 
+   return {"text": " FROM CHAT \n amu = add and remove user from groups in chat \n cal = create event from description in chat \n cdes = create event from info in chat \n cegc = edit group config in chat \n cgc = create group in chat \n email = send email with subject and text in chat \n fac = send factura in chat \n pu = change password user in chat  \n susf = unsuspend user in chat \n sust = suspend user in chat  \n uc = add user in chat \n  \n FROM SHEET \n ac = archive classes  \n asp = add students and professors  \n aru = remove user from group \n cbl = list cb  \n cc = create courses \n ceg = edit groups config \n cg = create groups \n cho = change owner \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = remove all students from class \n ecal = edit calendars \n ecb = edit cb \n eg = edit group info  \n eo = edit orgs  \n la = list assignments  \n lc = list courses  \n lcal = lists calenadars \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n ruc = reports"}; 
   }
   
 return {"text": "Done."};   
@@ -234,6 +254,27 @@ function listAssign(i1){
 var s1 = SpreadsheetApp.openById(i1);
 var sh = s1.getSheetByName('CACHE');
 sh.getRange('B1').setValue('la'); 
+}
+
+
+function addStPro(i1){
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CACHE');
+sh.getRange('B1').setValue('asp'); 
+}
+
+
+function delStu(i1){
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CACHE');
+sh.getRange('B1').setValue('ds'); 
+}
+
+
+function creUse(i1){
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CACHE');
+sh.getRange('B1').setValue('cu'); 
 }
 
 
@@ -317,6 +358,52 @@ var org = "/" + orr;
 }
 
 
+function createGroupChat(i1,na,em) {
+  for (i=0; i<1; i++){ try {
+      var gr = {email: em, name: na, description: na};
+      var gro = AdminDirectory.Groups.insert(gr);
+    } catch (e){continue;}
+}}
+
+
+function editGroupConfigChat(i1,em) {
+  for (i=0; i<1; i++){ try {
+    var groupId = em; // This is ONLY the email username, NOT the ID.
+    var group = AdminGroupsSettings.newGroups();
+    group.whoCanAdd = 'NONE_CAN_ADD';
+    group.whoCanJoin = 'INVITED_CAN_JOIN';
+    group.whoCanViewMembership = 'ALL_MEMBERS_CAN_VIEW';
+    group.whoCanViewGroup = 'ALL_MEMBERS_CAN_VIEW';
+    group.whoCanInvite = 'ALL_MANAGERS_CAN_INVITE';
+    group.allowExternalMembers = false;
+    group.whoCanPostMessage = 'ALL_MEMBERS_CAN_POST';
+    group.allowWebPosting = true;
+    group.showInGroupDirectory = true;
+    group.allowGoogleCommunication = false;
+    group.membersCanPostAsTheGroup = false;
+    group.includeInGlobalAddressList = true;
+    group.whoCanLeaveGroup = 'NONE_CAN_LEAVE';
+    AdminGroupsSettings.Groups.patch(group, groupId);
+  } catch (e){continue;}
+}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function sendFactura(i2,email,co,ca,re){
 // example "fac_IHI_ACS-EDU-AST:1,ACS-EDU-AST:1,ACS-EDU-AST:1_https://drive.google.com/open?id=ID";
    
@@ -366,7 +453,7 @@ for(i=14; i<39; i++){
   } 
   
 // esto es para copiar la hoja de factura en otro documento y moverlo a una carpeta (y quitandolo del root folder) 
- var destFolder = DriveApp.getFolderById("ID");
+ var destFolder = DriveApp.getFolderById("1ySK9KC75FWQvDjl4s493BnFkHX_b2bGw");
  var numf = shurl.getRange('D1').getValue();
  var sc = SpreadsheetApp.create('Factura sin OC jjurotich '+ numf);
  var newnumf = shurl.getRange('D1').setValue(numf+1); 
@@ -384,7 +471,7 @@ for(i=14; i<39; i++){
  DriveApp.getRootFolder().removeFile(sf);
   
 // esto pone el enlace del documento creado en la carpeta en la hoja de respuestas del formulario   
-var s33 = SpreadsheetApp.openById('ID').getSheets()[0]; // hoja del formulario
+var s33 = SpreadsheetApp.openById('1MkTOz8xLU38X2HUpeFiu6SuJGDGuP2aPgcZy1Zc-JYs').getSheets()[0]; // hoja del formulario
 var so = s33.getRange('A:C');  
 var arr2 = []; var date = new Date();    
 arr2.push([date,email,ssurl]);
@@ -412,7 +499,7 @@ function createCourse(i1) {
     for (x = 0; x < n; x++) { var i = d[x][0]; var l = 1 + x;
       if (i == '') {continue;}
       else if (sh.getRange(l,3,1,1).getBackground() === "#ea9999" || sh.getRange(l,4,1,1).getBackground() === "#ea9999" || sh.getRange(l,5,1,1).getBackground() === "#ea9999") {continue;}                        
-      else if (i == 'c' && sh.getRange(l,3,1,1).getBackground() !== "#ea9999" && sh.getRange(l,4,1,1).getBackground() !== "#ea9999" && sh.getRange(l,5,1,1).getBackground() !== "#ea9999") {
+      else if (i == 'cc' && sh.getRange(l,3,1,1).getBackground() !== "#ea9999" && sh.getRange(l,4,1,1).getBackground() !== "#ea9999" && sh.getRange(l,5,1,1).getBackground() !== "#ea9999") {
       var course = Classroom.newCourse();
         course.name = d[x][2];
         course.section = d[x][3];
@@ -422,62 +509,9 @@ function createCourse(i1) {
         course = Classroom.Courses.create(course);
         var c = course.id;
         var id = sh.getRange(l, 2).setValue(c);
+        var end = sh.getRange(l, 1).setValue('');
         }
     }
-}
-
-
-function addStudentsProfs(i1,d1){
-var s1 = SpreadsheetApp.openById(i1);
-var sh = s1.getSheetByName('CL'); var r = sh.getDataRange();
-var n = r.getNumRows(); var d = r.getValues();
-    for (x = 0; x < n; x++) { var i = d[x][0]; var l = 1 + x;
-    if (i == '') {continue;} else if (i == 'c'){
-    var arr1 =[]; var arr2 = [];
-      
-      var pageToken;
-      var gr = AdminDirectory.Members.list(d[x][6],
-       {domain: d1, maxResults: 500, pageToken: pageToken});
-      var grs = gr.members; 
-      for (t = 0; t < grs.length; t++) {
-        var or = grs[t];
-        var email = or.email;
-        arr1.push(email);
-      }
-      
-      var pageToken2;
-      var gr2 = AdminDirectory.Members.list(d[x][7],
-       {domain: d1, maxResults: 500, pageToken: pageToken2});
-      var grs2 = gr2.members; 
-      for (q = 0; q < grs2.length; q++) {
-        var or2 = grs2[q];
-        var email2 = or2.email;
-        arr2.push(email2);
-      }
-      
-      for (k = 0; k < arr1.length; k++) {
-        var list = arr1[k];
-        try {
-          Classroom.Courses.Teachers.create({userId: list}, d[x][1]);
-        } catch(e){continue;}
-      } 
-      
-      for (m = 0; m < arr2.length; m++) {
-        var list2 = arr2[m];
-        try{
-          Classroom.Courses.Students.create({userId: list2}, d[x][1]);
-        } catch(e){continue;}
-      } 
-      
-      try {
-        var prof1 = Classroom.Courses.Teachers.create({userId: d[x][8]}, d[x][1]);
-      } catch(e){continue;}
-      
-      var end = sh.getRange(l, 1).setValue('');
-      Utilities.sleep(1000);
-      
-    }
-  }
 }
 
 
@@ -508,7 +542,7 @@ function archiveClass(i1) {
   for (x = 0; x < n; x++) {
     var i = d[x][0]; var l = 1 + x;
     if (i == '') {continue;}
-    else if (i == 'a') {
+    else if (i == 'ac') {
       try {
         var course = Classroom.Courses.get(d[x][1]);
         course.courseState = 'ARCHIVED';
@@ -540,34 +574,18 @@ triggers.forEach(function (trigger) {ScriptApp.deleteTrigger(trigger);
 Utilities.sleep(1000);});  }
 
 
-function deleteStudents(i1) {
+function changeOwner(i1) {
 var s1 = SpreadsheetApp.openById(i1);
 var sh = s1.getSheetByName('CL'); var r = sh.getDataRange();
 var n = r.getNumRows(); var d = r.getValues();
 for (x = 0; x < n; x++) {var i = d[x][0]; var l = 1 + x;
-  if (i == '') {continue} else if (i == 'ds') {
-    
-    var page = null; var t = [];var arr = [];
-    do {
-      var tea = Classroom.Courses.Students.list(d[x][1], {pageToken: page, pageSize: 100});
-      page = tea.nextPageToken; t = t.concat(tea.students);
-      } while (page);
+  if (i == '') {continue} else if (i == 'cho') {
     try {
-      for (i = 0; i < t.length; i++) {
-        var c = t[i]; var ids = c.profile;
-        var em = ids.emailAddress;
-        arr.push(em);
-      }
-    } catch (e){continue;}
-    for (k = 0; k < arr.length; k++) {
-      var list = arr[k];
-        try { Classroom.Courses.Students.remove(d[x][1], list);
-        } catch (e){continue;} 
-    }  
-  }                    
- var end = sh.getRange(l, 1).setValue('');
-  }
-}
+      var course = {'ownerId': d[x][8]};
+      Classroom.Courses.patch(course, d[x][1],{'updateMask': 'ownerId'});
+   } catch (e){continue;} 
+    var end = sh.getRange(l, 1).setValue('');
+}}}
 
 
 function listUsers(i1,d1) {
@@ -685,7 +703,7 @@ for (x = 1; x < nr; x++) {
 var i = d[x][0]; var l = 1 + x;
   if (i === 'co') {
     try {
-      var or = {name: d[x][1], description: d[x][2], 
+      var or = {name: d[x][1], description: d[x][1], 
       parentOrgUnitPath: d[x][4], blockInheritance: false};
       var org = AdminDirectory.Orgunits.insert(or, a1);
       var end = sh.getRange(l, 1).setValue('');
@@ -755,7 +773,7 @@ for (x = 1; x < nr; x++) {
 var i = d[x][0]; var l = 1 + x;
   if (i === 'cg') {
     try {
-      var gr = {email: d[x][2], name: d[x][1], description: d[x][4]};
+      var gr = {email: d[x][2], name: d[x][1], description: d[x][1]};
       var gro = AdminDirectory.Groups.insert(gr);
       var end = sh.getRange(l, 1).setValue('');
       Utilities.sleep(1000);
@@ -772,7 +790,7 @@ var i = d[x][0]; var l = 1 + x;
   if (i === 'eg') {
     try {
       var groupKey = d[x][3];
-      var gr = {email: d[x][2], name: d[x][1], description: d[x][4]};
+      var gr = {email: d[x][2], name: d[x][1], description: d[x][1]};
       var gro = AdminDirectory.Groups.update(gr, groupKey);
       var end = sh.getRange(l, 1).setValue('');
       Utilities.sleep(1000);
@@ -819,10 +837,10 @@ var i = d[x][0]; var l = 1 + x;
       group.allowExternalMembers = false;
       group.whoCanPostMessage = 'ALL_MEMBERS_CAN_POST';
       group.allowWebPosting = true;
-      group.showInGroupDirectory = false;
+      group.showInGroupDirectory = true;
       group.allowGoogleCommunication = false;
       group.membersCanPostAsTheGroup = false;
-      group.includeInGlobalAddressList = false;
+      group.includeInGlobalAddressList = true;
       group.whoCanLeaveGroup = 'NONE_CAN_LEAVE';
       AdminGroupsSettings.Groups.patch(group, groupId);
       var end = sh.getRange(l, 1).setValue('');
@@ -881,7 +899,7 @@ var sh = s1.getSheetByName('CB');
 var r = sh.getDataRange(); var d = r.getValues();
 var nr = r.getNumRows();
 for (x = 1; x < nr; x++) { var i = d[x][0];
-var l = 1 + x; if (i === 'mc') {
+var l = 1 + x; if (i === 'mcb') {
   try {
     var cb = {deviceIds: [d[x][1]]};
     var orgUnitPath = d[x][6];
@@ -898,7 +916,7 @@ var sh = s1.getSheetByName('CB');
 var r = sh.getDataRange(); var d = r.getValues();
 var nr = r.getNumRows();
 for (x = 1; x < nr; x++) { var i = d[x][0];
-var l = 1 + x; if (i === 'ec') {
+var l = 1 + x; if (i === 'ecb') {
   try {
     var resource = {annotatedUser: d[x][3], notes: d[x][7], orgUnitPath: d[x][6]};
     var deviceId = d[x][1];
@@ -1067,6 +1085,37 @@ function getParameterValues(parameters) {
 }
 
 
+function listCals(i1) {
+  var s = SpreadsheetApp.openById(i1).getSheetByName('CR');
+  var r = s.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  var cal = CalendarApp.getAllCalendars();
+  var arr = [];
+  for (x=0; x<cal.length; x++){
+    var l = 1 + x; var ca = cal[x];
+    var id = ca.getId();
+    var name = ca.getName();
+    arr.push([id,name]); 
+  }
+  s.getRange(2, 2, arr.length, arr[0].length).setValues(arr);
+}
+
+
+function editCals(i1) {
+  var s = SpreadsheetApp.openById(i1).getSheetByName('CR');
+  var r = s.getDataRange(); var n = r.getNumRows(); var d = r.getValues();
+  for (x=0; x<n; x++) {var i=d[x][0]; var l = 1 + x; var color = d[x][3];
+    if(i==''){continue;} else if (i=='ecal'){ 
+      var cal = CalendarApp.getCalendarById(d[x][1]); 
+      var hid = cal.setHidden(true); 
+      var sel = cal.setSelected(false);
+//      var col = cal.setColor(color);
+      var end = s.getRange(l, 1).setValue(''); 
+      Utilities.sleep(2000);  
+    }
+  }
+}
+
+
 /*parameters
 https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/users-gmail
 https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/users-drive
@@ -1087,11 +1136,14 @@ It is the only way to have a trigger so that this can work. No other trigger wor
 to the sheet.
 */
 
-function laa(){
+function run(){
 var s1 = SpreadsheetApp.getActiveSpreadsheet();
 var sh = s1.getSheetByName('CACHE');
 var r = sh.getRange('C1').getValue();  
 if(r === 'la'){listAssignments();}
+else if(r === 'asp'){addStudentsProfs();}
+else if(r === 'ds'){deleteStudents();}
+else if(r === 'cu'){createUsers();}   
 }
 
 
@@ -1142,71 +1194,130 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
   }
   for (r=0; r < arr3.length; r++){ 
     try {  
-     var eu = arr3[r];
-     var us = AdminDirectory.Users.get(eu).primaryEmail;
-     arr5.push([us]);
+  var eu = arr3[r];
+  var us = AdminDirectory.Users.get(eu).primaryEmail;
+  arr5.push([us]);
     }catch(e){continue;}
   }
   sh.getRange(2, 2, arr5.length, arr5[0].length).setValues(arr5);
   sh.getRange(2, 3, arr2.length, arr2[0].length).setValues(arr2);
-  s1.getSheetName('CACHE').getRange('B1').setValue('');  
+  s1.getSheetByName('CACHE').getRange('B1').setValue('');  
 }
 
 
-// You need to add this to the appscript.json file, remember to activate all APIs in the GCP beforehand.
-// Review the example Google gives if you need to start from zero. https://codelabs.developers.google.com/codelabs/chat-apps-script/#0
-
-
-{
-  "timeZone": "America/Mexico_City",
-  "dependencies": {
-    "enabledAdvancedServices": [{
-      "userSymbol": "Plus",
-      "serviceId": "plus",
-      "version": "v1"
-    }, {
-      "userSymbol": "Classroom",
-      "serviceId": "classroom",
-      "version": "v1"
-    }, {
-      "userSymbol": "AdminGroupsMigration",
-      "serviceId": "groupsmigration",
-      "version": "v1"
-    }, {
-      "userSymbol": "Drive",
-      "serviceId": "drive",
-      "version": "v2"
-    }, {
-      "userSymbol": "Slides",
-      "serviceId": "slides",
-      "version": "v1"
-    }, {
-      "userSymbol": "AdminDirectory",
-      "serviceId": "admin",
-      "version": "directory_v1"
-    }, {
-      "userSymbol": "AdminReports",
-      "serviceId": "admin",
-      "version": "reports_v1"
-    }, {
-      "userSymbol": "Gmail",
-      "serviceId": "gmail",
-      "version": "v1"
-    }, {
-      "userSymbol": "Sheets",
-      "serviceId": "sheets",
-      "version": "v4"
-    }, {
-      "userSymbol": "Calendar",
-      "serviceId": "calendar",
-      "version": "v3"
-    }, {
-      "userSymbol": "AdminGroupsSettings",
-      "serviceId": "groupssettings",
-      "version": "v1"
-    }]
-  },
-  "exceptionLogging": "STACKDRIVER",
-  "chat": {
+function addStudentsProfs(){
+var d1 = 'domain';  
+var s1 = SpreadsheetApp.getActiveSpreadsheet();
+var sh = s1.getSheetByName('CL'); var r = sh.getDataRange();
+var n = r.getNumRows(); var d = r.getValues();
+    for (x = 0; x < n; x++) { var i = d[x][0]; var l = 1 + x;
+    if (i == '') {continue;} else if (i == 'asp'){
+    var arr1 =[]; var arr2 = [];
+// You must always put coor group and a student group. The professor is optional.      
+      var pageToken;
+      var gr = AdminDirectory.Members.list(d[x][6],
+       {domain: d1, maxResults: 500, pageToken: pageToken});
+      var grs = gr.members; 
+      for (t = 0; t < grs.length; t++) {
+        var or = grs[t];
+        var email = or.email;
+        arr1.push(email);
+      }
+      
+      var pageToken2;
+      var gr2 = AdminDirectory.Members.list(d[x][7],
+       {domain: d1, maxResults: 500, pageToken: pageToken2});
+      var grs2 = gr2.members; 
+      for (q = 0; q < grs2.length; q++) {
+        var or2 = grs2[q];
+        var email2 = or2.email;
+        arr2.push(email2);
+      }
+      
+      for (k = 0; k < arr1.length; k++) {
+        var list = arr1[k];
+        try {
+          Classroom.Courses.Teachers.create({userId: list}, d[x][1]);
+        } catch(e){continue;}
+      } 
+      
+      for (m = 0; m < arr2.length; m++) {
+        var list2 = arr2[m];
+        try{
+          Classroom.Courses.Students.create({userId: list2}, d[x][1]);
+        } catch(e){continue;}
+      } 
+      
+      try {
+        var prof1 = Classroom.Courses.Teachers.create({userId: d[x][8]}, d[x][1]);
+      } catch(e){continue;} 
+      
+    var end = sh.getRange(l, 1).setValue('');
+    Utilities.sleep(1000);  
+    } 
   }
+ s1.getSheetByName('CACHE').getRange('B1').setValue('');  
+}
+
+
+function deleteStudents() {
+var s1 = SpreadsheetApp.getActiveSpreadsheet();
+var sh = s1.getSheetByName('CL'); var r = sh.getDataRange();
+var n = r.getNumRows(); var d = r.getValues();
+for (x = 0; x < n; x++) {var i = d[x][0]; var l = 1 + x;
+  if (i == '') {continue} else if (i == 'ds') {
+    
+    var page = null; var t = [];var arr = [];
+    do {
+      var tea = Classroom.Courses.Students.list(d[x][1], {pageToken: page, pageSize: 100});
+      page = tea.nextPageToken; t = t.concat(tea.students);
+      } while (page);
+    try {
+      for (i = 0; i < t.length; i++) {
+        var c = t[i]; var ids = c.profile;
+        var em = ids.emailAddress;
+        arr.push(em);
+      }
+    } catch (e){continue;}
+    for (k = 0; k < arr.length; k++) {
+      var list = arr[k];
+        try { Classroom.Courses.Students.remove(d[x][1], list);
+        } catch (e){continue;} 
+    }  
+  }                    
+ var end = sh.getRange(l, 1).setValue('');
+ Utilities.sleep(1000);
+  }
+s1.getSheetByName('CACHE').getRange('B1').setValue('');  
+}
+
+
+function createUsers() {
+var d1 = 'domain';     
+var s1 = SpreadsheetApp.getActiveSpreadsheet();  
+var sh = s1.getSheetByName('US'); 
+sh.getRange('F2').setFormula('=IF($B2<>"",LOWER(CONCATENATE(LEFT($B2,FIND(" ",B2&" ")-1),LEFT($C2,FIND(" ",$C2&" ")-1),LEFT(TRIM(RIGHT(SUBSTITUTE($C2," ",REPT(" ",LEN($C2))),LEN($C2))),1),"@",CACHE!$D$1)),"")');  
+sh.getRange('G2').setFormula('=IF($B2<>"",LOWER(CONCATENATE(LEFT($B2,FIND(" ",B2&" ")-1),LEFT($C2,FIND(" ",$C2&" ")-1),LEFT(TRIM(RIGHT(SUBSTITUTE($C2," ",REPT(" ",LEN($C2))),LEN($C2))),1),"12345")),"")');
+sh.getRange('H2').setFormula('=IF($D2<>"",IF(LEN($D2)>1,CONCATENATE(SUBSTITUTE(LOWER(TRIM(RIGHT(SUBSTITUTE(TRIM($D2),"/",REPT(" ",200)),200)))," ",""),"@",CACHE!$D$1),""),"")');
+var fr = sh.getRange('F2:H'); sh.getRange('F2:H2').copyTo(fr);  
+var s1 = SpreadsheetApp.getActiveSpreadsheet();  
+var sh = s1.getSheetByName('US'); var r = sh.getDataRange();  
+var d = r.getValues(); var nr = r.getNumRows();  
+ for (x = 1; x < nr; x++) {var i = d[x][0]; var l = 1 + x;
+   if (i === 'cu') {
+     try {
+       var user = { 
+         primaryEmail: d[x][5], name: {givenName: d[x][1], familyName: d[x][2]},
+         password: d[x][6], changePasswordAtNextLogin: false,
+         includeInGlobalAddressList: true, orgUnitPath: d[x][3]};
+       var org = AdminDirectory.Users.insert(user);
+       var userEmail = d[x][5];
+       var groupKey = d[x][7];
+       var resource = {email: userEmail, role: 'MEMBER'};
+       var gr = AdminDirectory.Members.insert(resource, groupKey);
+       var end = sh.getRange(l, 1).setValue('');
+       Utilities.sleep(1000);
+     } catch (e){continue;}
+}}
+s1.getSheetByName('CACHE').getRange('B1').setValue('');  
 }
