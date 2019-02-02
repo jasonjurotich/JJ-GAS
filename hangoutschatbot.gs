@@ -113,6 +113,14 @@ var email = e.user.email;
     changeUserPassChat(user);
   }
   
+  
+  else if (sp2[0] === 'puf'){
+    var user = sp2[1];
+    var pass = sp2[2];
+   changeUserPassFixedChat(user,pass);
+  }
+  
+  
   else if (sp2[0] === 'sust'){
   var user = sp2[1];
   suspendUsersChat(user);
@@ -218,9 +226,18 @@ var email = e.user.email;
    editGroupConfigChat(i1,em); 
   }
   
+  else if (sp1[0] === 'ccc'){
+  var na = sp1[1];
+  var se = sp1[2];
+  var ro = sp1[3]; 
+  var pr = sp1[4];
+  var gr = sp1[5];  
+  createCourseChat(i1,d1,na,se,ro,pr,gr);
+  }
+  
 // Be careful of the letters. If two commands start with the same letters, it will take the shorter one (if one is 'lc', and another 'lcb', it will run the first.
   else if (m.indexOf('cs') > -1){
-   return {"text": " FROM CHAT \n amu = add and remove user from groups in chat \n cal = create event from description in chat \n cdes = create event from info in chat \n cegc = edit group config in chat \n cgc = create group in chat \n email = send email with subject and text in chat \n fac = send factura in chat \n pu = change password user in chat  \n susf = unsuspend user in chat \n sust = suspend user in chat  \n uc = add user in chat \n  \n FROM SHEET \n ac = archive classes  \n asp = add students and professors  \n aru = remove user from group \n cbl = list cb  \n cc = create courses \n ceg = edit groups config \n cg = create groups \n cho = change owner \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = remove all students from class \n ecal = edit calendars \n ecb = edit cb \n eg = edit group info  \n eo = edit orgs  \n la = list assignments  \n lc = list courses  \n lcal = lists calenadars \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n ruc = reports"}; 
+   return {"text": " FROM CHAT \n amu = add and remove user from groups in chat \n cal = create event from description in chat \n cdes = create event from info in chat \n cegc = edit group config in chat \n cgc = create group in chat \n email = send email with subject and text in chat \n fac = send factura in chat \n pu = change password user in chat  \n puf = change and fix password user in chat  \n susf = unsuspend user in chat \n sust = suspend user in chat  \n uc = add user in chat \n  \n FROM SHEET \n ac = archive classes  \n asp = add students and professors  \n aru = remove user from group \n cbl = list cb  \n cc = create courses \n ceg = edit groups config \n cg = create groups \n cho = change owner \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = remove all students from class \n ecal = edit calendars \n ecb = edit cb \n eg = edit group info  \n eo = edit orgs  \n la = list assignments  \n lc = list courses  \n lcal = lists calenadars \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs"}; 
   }
   
 return {"text": "Done."};   
@@ -297,6 +314,12 @@ rr.sort(int);
 function changeUserPassChat(user) {
   var pass = user.substring(0, user.indexOf('@')) + "12345"; 
   var resource = {password: pass, changePasswordAtNextLogin: true};
+  var org = AdminDirectory.Users.update(resource, user); 
+}
+
+
+function changeUserPassFixedChat(user,pass) { 
+  var resource = {password: pass, changePasswordAtNextLogin: false};
   var org = AdminDirectory.Users.update(resource, user); 
 }
 
@@ -388,20 +411,27 @@ function editGroupConfigChat(i1,em) {
 }}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function createCourseChat(i1,d1,na,se,ro,pr,gr) {
+var course = Classroom.newCourse();
+course.name = na; course.section = se;
+course.room = ro; course.courseState = 'ACTIVE';
+course.ownerId = 'me'; 
+course = Classroom.Courses.create(course);
+var c = course.id; var arr1 =[]; var pageToken;  
+for (i=0; i<1;i++) { 
+var prof1 = Classroom.Courses.Teachers.create({userId: pr}, c);
+  var gr = AdminDirectory.Members.list(gr,
+  {domain: d1, maxResults: 500, pageToken: pageToken});
+  var grs = gr.members; 
+  for (t = 0; t < grs.length; t++) {
+    var or = grs[t]; var email = or.email;
+    arr1.push(email);
+  }
+  for (k = 0; k < arr1.length; k++) {
+    var list = arr1[k];
+    try {Classroom.Courses.Students.create({userId: list}, c);
+    } catch(e){continue;}} 
+}}
 
 
 function sendFactura(i2,email,co,ca,re){
@@ -1114,6 +1144,7 @@ function editCals(i1) {
     }
   }
 }
+
 
 
 /*parameters
