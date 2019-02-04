@@ -235,9 +235,24 @@ var email = e.user.email;
   createCourseChat(i1,d1,na,se,ro,pr,gr);
   }
   
+  else if (sp2[0] === 'cf'){
+    creForm(i1);
+  }
+  
+  else if (sp2[0] === 'ca'){
+    creAssign(i1);
+  }
+  
+  else if (sp1[0] === 'cac'){
+  var id = sp1[1];
+  var te = sp1[2];
+  var assignment = {state: 'PUBLISHED', text: te};
+  var a = Classroom.Courses.Announcements.create(assignment, id);  
+  }
+  
 // Be careful of the letters. If two commands start with the same letters, it will take the shorter one (if one is 'lc', and another 'lcb', it will run the first.
   else if (m.indexOf('cs') > -1){
-   return {"text": " FROM CHAT \n amu = add and remove user from groups in chat \n cal = create event from description in chat \n cdes = create event from info in chat \n cegc = edit group config in chat \n cgc = create group in chat \n email = send email with subject and text in chat \n fac = send factura in chat \n pu = change password user in chat  \n puf = change and fix password user in chat  \n susf = unsuspend user in chat \n sust = suspend user in chat  \n uc = add user in chat \n  \n FROM SHEET \n ac = archive classes  \n asp = add students and professors  \n aru = remove user from group \n cbl = list cb  \n cc = create courses \n ceg = edit groups config \n cg = create groups \n cho = change owner \n co = create orgs  \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = remove all students from class \n ecal = edit calendars \n ecb = edit cb \n eg = edit group info  \n eo = edit orgs  \n la = list assignments  \n lc = list courses  \n lcal = lists calenadars \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs"}; 
+   return {"text": " FROM CHAT \n amu = add and remove user from groups in chat \n cal = create event from description in chat \n ccc = create class add prof teachers in chat \n cdes = create event from info in chat \n cegc = edit group config in chat \n cgc = create group in chat \n email = send email with subject and text in chat \n fac = send factura in chat \n pu = change password user in chat  \n susf = unsuspend user in chat \n sust = suspend user in chat  \n uc = add user in chat \n  \n FROM SHEET \n ac = archive classes  \n asp = add students and professors  \n aru = remove user from group \n cbl = list cb  \n ca = create assignments \n cc = create courses \n ceg = edit groups config \n cf = create form \n cg = create groups \n cho = change owner \n co = create orgs  \n cac = create announcement in classroom \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = remove all students from class \n ecal = edit calendars \n ecb = edit cb \n eg = edit group info  \n eo = edit orgs  \n la = list assignments  \n lc = list courses  \n lcal = lists calenadars \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n ruc = reports \n sd = sort data  \n sru = suspend user"}; 
   }
   
 return {"text": "Done."};   
@@ -293,6 +308,21 @@ var s1 = SpreadsheetApp.openById(i1);
 var sh = s1.getSheetByName('CACHE');
 sh.getRange('B1').setValue('cu'); 
 }
+
+
+function creForm(i1){
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CACHE');
+sh.getRange('B1').setValue('cf'); 
+}
+
+
+function creAssign(i1){
+var s1 = SpreadsheetApp.openById(i1);
+var sh = s1.getSheetByName('CACHE');
+sh.getRange('B1').setValue('ca'); 
+}
+
 
 
 function deleteData(i1,em){
@@ -1146,7 +1176,6 @@ function editCals(i1) {
 }
 
 
-
 /*parameters
 https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/users-gmail
 https://developers.google.com/admin-sdk/reports/v1/reference/usage-ref-appendix-a/users-drive
@@ -1174,7 +1203,9 @@ var r = sh.getRange('C1').getValue();
 if(r === 'la'){listAssignments();}
 else if(r === 'asp'){addStudentsProfs();}
 else if(r === 'ds'){deleteStudents();}
-else if(r === 'cu'){createUsers();}   
+else if(r === 'cu'){createUsers();}
+else if(r === 'ca'){addFormAssign();}
+else if(r === 'cf'){createForm();}  
 }
 
 
@@ -1237,7 +1268,7 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
 
 
 function addStudentsProfs(){
-var d1 = 'domain';  
+var d1 = 'jjir.me';  
 var s1 = SpreadsheetApp.getActiveSpreadsheet();
 var sh = s1.getSheetByName('CL'); var r = sh.getDataRange();
 var n = r.getNumRows(); var d = r.getValues();
@@ -1324,7 +1355,7 @@ s1.getSheetByName('CACHE').getRange('B1').setValue('');
 
 
 function createUsers() {
-var d1 = 'domain';     
+var d1 = 'jjir.me';     
 var s1 = SpreadsheetApp.getActiveSpreadsheet();  
 var sh = s1.getSheetByName('US'); 
 sh.getRange('F2').setFormula('=IF($B2<>"",LOWER(CONCATENATE(LEFT($B2,FIND(" ",B2&" ")-1),LEFT($C2,FIND(" ",$C2&" ")-1),LEFT(TRIM(RIGHT(SUBSTITUTE($C2," ",REPT(" ",LEN($C2))),LEN($C2))),1),"@",CACHE!$D$1)),"")');  
@@ -1352,3 +1383,311 @@ var d = r.getValues(); var nr = r.getNumRows();
 }}
 s1.getSheetByName('CACHE').getRange('B1').setValue('');  
 }
+
+
+function addFormAssign(){
+var s1 = SpreadsheetApp.getActiveSpreadsheet();
+var sh = s1.getSheetByName('CA');
+var r = sh.getDataRange();
+var n = r.getNumRows();
+var d = r.getValues();
+var t = sh.getRange('A1').getValue();
+for (x=0; x<n; x++) {
+ var l = 1 + x; var i=d[x][0];
+ if(i==''){continue;}
+    
+ else if (i=='an'){
+ var date =  new Date(d[x][3]);
+ var isoDate = new Date(date.getTime() - (60*60*24*t*1000) ).toISOString();
+ var year = date.getFullYear(); var mon = date.getMonth()+1;
+ var day = date.getDate(); var hour = date.getHours();
+ var min = date.getMinutes(); var sec = date.getSeconds(); 
+   var assignment = { 
+     state: 'PUBLISHED', text: d[x][1], 
+     materials: [{ driveFile: { driveFile: { id: d[x][7], title: d[x][1] }, shareMode: d[x][8] } }]
+   };
+   var a = Classroom.Courses.Announcements.create(assignment, d[x][5]); 
+ }
+  // STUDENT_COPY: to use this you must change the sharing options in the template to whomever has access can edit before running this.
+ else if (i=='lk'){
+ var date =  new Date(d[x][3]);
+ var isoDate = new Date(date.getTime() - (60*60*24*t*1000) ).toISOString();
+ var year = date.getFullYear(); var mon = date.getMonth()+1;
+ var day = date.getDate(); var hour = date.getHours();
+ var min = date.getMinutes(); var sec = date.getSeconds();   
+   if (t !== ''){
+     var assignment = {
+        workType: 'ASSIGNMENT', state: 'DRAFT', title: d[x][1], description: d[x][2],
+        materials: [{link:{url: d[x][7], title: d[x][1]}}],
+        maxPoints: d[x][4], scheduledTime: isoDate, 
+        dueDate: { year: year, month: mon, day: day},
+        dueTime: { hours: hour, minutes: min, seconds: sec},
+     };
+   } else {
+   var assignment = {
+        workType: 'ASSIGNMENT', state: 'PUBLISHED', title: d[x][1], description: d[x][2],
+        materials: [{link:{url: d[x][7], title: d[x][1]}}],
+        maxPoints: d[x][4], 
+        dueDate: { year: year, month: mon, day: day},
+        dueTime: { hours: hour, minutes: min, seconds: sec},
+     };   
+   }
+ var a = Classroom.Courses.CourseWork.create(assignment, d[x][5]);
+ var c = a.id; var id = sh.getRange(l,7).setValue(c);    
+ } 
+  
+ else if (i=='dc'){
+ var date =  new Date(d[x][3]);
+ var isoDate = new Date(date.getTime() - (60*60*24*t*1000) ).toISOString();
+ var year = date.getFullYear(); var mon = date.getMonth()+1;
+ var day = date.getDate(); var hour = date.getHours();
+ var min = date.getMinutes(); var sec = date.getSeconds();   
+   if (t !== ''){
+     var assignment = {
+        workType: 'ASSIGNMENT', state: 'DRAFT', title: d[x][1], description: d[x][2],
+        materials: [{ driveFile: { driveFile: { id: d[x][7], title: d[x][1] }, shareMode: d[x][8] } }],
+        maxPoints: d[x][4], scheduledTime: isoDate, 
+        dueDate: { year: year, month: mon, day: day},
+        dueTime: { hours: hour, minutes: min, seconds: sec},
+     };
+   } else {
+   var assignment = {
+        workType: 'ASSIGNMENT', state: 'PUBLISHED', title: d[x][1], description: d[x][2],
+        materials: [{ driveFile: { driveFile: { id: d[x][7], title: d[x][1] }, shareMode: d[x][8] } }],
+        maxPoints: d[x][4], 
+        dueDate: { year: year, month: mon, day: day},
+        dueTime: { hours: hour, minutes: min, seconds: sec},
+     };   
+   }
+ var a = Classroom.Courses.CourseWork.create(assignment, d[x][5]);
+ var c = a.id; var id = sh.getRange(l,7).setValue(c);    
+ } 
+  
+  sh.getRange(l,1).setValue('');
+  Utilities.sleep(1000); 
+  }
+ s1.getSheetByName('CACHE').getRange('B1').setValue('');  
+}
+
+
+function createForm() {
+var s1 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CF');
+var r = s1.getDataRange();
+var nr = r.getNumRows();
+var nc = r.getNumColumns();
+var lr = s1.getLastRow();
+var lc = s1.getLastColumn();
+var d = r.getValues();
+var fol = DriveApp.getFolderById(d[0][3]);
+
+if (d[0][7] === 'YES') {
+var fm = DriveApp.getFileById(d[0][9]).makeCopy(d[0][1], fol);
+var id = fm.getId();
+var f = FormApp.openById(id);
+  
+} else {
+var fm = FormApp.create(d[0][1]);
+var id = fm.getId();
+var f = FormApp.openById(id);
+}
+
+f.setDescription(d[1][1]);
+f.setIsQuiz(true);  
+
+var ur = f.getPublishedUrl();
+s1.getRange('F1').setValue(ur);
+
+
+var file = DriveApp.getFileById(id);
+fol.addFile(file);
+DriveApp.getRootFolder().removeFile(file);
+  
+
+for(var x=0;x<nr;x++){ // Beginning of for loop with x
+  var i = d[x][0];
+  var cr = 1 + x;
+  var ro = s1.getRange(cr, 8, 1, 10);
+  var op = ro.getValues();
+    if(i==''){continue;}
+
+    else if (i =='CHOICE') {
+        var arr = [];
+        
+        if (d[0][11] == "YES"){ var its = f.getItems();
+          for (var w = 0; w < its.length; w += 1){ var ite = its[w]; if (ite.getTitle() === "CHOICE"){ var q = ite.asMultipleChoiceItem().duplicate(); }}
+        } else { var q = f.addMultipleChoiceItem(); }
+        
+        q.setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        
+        if (d[x][3] !== '') {q.setPoints(d[x][3])}
+        
+        for (var ccc = 8; ccc<nc; ccc++) {
+          var cu = 1 + ccc;
+          if (s1.getRange(cr,cu,1,1).getValue() !== '' && s1.getRange(cr,cu,1,1).getBackground() === "#00ff00") {var q1 = q.createChoice(d[x][ccc], true); arr.push(q1);} 
+          else if (s1.getRange(cr,cu,1,1).getValue() !== '' && s1.getRange(cr,cu,1,1).getBackground() !== "#00ff00") {var q1 = q.createChoice(d[x][ccc], false); arr.push(q1);}
+        }
+        
+        q.setChoices(arr);
+        
+        if (d[x][4] !== ""){
+          var correctFeedback = FormApp.createFeedback().setText(d[x][4]).build();
+          q.setFeedbackForCorrect(correctFeedback);
+        }
+        if (d[x][5] !== ""){
+          var incorrectFeedback = FormApp.createFeedback().setText(d[x][5]).addLink(d[x][6],d[x][7]).build();
+          q.setFeedbackForIncorrect(incorrectFeedback);
+        } 
+    }
+    
+    else if (i =='LIST') {
+        var arr = [];
+        
+        if (d[0][11] == "YES"){ var its = f.getItems();
+          for (var w = 0; w < its.length; w += 1){ var ite = its[w]; if (ite.getTitle() === "LIST"){ var q = ite.asListItem().duplicate(); }}
+        } else { var q = f.addListItem(); }
+        
+        q.setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        
+        if (d[x][3] !== '') {q.setPoints(d[x][3])}
+  
+        for (var ccc = 8; ccc<nc; ccc++) {
+          var cu = 1 + ccc;
+          if (s1.getRange(cr,cu,1,1).getValue() !== '' && s1.getRange(cr,cu,1,1).getBackground() === "#00ff00") {var q1 = q.createChoice(d[x][ccc], true); arr.push(q1);} 
+          else if (s1.getRange(cr,cu,1,1).getValue() !== '' && s1.getRange(cr,cu,1,1).getBackground() !== "#00ff00") {var q1 = q.createChoice(d[x][ccc], false); arr.push(q1);}
+        }
+        
+        q.setChoices(arr);
+        
+        if (d[x][4] !== ""){
+          var correctFeedback = FormApp.createFeedback().setText(d[x][4]).build();
+          q.setFeedbackForCorrect(correctFeedback);
+        }
+        if (d[x][5] !== ""){
+          var incorrectFeedback = FormApp.createFeedback().setText(d[x][5]).addLink(d[x][6],d[x][7]).build();
+          q.setFeedbackForIncorrect(incorrectFeedback);
+        } 
+    }
+  
+    else if (i =='CHECKBOX') {
+        var arr = [];
+        
+        if (d[0][11] == "YES"){ var its = f.getItems();
+          for (var w = 0; w < its.length; w += 1){ var ite = its[w]; if (ite.getTitle() === "CHECKBOX"){ var q = ite.asCheckboxItem().duplicate(); }}
+        } else { var q = f.addCheckboxItem(); }
+        
+        q.setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+       
+       if (d[x][3] !== '') {q.setPoints(d[x][3])}
+        
+        for (var ccc = 8; ccc<nc; ccc++) {
+          var cu = 1 + ccc;
+          if (s1.getRange(cr,cu,1,1).getValue() !== '' && s1.getRange(cr,cu,1,1).getBackground() === "#00ff00") {var q1 = q.createChoice(d[x][ccc], true); arr.push(q1);} 
+          else if (s1.getRange(cr,cu,1,1).getValue() !== '' && s1.getRange(cr,cu,1,1).getBackground() !== "#00ff00") {var q1 = q.createChoice(d[x][ccc], false); arr.push(q1);}
+        }
+        
+        q.setChoices(arr);
+        
+        if (d[x][4] !== ""){
+          var correctFeedback = FormApp.createFeedback().setText(d[x][4]).build();
+          q.setFeedbackForCorrect(correctFeedback);
+        }
+        if (d[x][5] !== ""){
+          var incorrectFeedback = FormApp.createFeedback().setText(d[x][5]).addLink(d[x][6],d[x][7]).build();
+          q.setFeedbackForIncorrect(incorrectFeedback);
+        } 
+    }
+    
+    else if (i =='GRID') {
+        var arr1 = []; 
+        for (q=0; q<op[0].length; q++){ 
+          if (op[0][q] !== '') {arr1.push(op[0][q]);} 
+        }
+        var arr2 = []; 
+        for (q=0; q<op[0].length; q++){ 
+          if (op[0][q] !== '') {arr2.push(op[0][q]);} 
+        }
+        f.addGridItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true).setRows(arr1).setColumns(arr2);
+    }
+    
+    else if (i =='CHECKGRID') {
+        var arr1 = []; 
+        for (q=0; q<op[0].length; q++){ 
+          if (op[0][q] !== '') {arr1.push(op[0][q]);} 
+        }
+        var arr2 = []; 
+        for (q=0; q<op[0].length; q++){ 
+          if (op[0][q] !== '') {arr2.push(op[0][q]);} 
+        }
+        f.addCheckboxGridItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true).setRows(arr1).setColumns(arr2);
+    }
+    
+    else if (i =='TEXT') {
+        var q = f.addTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        if (d[x][3] !== '') {q.setPoints(d[x][3])}
+    }
+    
+    else if (i =='PARAGRAPH') {
+        var q = f.addParagraphTextItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        if (d[x][3] !== '') {q.setPoints(d[x][3])}
+    }
+      
+    else if (i =='SECTION') {
+        f.addSectionHeaderItem().setTitle(d[x][1]).setHelpText(d[x][2]);
+    }
+    
+    else if (i =='PAGE') {
+        f.addPageBreakItem().setTitle(d[x][1]).setHelpText(d[x][2]);
+    }
+    
+    else if (i =='IMAGE1') {
+        var img = UrlFetchApp.fetch(d[x][6]); 
+        f.addImageItem().setTitle(d[x][1]).setHelpText(d[x][2]).setImage(img).setAlignment(FormApp.Alignment.CENTER).setWidth(800);
+    }
+        
+    else if (i =='IMAGE2') {
+        var file = DriveApp.getFileById(d[x][6]);
+        f.addImageItem().setTitle(d[x][1]).setHelpText(d[x][2]).setImage(file).setAlignment(FormApp.Alignment.CENTER).setWidth(800);
+    }
+    
+    else if (i =='VIDEO') {
+        f.addVideoItem().setTitle(d[x][1]).setHelpText(d[x][2]).setVideoUrl(d[x][6]).setAlignment(FormApp.Alignment.CENTER).setWidth(800);
+    }
+         
+    else if (i =='SCALE') {
+        var q = f.addScaleItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true).setLabels(d[x][6], d[x][7]).setBounds(d[x][4], d[x][5]);
+        if (d[x][3] !== '') {q.setPoints(d[x][3])}
+    } 
+    
+    else if (i =='TIME') {
+        var q = f.addTimeItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        if (d[x][3] !== '') {q.setPoints(d[x][3])}
+    }
+   
+    else if (i =='DATE') {
+        var q = f.addDateItem().setTitle(d[x][1]).setHelpText(d[x][2]).setRequired(true);
+        if (d[x][3] !== '') {q.setPoints(d[x][3])}
+    }
+    
+    else if(i =='ACCEPTANCE'){
+        var item = f.addMultipleChoiceItem();
+        var goSubmit = item.createChoice('YES', FormApp.PageNavigationType.SUBMIT);
+        var goRestart = item.createChoice('NO', FormApp.PageNavigationType.RESTART);     
+          item.setRequired(true);
+          item.setTitle(d[x][1]);
+          item.setHelpText(d[x][2]);
+          item.setChoices([goSubmit,goRestart]);   
+    } 
+   
+ } // End of principle for loop with x
+ 
+    var iti = f.getItems();
+      for (var y = 0; y < iti.length; y += 1){
+        var ito = iti[y];
+        if (ito.getTitle() === "CHOICE"){ f.deleteItem(ito); } 
+        else if (ito.getTitle() === "LIST"){ f.deleteItem(ito); } 
+        else if (ito.getTitle() === "CHECKBOX"){ f.deleteItem(ito); }
+      }
+
+SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CACHE').getRange('B1').setValue('');   
+  
+} // End of entire scipt
