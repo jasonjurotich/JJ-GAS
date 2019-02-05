@@ -1211,7 +1211,12 @@ else if(r === 'cf'){createForm();}
 
 function listAssignments() {
 var s1 = SpreadsheetApp.getActiveSpreadsheet();
-var sh = s1.getSheetByName('LA');
+var sh = s1.getSheetByName('LA');  
+
+var d2 = sh.getRange('J1').getValue();  
+var date =  new Date(d2);
+var utc = new Date(date.getTime() - (60*60*6*1000)).toISOString();
+  
 var response = Classroom.Courses.list();
 var courses = response.courses;
 var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
@@ -1248,8 +1253,10 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
                 var cour = c.courseId;
                 var ids = c.id;
                 var user = c.creatorUserId;
+              if(create > utc){
                 arr2.push([name,ti,des,st,link,typ,poi,create,due,duet,cour,ids]); 
                 arr3.push(user);
+              }
             }
         } catch (e) {continue;}  
      }
@@ -1263,7 +1270,7 @@ var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
   }
   sh.getRange(2, 2, arr5.length, arr5[0].length).setValues(arr5);
   sh.getRange(2, 3, arr2.length, arr2[0].length).setValues(arr2);
-  s1.getSheetByName('CACHE').getRange('B1').setValue('');  
+  s1.getSheetByName('CACHE').getRange('B1').setValue('');
 }
 
 
@@ -1693,71 +1700,3 @@ SpreadsheetApp.getActiveSpreadsheet().getSheetByName('CACHE').getRange('B1').set
 } // End of entire scipt
 
 
-
-
-
-// This is to only list the assignments that came after a certain date, but is not connected yet to the bot. I am still experimenting with it. 
-
-function listAssignmentsByTime() {
-var s1 = SpreadsheetApp.getActiveSpreadsheet();
-var sh = s1.getSheetByName('LA');  
-
-var d2 = sh.getRange('J1').getValue();  
-var date =  new Date(d2);
-var utc = new Date(date.getTime() - (60*60*6*1000)).toISOString();
-  
-var response = Classroom.Courses.list();
-var courses = response.courses;
-var arr1 = []; var arr2 = []; var arr3 = []; var arr4 = []; var arr5 = [];
- 
-  for (i = 0; i < courses.length; i++) {
-    var course = courses[i];
-    var ids = course.id;
-    var title = course.name;
-    var state = course.courseState;
-    arr1.push([ids,title,state]);
-  }
-  
- for (i = 0; i < arr1.length; i++) {
-   if (arr1[i][2] !== 'ARCHIVED'){
-     var list = arr1[i][0];
-     var page = null, t = [];
-     do {
-       var tea = Classroom.Courses.CourseWork.list(list, {pageToken: page, pageSize: 100});
-       page = tea.nextPageToken; var t = t.concat(tea.courseWork);
-     } while (page);
-     try {
-            for (q = 0; q < t.length; q++) {
-                var c = t[q];
-                var name = arr1[i][1];
-                var ti = c.title;
-                var des = c.description;
-                var st = c.state;
-                var link = c.alternateLink;
-                var typ = c.workType;
-                var poi = c.maxPoints;
-                var create = c.creationTime;
-                var due = c.dueDate;
-                var duet = c.dueTime;
-                var cour = c.courseId;
-                var ids = c.id;
-                var user = c.creatorUserId;
-              if(create > utc){
-                arr2.push([name,ti,des,st,link,typ,poi,create,due,duet,cour,ids]); 
-                arr3.push(user);
-              }
-            }
-        } catch (e) {continue;}  
-     }
-  }
-  for (r=0; r < arr3.length; r++){ 
-    try {  
-  var eu = arr3[r];
-  var us = AdminDirectory.Users.get(eu).primaryEmail;
-  arr5.push([us]);
-    }catch(e){continue;}
-  }
-  sh.getRange(2, 2, arr5.length, arr5[0].length).setValues(arr5);
-  sh.getRange(2, 3, arr2.length, arr2[0].length).setValues(arr2);
-  s1.getSheetByName('CACHE').getRange('B1').setValue('');  
-}
