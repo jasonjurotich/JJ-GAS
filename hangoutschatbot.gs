@@ -257,7 +257,7 @@ var email = e.user.email;
   
 // Be careful of the letters. If two commands start with the same letters, it will take the shorter one (if one is 'lc', and another 'lcb', it will run the first.
   else if (m.indexOf('cs') > -1){
-   return {"text": " FROM CHAT \n amu = add and remove user from groups in chat \n cal = create event from description in chat \n ccc = create class add prof teachers in chat \n cdes = create event from info in chat \n cegc = edit group config in chat \n cgc = create group in chat \n email = send email with subject and text in chat \n fac = send factura in chat \n pu = change password user in chat  \n susf = unsuspend user in chat \n sust = suspend user in chat  \n uc = add user in chat \n  \n FROM SHEET \n ac = archive classes  \n asp = add students and professors  \n aru = remove user from group \n cbl = list cb  \n ca = create assignments \n cc = create courses \n ceg = edit groups config \n cf = create form \n cg = create groups \n cho = change owner \n co = create orgs  \n cac = create announcement in classroom \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = remove all students from class \n ecal = edit calendars \n ecb = edit cb \n eg = edit group info  \n eo = edit orgs  \n la = list assignments  \n lc = list courses  \n lcal = lists calenadars \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n ruc = reports \n sd = sort data  \n sru = suspend user"}; 
+   return {"text": " FROM CHAT \n amu = add and remove user from groups in chat \n cal = create event from description in chat \n ccc = create class add prof teachers in chat \n cdes = create event from info in chat \n cegc = edit group config in chat \n cgc = create group in chat \n email = send email with subject and text in chat \n fac = send factura in chat \n pu = change password user in chat  \n puf = change password user in chat fixed \n susf = unsuspend user in chat \n sust = suspend user in chat  \n uc = add user in chat \n  \n FROM SHEET \n ac = archive classes  \n asp = add students and professors  \n aru = remove user from group \n cbl = list cb  \n ca = create assignments \n cc = create courses \n ceg = edit groups config \n cf = create form \n cg = create groups \n cho = change owner \n co = create orgs  \n cac = create announcement in classroom \n cu = create users  \n dc = delete classes  \n dd = delete data  \n dg = delete groups  \n ds = remove all students from class \n ecal = edit calendars \n ecb = edit cb \n eg = edit group info  \n eo = edit orgs  \n la = list assignments  \n lc = list courses  \n lcal = lists calenadars \n lg = list groups  \n lo = list orgs  \n lu = list users  \n mcb = move cb \n mmg = move user to another group  \n od = delete orgs  \n ruc = reports \n sd = sort data  \n sru = suspend user"}; 
   }
   
 return {"text": "Done."};   
@@ -1382,7 +1382,7 @@ var d = r.getValues(); var nr = r.getNumRows();
      try {
        var user = { 
          primaryEmail: d[x][5], name: {givenName: d[x][1], familyName: d[x][2]},
-         password: d[x][6], changePasswordAtNextLogin: false,
+         password: d[x][6], changePasswordAtNextLogin: true,
          includeInGlobalAddressList: true, orgUnitPath: d[x][3]};
        var org = AdminDirectory.Users.insert(user);
        var userEmail = d[x][5];
