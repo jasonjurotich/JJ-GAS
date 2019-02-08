@@ -149,6 +149,11 @@ var email = e.user.email;
   var l1 = sp1[2];
   var o1 = sp1[3];  
   createUserChat(i1,f1,l1,o1);
+  var s1 = SpreadsheetApp.openById(i1);  
+  var sh = s1.getSheetByName('CACHE');  
+  var email = sh.getRange('G2').getValue();
+  var pass = sh.getRange('H2').getValue();  
+  return {"text": "Done. Here is the new email. \n\n" + email + "\n" + pass};    
   }
    
   else if (sp2[0] === 'cbl'){
