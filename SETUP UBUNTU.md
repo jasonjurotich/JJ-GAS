@@ -74,12 +74,12 @@ After you save the .vimrc file, you must go out and then go back in and then run
       IN EDIT MODE
 a = start adding text AFTER cursor (use instead of i)      
 alt j or alt k will escape edit mode
-ctrl p is autocomplete
-ctrl xn specific autocomplete 
-ctrl xk dictionary
-ctrl xf search and add files after /
-ctrl f next page
-ctrl b previous page
+ctrl p is autocomplete. 
+ctrl xn specific autocomplete.  
+ctrl xk dictionary. 
+ctrl xf search and add files after /. 
+ctrl f next page.  
+ctrl b previous page.  
 
       IN NON-EDIT MODE
 :Vex file browswer
@@ -89,13 +89,13 @@ ctrl b previous page
 
 v = select lines
 
-dd = delete the line where the cursor is at
-number + dd will delete that many lines
-dd and then move to another spot and then p to paste the line deleted
-x = delete a letter at a time
-dw = delete a word
-d$ = to delete to end of line
-shift d = delete all from cursor to end of line
+dd = delete the line where the cursor is at.  
+number + dd will delete that many lines. 
+dd and then move to another spot and then p to paste the line deleted.  
+x = delete a letter at a time. 
+dw = delete a word. 
+d$ = to delete to end of line. 
+shift d = delete all from cursor to end of line. 
 
 u = undo what you just did 
 ctrl r = redo things
