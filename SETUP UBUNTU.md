@@ -87,7 +87,7 @@ ctrl b previous page.
 IN NON-EDIT MODE
 :Vex file browswer
     I have this mapped to shift W
-:bd close the file browser (or buffer)
+shift ZZ to close the file browser
 :vs path/to/file.txt to open a file directly
 
 TERMINAL
