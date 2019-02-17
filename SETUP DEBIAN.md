@@ -65,7 +65,7 @@ hi EndOfBuffer ctermfg=black
 ru macros/justify.vim
 ```
 ## INSTALL VIMPROC
-cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
+After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
 
 ## INSTALL GOOGLE DRIVE IN VIM
 1. In APIs, Install Drive API in project and Create Credentials (OAuth client ID)
