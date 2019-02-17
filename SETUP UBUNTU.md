@@ -51,6 +51,8 @@ map Q :qa<CR>
 map W :Vex<CR> 
 map E <C-f>  
 map R <C-b>
+map df :bd<cr>
+map B :vert term<CR>
 map S :s/\<\>//g<left><left><left><left><left> 
 
 let g:netrw_banner = 0
@@ -87,6 +89,18 @@ IN NON-EDIT MODE
     I have this mapped to shift W
 :bd close the file browser (or buffer)
 :vs path/to/file.txt to open a file directly
+
+TERMINAL
+pause Vim with Ctrl + Z,
+play in the terminal,
+then return to exactly where you left with Vim by just typing the command fg.
+
+or
+
+:vert term (opens terminal on the side)
+write exit in terminal 
+:bd to close the buffer
+
 
 v = select lines
 
