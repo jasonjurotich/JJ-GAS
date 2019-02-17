@@ -72,6 +72,7 @@ After you save the .vimrc file, you must go out and then go back in and then run
 
 ## KEYBOARD COMBOS FOR VIM
       IN EDIT MODE
+...      
 a = start adding text AFTER cursor (use instead of i)      
 alt j or alt k will escape edit mode
 ctrl p is autocomplete. 
@@ -139,7 +140,7 @@ select the lines first
 
 TO FIND WORDS
 put the cursor on the word you want to find and then type the * and then it will bring you to those words in the text, or to just find something, in non-edit mode put  / and the word, and then press the letter n to keep searching
-
+...
 
 
 ## INSTALL GOOGLE DRIVE IN VIM
