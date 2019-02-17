@@ -139,7 +139,9 @@ select the lines first
 :s/changefrom/changeto/g
 
 TO FIND WORDS
-put the cursor on the word you want to find and then type the * and then it will bring you to those words in the text, or to just find something, in non-edit mode put  / and the word, and then press the letter n to keep searching
+put the cursor on the word you want to find and then type the * 
+and then it will bring you to those words in the text, or to just find something, 
+in non-edit mode put  / and the word, and then press the letter n to keep searching
 ```
 
 
