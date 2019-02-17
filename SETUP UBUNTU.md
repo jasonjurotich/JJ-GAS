@@ -53,6 +53,7 @@ map E <C-f>
 map R <C-b>
 map df :bd<cr>
 map B :vert term<CR>
+map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left> 
 
 let g:netrw_banner = 0
@@ -91,7 +92,7 @@ shift ZZ to close the file browser
 :vs path/to/file.txt to open a file directly
 
 TERMINAL
-pause Vim with Ctrl + Z,
+pause Vim with Ctrl + Z, (I have mapped this to shift T)
 play in the terminal,
 then return to exactly where you left with Vim by just typing the command fg.
 
