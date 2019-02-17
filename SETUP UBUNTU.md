@@ -71,8 +71,8 @@ ru macros/justify.vim
 After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
 
 ## KEYBOARD COMBOS FOR VIM
-      IN EDIT MODE
-...      
+```
+IN EDIT MODE      
 a = start adding text AFTER cursor (use instead of i)      
 alt j or alt k will escape edit mode
 ctrl p is autocomplete. 
@@ -82,7 +82,7 @@ ctrl xf search and add files after /.
 ctrl f next page.  
 ctrl b previous page.  
 
-      IN NON-EDIT MODE
+IN NON-EDIT MODE
 :Vex file browswer
     I have this mapped to shift W
 :bd close the file browser (or buffer)
@@ -140,7 +140,7 @@ select the lines first
 
 TO FIND WORDS
 put the cursor on the word you want to find and then type the * and then it will bring you to those words in the text, or to just find something, in non-edit mode put  / and the word, and then press the letter n to keep searching
-...
+```
 
 
 ## INSTALL GOOGLE DRIVE IN VIM
