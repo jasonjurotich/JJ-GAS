@@ -88,6 +88,7 @@ ctrl b previous page.
 IN NON-EDIT MODE
 :Vex file browswer
     I have this mapped to shift W
+ctrl h will switch back and forth from the editor    
 shift ZZ to close the file browser
 :vs path/to/file.txt to open a file directly
 
@@ -100,7 +101,7 @@ or
 
 :vert term (opens terminal on the side)
 finish working, then write exit in terminal 
-:bd to close the buffer (I have this mapped to df + enter)
+:bd + enter to close the buffer (I have this mapped to df + enter)
 
 
 v = select lines
