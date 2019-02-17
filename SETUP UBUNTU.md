@@ -99,8 +99,8 @@ then return to exactly where you left with Vim by just typing the command fg.
 or
 
 :vert term (opens terminal on the side)
-write exit in terminal 
-:bd to close the buffer
+finish working, then write exit in terminal 
+:bd to close the buffer (I have this mapped to df + enter)
 
 
 v = select lines
