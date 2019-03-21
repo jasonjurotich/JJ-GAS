@@ -47,6 +47,9 @@ nnoremap <C-h> <C-W><C-W>
 let mapleader="g" 
 inoremap <leader>g <C-x><C-o>   
 inoremap ff <Esc> 
+inoremap ( ()<Left>
+inoremap ' ''<Left>
+inoremap " ""<Left>
 map Q :qa<CR>
 map W :Vex<CR> 
 map E <C-f>  
