@@ -32,6 +32,7 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'Quramy/tsuquyomi'
 Plugin 'Shougo/vimproc.vim'
+Plugin 'itchyny/lightline.vim'
 call vundle#end()
 
 filetype plugin indent on
