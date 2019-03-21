@@ -56,6 +56,8 @@ map B :vert term<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
 map ; :normal A;<cr>
+map  cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
+map  vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
