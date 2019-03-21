@@ -54,7 +54,8 @@ map R <C-b>
 map df :bd<cr>
 map B :vert term<CR>
 map T <C-z>
-map S :s/\<\>//g<left><left><left><left><left> 
+map S :s/\<\>//g<left><left><left><left><left>
+map ; :normal A;<cr>
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
