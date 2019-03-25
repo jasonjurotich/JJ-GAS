@@ -28,7 +28,6 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set cursorline
-" set colorcolumn=92
 set laststatus=2 
 
 nnoremap <C-h> <C-W><C-W> 
@@ -64,6 +63,7 @@ colorscheme molokai
 hi EndOfBuffer ctermfg=black
 ru macros/justify.vim
 set noshowmode
+" set colorcolumn=92
 ```
 ## INSTALL VIMPROC
 After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
