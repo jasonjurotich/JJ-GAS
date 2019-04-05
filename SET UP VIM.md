@@ -1,6 +1,6 @@
 ## VIM
 vim .vimrc
-(The configuration below allows you to type double ff to escape, gg to autocomplete, and shift q to exit.
+
 ```
 set nocompatible
 filetype off
