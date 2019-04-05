@@ -19,6 +19,7 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'Quramy/tsuquyomi'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'itchyny/lightline.vim'
+Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 
 filetype plugin indent on
@@ -67,6 +68,10 @@ set noshowmode
 ```
 ## INSTALL VIMPROC
 After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
+
+## INSTALL YOUCOMPLETEME
+After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/YouCompleteMe && python3 install.py --all && cd ~
+You may have to run :PluginUpdate afterwords before it activates.
 
 ## KEYBOARD COMBOS FOR VIM
 ```
@@ -153,6 +158,26 @@ TO FIND WORDS
 put the cursor on the word you want to find and then type the * 
 and then it will bring you to those words in the text, or to just find something, 
 in non-edit mode put  / and the word, and then press the letter n to keep searching
+
+NEW COMMANDS CREATED WITH VIMRC FILE
+in edit mode
+ff to escape
+in normal mode
+Shift Q to save and close
+Shift E to go down a page
+Shift R to go up a page
+Shift B to open vertical terminal
+Shift S to advanced search
+Shift T to suspend vim and go to terminal
+fg to return to vim
+Shift W to open vertical file explorer
+df to :bd<cr> to close vertical explorer
+cc to comment out lines
+vv to uncomment lines
+; to add a semicolon at the end of a line
+( to put () and the cursor in the middle
+' to put '' and the cursor in the middle
+" to put "" and the cursor in the middle
 ```
 
 
