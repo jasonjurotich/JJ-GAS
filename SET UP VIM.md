@@ -202,7 +202,7 @@ ALL IN ONE
 git config --global user.email "EMAIL" && git config --global user.name "NAME" && git clone https://github.com/USERNAME/REPOSITORY.git && cd ieducando && git config --global credential.helper store && git push https://github.com/USERNAME/REPOSITORY.git && cd ~
 
 TO UPDATE GIT
-git add -A && git commit -m "updated" && git push -u origin master
+- git add -A && git commit -m "updated" && git push -u origin master
 //For the first time
-git add -A && git commit -m "updated" && git push
+- git add -A && git commit -m "updated" && git push
 //For all other times
