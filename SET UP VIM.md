@@ -188,3 +188,21 @@ vv to uncomment lines
 3. Click "Create". You will get a Client ID, a Client Secret.
 4. google-drive-ocamlfuse -headless -label me -id "ID" -secret "ID"
 5. mkdir ~/gdrive && google-drive-ocamlfuse -label me ~/gdrive
+
+
+
+## SET UP GIT
+
+1. git config --global user.email "EMAIL" && git config --global user.name "NAME"
+2. git clone https://github.com/USERNAME/REPOSITORY.git 
+3. git config --global credential.helper store && git push https://github.com/USERNAME/REPOSITORY.git
+// It will ask for your username and password. If you have 2 step verification, you will have to create a token.
+
+ALL IN ONE
+git config --global user.email "EMAIL" && git config --global user.name "NAME" && git clone https://github.com/USERNAME/REPOSITORY.git && cd ieducando && git config --global credential.helper store && git push https://github.com/USERNAME/REPOSITORY.git && cd ~
+
+TO UPDATE GIT
+git add -A && git commit -m "updated" && git push -u origin master
+//For the first time
+git add -A && git commit -m "updated" && git push
+//For all other times
