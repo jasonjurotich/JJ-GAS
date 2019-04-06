@@ -216,3 +216,9 @@ TO UPDATE GIT
 
 If you want to have this command available in every terminal you must add the aliases to the .bashrc file.
 
+
+## SET UP MOSH
+- ssh-keygen -t rsa  //in local linux
+- cat ~/.ssh/id_rsa.pub  //in local linux
+- copy ssh keys into GSM by clicking on name of VM instance, then edit, then SSH keys.
+- mosh --ssh="ssh -i ~/.ssh/id_rsa" LOCALUSER@PUBLICIPGSM
