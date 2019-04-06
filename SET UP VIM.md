@@ -196,7 +196,7 @@ vv to uncomment lines
 1. git config --global user.email "EMAIL" && git config --global user.name "NAME"
 2. git clone https://github.com/USERNAME/REPOSITORY.git 
 3. git config --global credential.helper store && git push https://github.com/USERNAME/REPOSITORY.git
-// It will ask for your username and password. If you have 2 step verification, you will have to create a token.
+// It will ask for your username and password. If you have 2 step verification, you will have to create a token under developer settings.
 
 ALL IN ONE
 git config --global user.email "EMAIL" && git config --global user.name "NAME" && git clone https://github.com/USERNAME/REPOSITORY.git && cd ieducando && git config --global credential.helper store && git push https://github.com/USERNAME/REPOSITORY.git && cd ~
