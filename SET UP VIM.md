@@ -206,3 +206,7 @@ TO UPDATE GIT
 //For the first time
 - git add -A && git commit -m "updated" && git push
 //For all other times
+
+## CREATE SHORTCUTS FOR LINUX
+alias df='git add -A && git commit -m "updated" && git push'  // this will create a shortcut. If you want to have this command available in every terminal you must add the aliases to the .bashrc file.
+
