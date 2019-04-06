@@ -73,6 +73,7 @@ After you save the .vimrc file, you must go out and then go back in and then run
 - After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/YouCompleteMe && python3 install.py --all && cd ~
 - You may have to run :PluginUpdate afterwords before it activates. 
 - There is an error that comes out at the end but it does not affect how it works if you are just programming in Node and JS. If you need to program in C or C++ you need to follow the instructions here: https://github.com/Valloric/YouCompleteMe#linux-64-bit to get rid of the error.
+- When installing YouCompleteMe on the VM instance in the GCP, you may have to try twice, given that it may lag at 98%. Just do the process again to finish it after closing the tab where the VM instance is.
 
 ## INSTALL VIMPROC AND YOUCOMPLETEME
 - cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~ && cd ~/.vim/bundle/YouCompleteMe && python3 install.py --all && cd ~
