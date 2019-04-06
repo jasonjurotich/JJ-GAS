@@ -217,6 +217,13 @@ TO UPDATE GIT
 
 If you want to have this command available in every terminal you must add the aliases to the .bashrc file.
 
+- vim .bashrc
+- Shift g (to go to end of file)
+- a (to edit)
+- copy aliases (put each alias on a new line)
+- :wq
+- source ~/.bashrc
+
 
 ## SET UP MOSH
 - ssh-keygen -t rsa  //in local linux
