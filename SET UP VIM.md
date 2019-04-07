@@ -46,7 +46,7 @@ map df :bd<cr>
 map B :vert term<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
-map ; :normal A;<cr>:normal o<cr>i 
+map ; :normal A;<cr>a 
 map  cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
 map  vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
 
