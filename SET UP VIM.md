@@ -59,6 +59,7 @@ let g:auto_save = 1
 let g:auto_save_silent = 1
 let g:auto_save_events = ["InsertLeave","TextChanged","TextChangedI"]
 let g:tsuquyomi_disable_quickfix = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
 
 colorscheme molokai
 hi EndOfBuffer ctermfg=black
