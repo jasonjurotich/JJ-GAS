@@ -111,7 +111,9 @@ finish working, then write exit in terminal
 
 
 v = select lines
+
 after selecting lines < will shift all left or > will shift them right
+a . after indenting once will continue to indent the lines
 dd = delete the line where the cursor is at.  
 number + dd will delete that many lines. 
 dd and then move to another spot and then p to paste the line deleted.  
