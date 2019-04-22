@@ -39,6 +39,7 @@ inoremap dd <Esc>:normal A<cr>a
 inoremap ( ()<Left>
 inoremap ' ''<Left>
 inoremap " ""<Left>
+
 map Q :qa<CR>
 map W :Vex<CR> 
 map E <C-f>  
@@ -48,10 +49,11 @@ map B :vert term<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
 map ; :normal A;<cr>a
-map  cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
-map  vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
+map cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
+map vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
 map ee :s/^/# /g<CR>:let @/ = ""<CR>
 map rr :s/^# //g<CR>:let @/ = ""<CR>
+
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
@@ -94,7 +96,7 @@ ctrl f next page.
 ctrl b previous page.  
 
 IN NON-EDIT MODE
-:Vex file browswer
+:Vex vertical file browswer
     I have this mapped to shift W
 ctrl h will switch back and forth from the editor    
 shift ZZ to close the file browser
@@ -110,7 +112,6 @@ or
 :vert term (opens terminal on the side)
 finish working, then write exit in terminal 
 :bd + enter to close the buffer (I have this mapped to df + enter)
-
 
 v = select lines
 
