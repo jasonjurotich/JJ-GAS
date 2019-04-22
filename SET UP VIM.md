@@ -49,7 +49,8 @@ map S :s/\<\>//g<left><left><left><left><left>
 map ; :normal A;<cr>a
 map  cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
 map  vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
-
+map ee :s/^/# /g<CR>:let @/ = ""<CR>
+map rr :s/^# //g<CR>:let @/ = ""<CR>
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
