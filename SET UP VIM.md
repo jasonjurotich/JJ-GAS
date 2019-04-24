@@ -236,3 +236,12 @@ If you want to have this command available in every terminal you must add the al
 - cat ~/.ssh/id_rsa.pub  //in local linux
 - copy ssh keys into GSM by clicking on name of VM instance, then edit, then SSH keys.
 - mosh --ssh="ssh -i ~/.ssh/id_rsa" LOCALUSER@PUBLICIPGSM
+
+
+## SET UP CLASP
+- clasp login --no-localhost
+- clasp clone ID
+- clasp pull
+- clasp push
+
+https://github.com/google/clasp
