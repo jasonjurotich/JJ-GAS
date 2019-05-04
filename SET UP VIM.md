@@ -76,7 +76,7 @@ After you save the .vimrc file, you must go out and then go back in and then run
 
 ## INSTALL YOUCOMPLETEME
 - After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/YouCompleteMe && python3 install.py --ts-completer && cd ~
-If you need to program in C or C++ you need to follow the instructions here: https://github.com/Valloric/YouCompleteMe#linux-64-bit.
+- If you need to program in C or C++ you need to follow the instructions here: https://github.com/Valloric/YouCompleteMe#linux-64-bit.
 - When installing YouCompleteMe on the VM instance in the GCP, you may have to try twice, given that it may lag at 98%. Just do the process again to finish it after closing the tab where the VM instance is.
 
 ## INSTALL VIMPROC AND YOUCOMPLETEME
