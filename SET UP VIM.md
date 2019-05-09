@@ -31,7 +31,8 @@ set shiftwidth=2
 set cursorline
 set laststatus=2 
 
-nnoremap <C-h> <C-W><C-W> 
+nnoremap <C-h> <C-W><C-W>
+tnoremap <C-u> <C-W>w
 let mapleader="g" 
 inoremap <leader>g <C-x><C-o>   
 inoremap ff <Esc>
