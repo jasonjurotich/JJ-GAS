@@ -85,6 +85,7 @@ After you save the .vimrc file, you must go out and then go back in and then run
 ```
 FOR FILES
 vim -O (then the two files) will open them in two vertical buffers
+vim -p (then the two files) will open them in two tabs
 
 IN EDIT MODE      
 a = start adding text AFTER cursor (use instead of i)      
