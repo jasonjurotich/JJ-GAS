@@ -45,6 +45,7 @@ map E <C-f>
 map R <C-b>
 map df :bd!<cr>
 map B :vert term<CR>
+map F :vertical resize 110<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
 map ; :normal A;<cr>a
