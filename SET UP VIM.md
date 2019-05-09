@@ -32,9 +32,7 @@ set cursorline
 set laststatus=2 
 
 nnoremap <C-h> <C-W><C-W>
-tnoremap <C-u> <C-W>w
-let mapleader="g" 
-inoremap <leader>g <C-x><C-o>   
+tnoremap <C-u> <C-W>w 
 inoremap ff <Esc>
 inoremap tt <Esc>:normal A<cr>a 
 inoremap ( ()<Left>
@@ -71,6 +69,8 @@ hi EndOfBuffer ctermfg=black
 ru macros/justify.vim
 set noshowmode
 " set colorcolumn=92
+" let mapleader="g" 
+" inoremap <leader>g <C-x><C-o>  
 ```
 ## INSTALL VIMPROC
 After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
