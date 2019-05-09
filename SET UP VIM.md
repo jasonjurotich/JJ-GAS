@@ -44,7 +44,7 @@ map Q :qa<CR>
 map W :Vex<CR> 
 map E <C-f>  
 map R <C-b>
-map df :bd<cr>
+map df :bd!<cr>
 map B :vert term<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
@@ -83,6 +83,9 @@ After you save the .vimrc file, you must go out and then go back in and then run
 
 ## KEYBOARD COMBOS FOR VIM
 ```
+FOR FILES
+vim -O (then the two files) will open them in two vertical buffers
+
 IN EDIT MODE      
 a = start adding text AFTER cursor (use instead of i)      
 alt j or alt k will escape edit mode
