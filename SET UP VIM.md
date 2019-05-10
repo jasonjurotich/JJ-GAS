@@ -84,6 +84,7 @@ After you save the .vimrc file, you must go out and then go back in and then run
 ## INSTALL YOUCOMPLETEME
 - After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/YouCompleteMe && python3 install.py --ts-completer && cd ~
 - If you need to program in C or C++ you need to follow the instructions here: https://github.com/Valloric/YouCompleteMe#linux-64-bit.
+- On the server with little memory, you may have to uninstall and reinstall (PluginInstall and PluginUdate) a couple of times until it registers.
 
 ## INSTALL VIMPROC AND YOUCOMPLETEME
 - cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~ && cd ~/.vim/bundle/YouCompleteMe && python3 install.py --ts-completer && cd ~
