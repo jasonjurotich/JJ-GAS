@@ -29,10 +29,16 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set cursorline
-set laststatus=2 
+set laststatus=2
+set omnifunc=syntaxcomplete#Complete
 
 nnoremap <C-h> <C-W><C-W>
 tnoremap <C-u> <C-W>w 
+let mapleader="g" 
+inoremap <leader>g <C-x><C-o> 
+inoremap <leader>n <C-N>
+inoremap <leader>u <C-P>
+
 inoremap ff <Esc>
 inoremap tt <Esc>:normal A<cr>a 
 inoremap ( ()<Left>
@@ -68,10 +74,9 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 colorscheme molokai
 hi EndOfBuffer ctermfg=black
 ru macros/justify.vim
+set bs=2
 set noshowmode
 " set colorcolumn=92
-" let mapleader="g" 
-" inoremap <leader>g <C-x><C-o>  
 ```
 ## INSTALL VIMPROC
 After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
