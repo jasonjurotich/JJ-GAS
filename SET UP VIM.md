@@ -47,8 +47,8 @@ inoremap " ""<Left>
 
 map Q :qa<CR>
 map W :Vex<CR> 
-map E <C-f>  
-map R <C-b>
+map E <C-d>  
+map R <C-u>
 map df :bd!<cr>
 map B :vert term<CR>
 map F :vertical resize 110<CR>
