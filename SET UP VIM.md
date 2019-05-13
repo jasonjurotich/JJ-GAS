@@ -106,11 +106,16 @@ ctrl xf search and add files after /.
 ctrl f next page.  
 ctrl b previous page.  
 
+(Many of these I have remapped, please see the changes in the .vimrc file above)
+
 IN NON-EDIT MODE
 :Vex vertical file browswer
-    I have this mapped to shift W
-ctrl h will switch back and forth from the editor    
-shift ZZ to close the file browser
+(I have this mapped to shift W)
+    
+ctrl h will switch back and forth from the editor
+
+shift ZZ to close the file browser (or any open buffer)
+
 :vs path/to/file.txt to open a file directly
 
 TERMINAL
@@ -124,13 +129,19 @@ or
 finish working, then write exit in terminal 
 :bd + enter to close the buffer (I have this mapped to df + enter)
 
+(I have this mapped to Shift B)
+** VERY IMPORTANT: to switch from the terminal to the file it is Ctrl W then w, but I have this mapped to Ctrl U. 
+** You use the mapped Ctrl H to go back to the terminal. 
+
 v = select lines
 
 after selecting lines < will shift all left or > will shift them right
 a . after indenting once will continue to indent the lines
+
 dd = delete the line where the cursor is at.  
 number + dd will delete that many lines. 
 dd and then move to another spot and then p to paste the line deleted.  
+
 x = delete a letter at a time. 
 dw = delete a word. 
 d$ = to delete to end of line. 
@@ -140,8 +151,8 @@ u = undo what you just did
 ctrl r = redo things
 shift u = undo what was done to the line
 
-gg  or  H = beginning
-G or L  = end
+gg  or  Shift H = beginning
+Shift G or L  = end
 number plus G will take you to that line
 
 0 = beginning of line
@@ -160,6 +171,8 @@ b = jumps backwards by words
 
 Ctrl-D  move half-page down
 Ctrl-U  move half-page up
+(I have these mapped)
+
 
 % jumps from one bracket to another
 
@@ -182,20 +195,25 @@ and then it will bring you to those words in the text, or to just find something
 in non-edit mode put  / and the word, and then press the letter n to keep searching
 
 NEW COMMANDS CREATED WITH VIMRC FILE
-in edit mode
+in EDIT mode
 ff to escape
-in normal mode
+in NORMAL mode
 Shift Q to save and close
-Shift E to go down a page
-Shift R to go up a page
+Shift E to go down half a page
+Shift R to go up half a page
 Shift B to open vertical terminal
 Shift S to advanced search
 Shift T to suspend vim and go to terminal
 fg to return to vim
 Shift W to open vertical file explorer
-df to :bd<cr> to close vertical explorer
-cc to comment out lines
-vv to uncomment lines
+Ctrl h to go from file explorer to file and back
+Shift ZZ to close file explorer or buffer
+df to :bd<cr> to close vertical explorer or buffer
+cc to comment out lines for javascript
+vv to uncomment lines for javascript
+ee to comment out lines for python
+rr to uncomment lines for python
+
 ; to add a semicolon at the end of a line
 ( to put () and the cursor in the middle
 ' to put '' and the cursor in the middle
