@@ -87,7 +87,7 @@ After you save the .vimrc file, you must go out and then go back in and then run
 - On the server with little memory, you may have to uninstall and reinstall (PluginInstall and PluginUdate) a couple of times until it registers that YouCompleteMe is there.
 
 ## INSTALL VIMPROC AND YOUCOMPLETEME
-- cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~ && cd ~/.vim/bundle/YouCompleteMe && python3 install.py --ts-completer && cd ~
+- cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~ && cd ~/.vim/bundle/YouCompleteMe && sudo python3 install.py --ts-completer && cd ~
 
 ## KEYBOARD COMBOS FOR VIM
 ```
