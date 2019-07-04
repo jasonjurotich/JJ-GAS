@@ -248,7 +248,6 @@ TO UPDATE GIT
 
 ## CREATE SHORTCUTS FOR LINUX
 - alias df='git add -A && git commit -m "updated" && git push'  // this will create a shortcut. 
-- All together: alias mo='mosh --ssh="ssh -i ~/.ssh/id_rsa" user@IP' && alias df='git add -A && git commit -m "updated" && git push' && alias dg='git pull origin master'
 
 If you want to have this command available in every terminal you must add the aliases to the .bashrc file.
 
@@ -256,6 +255,9 @@ If you want to have this command available in every terminal you must add the al
 - Shift g (to go to end of file)
 - a (to edit)
 - copy aliases (put each alias on a new line)
+    alias mo='mosh --ssh="ssh -i ~/.ssh/id_rsa" user@IP'
+    alias df='git add -A && git commit -m "updated" && git push'
+    alias dg='git pull origin master'  
 - :wq
 - source ~/.bashrc
 
