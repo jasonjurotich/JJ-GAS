@@ -11,6 +11,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'moll/vim-node'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tomasiser/vim-code-dark'
 Plugin '907th/vim-auto-save'
 Plugin 'chrisbra/csv.vim'
 Plugin 'Townk/vim-autoclose'
@@ -71,7 +72,8 @@ let g:auto_save_events = ["InsertLeave","TextChanged","TextChangedI"]
 let g:tsuquyomi_disable_quickfix = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 
-colorscheme molokai
+colorscheme codedark
+hi Normal guibg=NONE ctermbg=NONE
 hi EndOfBuffer ctermfg=black
 ru macros/justify.vim
 set bs=2
