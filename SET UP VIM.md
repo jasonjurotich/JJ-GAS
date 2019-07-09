@@ -2,7 +2,7 @@
 vim .vimrc
 
 ```
-set nocompatible
+set nocompatible                                                                                                              
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -11,16 +11,15 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'moll/vim-node'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tomasiser/vim-code-dark'
 Plugin '907th/vim-auto-save'
 Plugin 'chrisbra/csv.vim'
 Plugin 'Townk/vim-autoclose'
-Plugin 'flazz/vim-colorschemes'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'Quramy/tsuquyomi'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'tomasiser/vim-code-dark'
 call vundle#end()
 
 filetype plugin indent on
@@ -74,7 +73,11 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 
 colorscheme codedark
 hi Normal guibg=NONE ctermbg=NONE
-hi EndOfBuffer ctermfg=black
+hi LineNr guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
+hi NonText guibg=NONE ctermbg=NONE
+hi CursorLine ctermbg=NONE
+
 ru macros/justify.vim
 set bs=2
 set noshowmode
