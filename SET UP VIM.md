@@ -77,6 +77,7 @@ hi LineNr guibg=NONE ctermbg=NONE
 hi EndOfBuffer guibg=NONE ctermbg=NONE
 hi NonText guibg=NONE ctermbg=NONE
 hi CursorLine ctermbg=NONE
+hi Pmenu guifg=NONE ctermbg=NONE
 
 ru macros/justify.vim
 set bs=2
