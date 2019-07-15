@@ -40,21 +40,25 @@ inoremap <leader>n <C-N>
 inoremap <leader>u <C-P>
 
 inoremap ff <Esc>
-inoremap tt <Esc>:normal A<cr>a 
+inoremap tt <Esc>:normal A<cr>a<cr>
 inoremap ( ()<Left>
 inoremap ' ''<Left>
-inoremap " ""<Left>
+inoremap " ""<Left> 
+
+map c "+
+map ft :bprev<CR>
+map fe :bnext<CR>
 
 map Q :qa<CR>
-map W :Vex<CR> 
-map E <C-d>  
+map W :Vex<CR>
+map E <C-d>
 map R <C-u>
-map df :bd!<cr>
+map fd :tabnew 
 map B :vert term<CR>
-map F :vertical resize 110<CR>
+map F :vertical rusize 110<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
-map ; :normal A;<cr>a
+map ; :normal A;<cr>a<cr>
 map cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
 map vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
 map ee :s/^/# /g<CR>:let @/ = ""<CR>
