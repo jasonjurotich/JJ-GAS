@@ -48,12 +48,12 @@ inoremap " ""<Left>
 map c "+
 map ft :bprev<CR>
 map fe :bnext<CR>
+map fd :tabnew
 
 map Q :qa<CR>
 map W :Vex<CR>
 map E <C-d>
-map R <C-u>
-map fd :tabnew 
+map R <C-u> 
 map B :vert term<CR>
 map F :vertical rusize 110<CR>
 map T <C-z>
