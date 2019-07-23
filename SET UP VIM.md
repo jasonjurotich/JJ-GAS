@@ -1,6 +1,5 @@
 ## VIM
 vim .vimrc
-- It might be necessary to run source ~/.vimrc after finishing everything else to activate the tab change.
 
 ```
 set nocompatible                                                                                                              
@@ -86,9 +85,6 @@ hi Pmenu guifg=NONE ctermbg=NONE
 
 ru macros/justify.vim
 set bs=2
-set ts=2
-set sts=2
-set shiftwidth=2
 set noshowmode
 " set colorcolumn=92
 ```
