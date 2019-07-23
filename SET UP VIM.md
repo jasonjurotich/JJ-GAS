@@ -102,7 +102,7 @@ After you save the .vimrc file, you must go out and then go back in and then run
 ## KEYBOARD COMBOS FOR VIM
 ```
 FOR FILES
-For 2 space tab in python files, you must comment out filetype plugin indent on and just leave filetype on
+For 2 space tab in python files, comment out filetype plugin indent on and just leave filetype on
 vim -O (then the two files) will open them in two vertical buffers
 vim -p (then the two files) will open them in two tabs
 gt and gT will move between tabs
