@@ -141,7 +141,7 @@ finish working, then write exit in terminal
 :bd + enter to close the buffer (I have this mapped to df + enter)
 
 (I have this mapped to Shift B)
-** VERY IMPORTANT: to switch from the terminal to the file it is Ctrl W then w, but I have this mapped to Ctrl U. 
+** To switch from the terminal to the file it is Ctrl W then w, but I have this mapped to Ctrl U. 
 ** You use the mapped Ctrl H to go back to the terminal. 
 
 v = select lines
