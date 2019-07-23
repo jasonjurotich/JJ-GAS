@@ -1,5 +1,6 @@
 ## VIM
 vim .vimrc
+- It might be necessary to run source ~/.vimrc after finishing everything else to activate the tab change.
 
 ```
 set nocompatible                                                                                                              
