@@ -31,6 +31,7 @@ set shiftwidth=2
 set cursorline
 set laststatus=2
 set omnifunc=syntaxcomplete#Complete
+set splitright
 
 nnoremap <C-h> <C-W><C-W>
 tnoremap <C-u> <C-W>w 
@@ -55,7 +56,7 @@ map W :Vex<CR>
 map E <C-d>
 map R <C-u> 
 map B :vert term<CR>
-map F :vertical rusize 110<CR>
+map F :vertical resize 110<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
 map ; :normal A;<cr>a<cr>
