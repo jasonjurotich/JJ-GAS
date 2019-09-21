@@ -130,7 +130,9 @@ ctrl h will switch back and forth from the editor
 
 shift ZZ to close the file browser (or any open buffer)
 
-:vs path/to/file.txt to open a file directly
+:vs path/to/file.txt to open a new file to the right of another one. 
+
+:sp path/to/file.txt to open a new file below the other one.
 
 TERMINAL
 pause Vim with Ctrl + Z, (I have mapped this to shift T)
