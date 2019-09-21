@@ -20,7 +20,6 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'tomasiser/vim-code-dark'
-Plugin 'nvie/vim-flake8'
 call vundle#end()
 
 filetype plugin indent on
