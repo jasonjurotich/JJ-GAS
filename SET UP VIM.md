@@ -20,14 +20,17 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'tomasiser/vim-code-dark'
+Plugin 'nvie/vim-flake8'
 call vundle#end()
 
 filetype plugin indent on
 syntax on
 set number
 set expandtab
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set textwidth=80
 set cursorline
 set laststatus=2
 set omnifunc=syntaxcomplete#Complete
@@ -89,7 +92,7 @@ hi Pmenu guifg=NONE ctermbg=NONE
 ru macros/justify.vim
 set bs=2
 set noshowmode
-" set colorcolumn=92
+
 ```
 ## INSTALL VIMPROC
 After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
