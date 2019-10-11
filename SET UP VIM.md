@@ -60,7 +60,7 @@ map R <C-u>
 map B :vert term<CR>
 map K :below term<CR>
 map ss :res 22<CR>
-map F :vertical resize 110<CR>
+map F :vert res 60<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
 map ; :normal A;<cr>a<cr>
