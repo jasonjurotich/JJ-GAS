@@ -93,6 +93,9 @@ set bs=2
 set noshowmode
 
 ```
+
+
+
 ## INSTALL VIMPROC
 After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
 
@@ -107,7 +110,9 @@ After you save the .vimrc file, you must go out and then go back in and then run
 ## KEYBOARD COMBOS FOR VIM
 ```
 FOR FILES
-For 2 space tab in python files, comment out filetype plugin indent on and just leave filetype on
+
+FOR 2 SPACE TAB IN PYHON, COMMENT OUT THE FILETYPE PLUGIN INDENT ON AND LEAVE FILETYPE ON
+
 vim -O (then the two files) will open them in two vertical buffers
 vim -p (then the two files) will open them in two tabs
 gt and gT will move between tabs
