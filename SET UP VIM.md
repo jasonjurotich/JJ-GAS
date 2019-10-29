@@ -299,3 +299,12 @@ If you want to have this command available in every terminal you must add the al
 - clasp push
 
 https://github.com/google/clasp
+
+
+## FIND RSPOSITORIES
+- use grep: /etc/apt# grep -iRl "http://ppa.launchpad.net/deadsnakes/ppa/ubuntu"
+- put / after link if you are in the home directory to search from root folder.
+
+## MAKE REPOSITORY TRUSTED
+- [trusted=yes]
+- deb [trusted=yes] http://ppa.launchpad.net/deadsnakes/ppa/ubuntu eoan main
