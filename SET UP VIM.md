@@ -107,6 +107,8 @@ After you save the .vimrc file, you must go out and then go back in and then run
 ## INSTALL VIMPROC AND YOUCOMPLETEME
 - cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~ && cd ~/.vim/bundle/YouCompleteMe && sudo python3 install.py --ts-completer && cd ~
 
+- if config does not allow you to write, then in the home folder put sudo chown -R $(whoami) .config
+
 ## KEYBOARD COMBOS FOR VIM
 ```
 FOR FILES
