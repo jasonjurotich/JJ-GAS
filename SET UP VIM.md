@@ -141,6 +141,8 @@ shift ZZ to close the file browser (or any open buffer)
 
 :vs path/to/file.txt to open a new file to the right of another one. 
 
+:on in the file you want to see and close the one on the right or below.
+
 :sp path/to/file.txt to open a new file below the other one.
 
 TERMINAL
