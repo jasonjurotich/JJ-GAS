@@ -312,3 +312,6 @@ https://github.com/google/clasp
 ## MAKE REPOSITORY TRUSTED
 - [trusted=yes]
 - deb [trusted=yes] http://ppa.launchpad.net/deadsnakes/ppa/ubuntu eoan main
+
+## REMOVE FOLDER AND ALL SUB ELEMENTS
+rm -rf
