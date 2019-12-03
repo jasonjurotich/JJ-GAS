@@ -8,21 +8,17 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'maksimr/vim-jsbeautify'
 Plugin 'moll/vim-node'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin '907th/vim-auto-save'
 Plugin 'chrisbra/csv.vim'
 Plugin 'Townk/vim-autoclose'
-Plugin 'leafgarland/typescript-vim'
 Plugin 'Quramy/tsuquyomi'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'itchyny/lightline.vim'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'tomasiser/vim-code-dark'
 call vundle#end()
 
-filetype plugin indent on
 syntax on
 set number
 set expandtab
@@ -35,15 +31,15 @@ set laststatus=2
 set omnifunc=syntaxcomplete#Complete
 set splitright
 
-nnoremap <C-h> <C-W><C-W>
-tnoremap <C-u> <C-W>w 
+nnoremap H <C-W><C-W>
+tnoremap <C-u> <C-W>w
+
 let mapleader="g" 
 inoremap <leader>g <C-x><C-o> 
 inoremap <leader>n <C-N>
 inoremap <leader>u <C-P>
 
 inoremap ff <Esc>
-inoremap tt <Esc>:normal A<cr>a<cr>
 inoremap ( ()<Left>
 inoremap ' ''<Left>
 inoremap " ""<Left> 
@@ -68,6 +64,7 @@ map cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
 map vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
 map ee :s/^/# /g<CR>:let @/ = ""<CR>
 map rr :s/^# //g<CR>:let @/ = ""<CR>
+map vs :vs
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -91,6 +88,13 @@ hi Pmenu guifg=NONE ctermbg=NONE
 ru macros/justify.vim
 set bs=2
 set noshowmode
+
+" filetype plugin indent on
+" inoremap tt <Esc>:normal A<cr>a<cr>
+" Plugin 'maksimr/vim-jsbeautify'
+" Plugin 'leafgarland/typescript-vim'
+" Plugin 'Valloric/YouCompleteMe'
+
 
 ```
 
@@ -139,7 +143,7 @@ ctrl h will switch back and forth from the editor
 
 shift ZZ to close the file browser (or any open buffer)
 
-:vs path/to/file.txt to open a new file to the right of another one. 
+:vs path/to/file.txt to open a new file to the right of another one. I have this mapped to just vs
 
 :on in the file you want to see and close the one on the right or below.
 
@@ -233,8 +237,8 @@ Shift S to advanced search
 Shift T to suspend vim and go to terminal
 fg to return to vim
 Shift W to open vertical file explorer
-Ctrl h to go from file explorer to file and back
-Shift ZZ to close file explorer or buffer
+Shift H to go from file explorer to file and back
+Shift ZZ to close file explorer or buffer (I HAVE THIS MAPPED TO ss)
 df to :bd<cr> to close vertical explorer or buffer
 cc to comment out lines for javascript
 vv to uncomment lines for javascript
