@@ -55,7 +55,7 @@ map E <C-d>
 map R <C-u> 
 map B :vert term<CR>
 map K :below term<CR>
-map ss :res 22<CR>
+map ss ZZ
 map F :vert res 60<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
