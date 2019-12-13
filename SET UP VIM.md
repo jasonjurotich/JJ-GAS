@@ -31,7 +31,8 @@ set laststatus=2
 set omnifunc=syntaxcomplete#Complete
 set splitright
 
-nnoremap H <C-W><C-W>
+nnoremap L <C-W><C-W>
+nnoremap H <C-W><C-H>
 tnoremap <C-u> <C-W>w
 
 let mapleader="g" 
