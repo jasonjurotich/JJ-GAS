@@ -45,7 +45,6 @@ inoremap ( ()<Left>
 inoremap ' ''<Left>
 inoremap " ""<Left> 
 
-map c "+
 map ft :bprev<CR>
 map fe :bnext<CR>
 map fd :tabnew
@@ -60,7 +59,6 @@ map ss ZZ
 map F :vert res 60<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
-map ; :normal A;<cr>a<cr>
 map c <C-f>
 map v <C-b> 
 map ee :s/^/# /g<CR>:let @/ = ""<CR>
@@ -97,6 +95,7 @@ set noshowmode
 " Plugin 'Valloric/YouCompleteMe'
 " map cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
 " map vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
+" map ; :normal A;<cr>a<cr>
 
 ```
 
