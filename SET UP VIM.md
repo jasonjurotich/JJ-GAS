@@ -61,8 +61,8 @@ map F :vert res 60<CR>
 map T <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
 map ; :normal A;<cr>a<cr>
-map cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
-map vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
+map c <C-f>
+map v <C-b> 
 map ee :s/^/# /g<CR>:let @/ = ""<CR>
 map rr :s/^# //g<CR>:let @/ = ""<CR>
 map vs :vs
@@ -95,7 +95,8 @@ set noshowmode
 " Plugin 'maksimr/vim-jsbeautify'
 " Plugin 'leafgarland/typescript-vim'
 " Plugin 'Valloric/YouCompleteMe'
-
+" map cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
+" map vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
 
 ```
 
