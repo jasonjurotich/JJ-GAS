@@ -2,7 +2,7 @@
 vim .vimrc
 
 ```
-set nocompatible                                                                                                              
+set nocompatible                             
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -53,14 +53,14 @@ map Q :qa<CR>
 map W :Vex<CR>
 map E <C-d>
 map R <C-u> 
+map c <C-f>
+map x <C-b> 
 map B :vert term<CR>
 map K :below term<CR>
 map ss ZZ
 map F :vert res 60<CR>
-map T <C-z>
+map M <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
-map c <C-f>
-map v <C-b> 
 map ee :s/^/# /g<CR>:let @/ = ""<CR>
 map rr :s/^# //g<CR>:let @/ = ""<CR>
 map vs :vs
