@@ -63,7 +63,7 @@ map M <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
 map ee :s/^/# /g<CR>:let @/ = ""<CR>
 map rr :s/^# //g<CR>:let @/ = ""<CR>
-map vs :vs
+map vs :vs 
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
