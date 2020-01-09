@@ -35,11 +35,6 @@ nnoremap L <C-W><C-W>
 nnoremap H <C-W><C-H>
 tnoremap <C-u> <C-W>w
 
-let mapleader="g" 
-inoremap <leader>g <C-x><C-o> 
-inoremap <leader>n <C-N>
-inoremap <leader>u <C-P>
-
 inoremap ff <Esc>
 inoremap ( ()<Left>
 inoremap ' ''<Left>
@@ -88,6 +83,11 @@ ru macros/justify.vim
 set bs=2
 set noshowmode
 
+
+" let mapleader="g" 
+" inoremap <leader>g <C-x><C-o> 
+" inoremap <leader>n <C-N>
+" inoremap <leader>u <C-P>
 " filetype plugin indent on
 " inoremap tt <Esc>:normal A<cr>a<cr>
 " Plugin 'maksimr/vim-jsbeautify'
