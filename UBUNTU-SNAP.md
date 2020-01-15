@@ -1,1 +1,0 @@
-sudo snap install curl-ijohnson && sudo snap install git-ubuntu --classic && sudo snap install nvim --beta --classic wget-simosx --beta && sudo snap install cmake --classic && sudo snap install mosh --edge --classic && sudo snap install mosh-armhf --edge && 
