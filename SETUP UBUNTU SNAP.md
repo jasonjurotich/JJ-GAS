@@ -2,14 +2,13 @@
 
 ## UBUNTU ON GCP
 
-sudo fallocate -l 4G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile && sudo cp /etc/fstab /etc/fstab.bak && echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab && sudo apt update -y && sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt dist-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y && sudo apt update -y && sudo apt-get update -y && sudo apt-get install mosh -y && sudo snap install curl-ijohnson python38 ngrok postgresql10 rclone kdenlive test-snapd-fuse-consumer && sudo snap install git-ubuntu --classic && sudo snap install cmake --classic && sudo snap install node --edge --classic && sudo snap install google-cloud-sdk --classic && sudo snap install code --classic && sudo snap install snapcraft --classic && sudo snap install wget-simosx --beta && sudo snap install gnome-terminator --beta && sudo snap install nvim --beta --classic && sudo apt install python3-pip -y && pip3 install cryptography==2.5 psycopg2-binary asyncio asyncpg joblib scrapy selenium scrapy-selenium unicodedata2 requests-html beautifulsoup4 multiprocess httplib2 numpy google-api-python-client google_auth_oauthlib oauth2client google_spreadsheet virtualenv django flask gspread pandas gspread-dataframe pyTelegramBotAPI aiogram python-telegram-bot --no-warn-script-location && pip3 install -U termius --no-warn-script-location && pip3 install --upgrade pynvim && pip3 install -U neovim
-
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+sudo fallocate -l 4G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile && sudo cp /etc/fstab /etc/fstab.bak && echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab && sudo apt update -y && sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt dist-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y && sudo apt update -y && sudo apt-get update -y && sudo apt-get install mosh -y && sudo snap install curl-ijohnson python38 ngrok postgresql10 rclone kdenlive test-snapd-fuse-consumer && sudo snap install git-ubuntu --classic && sudo snap install cmake --classic && sudo snap install node --edge --classic && sudo snap install google-cloud-sdk --classic && sudo snap install code --classic && sudo snap install snapcraft --classic && sudo snap install wget-simosx --beta && sudo snap install gnome-terminator --beta && sudo snap install nvim --beta --classic && sudo apt install python3-pip -y && pip3 install cryptography==2.5 psycopg2-binary asyncio asyncpg joblib scrapy selenium scrapy-selenium unicodedata2 requests-html beautifulsoup4 multiprocess httplib2 numpy google-api-python-client google_auth_oauthlib oauth2client google_spreadsheet virtualenv django flask gspread pandas gspread-dataframe pyTelegramBotAPI aiogram python-telegram-bot --no-warn-script-location && pip3 install -U termius --no-warn-script-location && pip3 install --upgrade pynvim && pip3 install -U neovim && curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 
 ## NEOVIM
 
-~/.config/nvim/init.vim
+Create the directory ~/.config/nvim/ if it does not exist yet
+Then, create the init.vim document and nvim inside to add the following
 ```
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'terryma/vim-multiple-cursors'
@@ -85,3 +84,18 @@ ru macros/justify.vim
 set bs=2
 set noshowmode
 ```
+
+## ALIAS
+```
+vn .bashrc
+
+alias df='git add -A && git commit -m "updated" && git push'
+alias dg='git pull origin master'
+alias py='python3'
+alias ex='exit'
+alias cl='clear'
+alias vn='nvim'
+
+source ~/.bashrc
+
+
