@@ -43,7 +43,7 @@ inoremap " ""<Left>
 
 map ft :bprev<CR>
 map fe :bnext<CR>
-map fd :tabnew
+map fd :tabnew 
 
 map Q :qa<CR>
 map W :Vex<CR>
