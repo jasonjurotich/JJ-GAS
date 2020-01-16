@@ -6,7 +6,6 @@ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \ https://raw
 NEOVIM
 
 call plug#begin('~/.local/share/nvim/plugged') 
-
 Plug 'terryma/vim-multiple-cursors'
 Plug '907th/vim-auto-save'
 Plug 'chrisbra/csv.vim'
@@ -15,7 +14,6 @@ Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/vimproc.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'tomasiser/vim-code-dark'
-
 call plug#end()
 
 syntax on                                                                                                                                                 
