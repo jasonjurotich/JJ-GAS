@@ -21,6 +21,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'tomasiser/vim-code-dark'
 call plug#end()
 
+filetype plugin indent off
 set number    
 set expandtab    
 set tabstop=2    
