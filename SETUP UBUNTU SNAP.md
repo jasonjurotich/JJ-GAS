@@ -11,6 +11,9 @@ sudo fallocate -l 4G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapf
 Create the directory ~/.config/nvim/ if it does not exist yet
 Then, create the init.vim document and nvim inside to add the following
 ```
+set nocompatible                             
+filetype off
+
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'terryma/vim-multiple-cursors'
 Plug '907th/vim-auto-save'
