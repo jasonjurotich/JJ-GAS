@@ -3,8 +3,6 @@ sudo fallocate -l 4G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapf
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 
-NEOVIM
-
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'terryma/vim-multiple-cursors'
 Plug '907th/vim-auto-save'
