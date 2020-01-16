@@ -34,7 +34,7 @@ set splitright
 
 nnoremap L <C-W><C-W>
 nnoremap H <C-W><C-H>
-tnoremap <C-u> <C-W>w
+tnoremap dk <C-W>w
 
 inoremap ff <Esc>
 inoremap ( ()<Left>
