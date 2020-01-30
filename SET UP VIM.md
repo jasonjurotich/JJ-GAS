@@ -2,38 +2,38 @@
 vim .vimrc
 
 ```
-set nocompatible                             
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'moll/vim-node'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin '907th/vim-auto-save'
-Plugin 'chrisbra/csv.vim'
-Plugin 'Townk/vim-autoclose'
-Plugin 'Quramy/tsuquyomi'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'itchyny/lightline.vim'
-Plugin 'tomasiser/vim-code-dark'
-call vundle#end()
+call plug#begin('~/.vim/plugged')
+Plug 'terryma/vim-multiple-cursors'
+Plug '907th/vim-auto-save'
+Plug 'chrisbra/csv.vim'
+Plug 'Townk/vim-autoclose'
+Plug 'Quramy/tsuquyomi'
+Plug 'Shougo/vimproc.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'tomasiser/vim-code-dark'
+call plug#end()
 
-syntax on
-set number
-set expandtab
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set textwidth=80
-set cursorline
-set laststatus=2
-set omnifunc=syntaxcomplete#Complete
-set splitright
+filetype plugin indent off
+set number    
+set expandtab    
+set tabstop=2    
+set softtabstop=2    
+set shiftwidth=2    
+set textwidth=80    
+set cursorline    
+set laststatus=2    
+set omnifunc=syntaxcomplete#Complete    
+set splitright 
 
 nnoremap L <C-W><C-W>
 nnoremap H <C-W><C-H>
-tnoremap <C-u> <C-W>w
+tnoremap dk <C-W>w
 
 inoremap ff <Esc>
 inoremap ( ()<Left>
@@ -42,7 +42,7 @@ inoremap " ""<Left>
 
 map ft :bprev<CR>
 map fe :bnext<CR>
-map fd :tabnew
+map fd :tabnew 
 
 map Q :qa<CR>
 map W :Vex<CR>
@@ -53,7 +53,7 @@ map x <C-b>
 map B :vert term<CR>
 map K :below term<CR>
 map ss ZZ
-map F :vert res 60<CR>
+map F :vert res 50<CR>
 map M <C-z>
 map S :s/\<\>//g<left><left><left><left><left>
 map ee :s/^/# /g<CR>:let @/ = ""<CR>
@@ -83,16 +83,6 @@ ru macros/justify.vim
 set bs=2
 set noshowmode
 
-
-" let mapleader="g" 
-" inoremap <leader>g <C-x><C-o> 
-" inoremap <leader>n <C-N>
-" inoremap <leader>u <C-P>
-" filetype plugin indent on
-" inoremap tt <Esc>:normal A<cr>a<cr>
-" Plugin 'maksimr/vim-jsbeautify'
-" Plugin 'leafgarland/typescript-vim'
-" Plugin 'Valloric/YouCompleteMe'
 " map cc :s/^/\/\/ /g<CR>:let @/ = ""<CR>
 " map vv :s/^\/\/ //g<CR>:let @/ = ""<CR> 
 " map ; :normal A;<cr>a<cr>
@@ -101,16 +91,11 @@ set noshowmode
 
 
 
-## INSTALL VIMPROC
-After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~
 
 ## INSTALL YOUCOMPLETEME
 - After you save the .vimrc file, you must go out and then go back in and then run :PluginInstall. Then go out and run the following: cd ~/.vim/bundle/YouCompleteMe && python3 install.py --ts-completer && cd ~
 - If you need to program in C or C++ you need to follow the instructions here: https://github.com/Valloric/YouCompleteMe#linux-64-bit.
 - On the server with little memory, you may have to uninstall and reinstall (PluginInstall and PluginUdate) a couple of times until it registers that YouCompleteMe is there.
-
-## INSTALL VIMPROC AND YOUCOMPLETEME
-- cd ~/.vim/bundle/vimproc.vim && sudo make && cd ~ && cd ~/.vim/bundle/YouCompleteMe && sudo python3 install.py --ts-completer && cd ~
 
 - if config does not allow you to write, then in the home folder put sudo chown -R $(whoami) .config
 
