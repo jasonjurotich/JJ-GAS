@@ -313,6 +313,7 @@ https://github.com/google/clasp
 ## FIND RSPOSITORIES
 - grep -Ril "https://storage.googleapis.com/cros-packages/79" /
 - put / after link if you are in the home directory to search from root folder.
+- https://stackoverflow.com/questions/16956810/how-do-i-find-all-files-containing-specific-text-on-linux
 
 ## MAKE REPOSITORY TRUSTED
 - [trusted=yes]
