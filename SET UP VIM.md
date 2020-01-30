@@ -311,7 +311,7 @@ https://github.com/google/clasp
 
 
 ## FIND RSPOSITORIES
-- use grep: /etc/apt# grep -iRl "http://ppa.launchpad.net/deadsnakes/ppa/ubuntu"
+- grep -Ril "https://storage.googleapis.com/cros-packages/79" /
 - put / after link if you are in the home directory to search from root folder.
 
 ## MAKE REPOSITORY TRUSTED
