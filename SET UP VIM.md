@@ -262,6 +262,7 @@ TO UPDATE GIT
 //For the first time
 - git add -A && git commit -m "updated" && git push
 //For all other times
+- git fetch --all && git reset --hard origin/master (to overide ALL in local with what is in GitHub)
 
 ## CREATE SHORTCUTS FOR LINUX
 - alias df='git add -A && git commit -m "updated" && git push'  // this will create a shortcut. 
