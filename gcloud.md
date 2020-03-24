@@ -9,14 +9,17 @@ gcloud init
 - It will ask you to sign in. Open the link and then choose the account
 - It will then ask you to choose or create a project, just click on ctrl + c to escape that. We will do it later.
 
+
 To create a project, add APIs, add Firewall exceptions, create Service Accounts, and create a VM Compute Instance:
 
 gcloud projects create PROJECTNAME && gcloud config set project PROJECTNAME && gcloud beta billing projects link PROJECTNAME --billing-account=ACCOUNTNUMBER && gcloud services enable admin.googleapis.com appengine.googleapis.com caldav.googleapis.com cloudapis.googleapis.com calendar-json.googleapis.com chat.googleapis.com classroom.googleapis.com compute.googleapis.com contacts.googleapis.com docs.googleapis.com drive.googleapis.com gmail.googleapis.com groupssettings.googleapis.com iam.googleapis.com iamcredentials.googleapis.com people.googleapis.com sheets.googleapis.com slides.googleapis.com && gcloud compute firewall-rules create FWNAME --allow tcp:5000 --direction=INGRESS && gcloud compute firewall-rules create FWNAME --allow tcp:5001 --direction=INGRESS && gcloud compute firewall-rules create FWNAME --allow udp:60000-61000 --direction=INGRESS && gcloud iam service-accounts create SANAME --description "does all" --display-name "SANAME" && gcloud iam service-accounts add-iam-policy-binding SANAME@PROJECTNAME.iam.gserviceaccount.com --member 'user:ADMINEMAIL' --role 'roles/owner' && gcloud iam service-accounts add-iam-policy-binding SANAME@PROJECTNAME.iam.gserviceaccount.com --member 'user:ADMINEMAIL' --role 'roles/iam.serviceAccountUser' && gcloud compute instances create "VMINAME" --boot-disk-device-name "VMINAME" --zone "us-central1-f" --machine-type "f1-micro" --image-project ubuntu-os-cloud --image-family ubuntu-1910 --boot-disk-size "30" --boot-disk-type "pd-standard" --maintenance-policy "MIGRATE" --tags http-server,https-server --scopes cloud-platform
+...
 
 
 To create a project, add APIs, add Firewall exceptions, create Service Accounts, and create an AppEngine Instance:
 
 gcloud projects create PROJECTNAME && gcloud config set project PROJECTNAME && gcloud beta billing projects link PROJECTNAME --billing-account=ACCOUNTNUMBER && gcloud services enable admin.googleapis.com appengine.googleapis.com caldav.googleapis.com cloudapis.googleapis.com calendar-json.googleapis.com chat.googleapis.com classroom.googleapis.com compute.googleapis.com contacts.googleapis.com docs.googleapis.com drive.googleapis.com gmail.googleapis.com groupssettings.googleapis.com iam.googleapis.com iamcredentials.googleapis.com people.googleapis.com sheets.googleapis.com slides.googleapis.com && gcloud compute firewall-rules create FWNAME --allow tcp:5000 --direction=INGRESS && gcloud compute firewall-rules create FWNAME --allow tcp:5001 --direction=INGRESS && gcloud compute firewall-rules create FWNAME --allow udp:60000-61000 --direction=INGRESS && gcloud iam service-accounts create SANAME --description "does all" --display-name "SANAME" && gcloud iam service-accounts add-iam-policy-binding SANAME@PROJECTNAME.iam.gserviceaccount.com --member 'user:ADMINEMAIL' --role 'roles/owner' && gcloud iam service-accounts add-iam-policy-binding SANAME@PROJECTNAME.iam.gserviceaccount.com --member 'user:ADMINEMAIL' --role 'roles/iam.serviceAccountUser' && gcloud app create --project=bots20 --region=us-central
+...
 
 For both cases, you must do the following afterwords in GCP:
 
