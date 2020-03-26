@@ -26,7 +26,88 @@ You must do the following afterwords in GCP:
 https://mail.google.com/,https://www.google.com/calendar/feeds,https://www.googleapis.com/auth/activity,https://www.googleapis.com/auth/admin.datatransfer,https://www.googleapis.com/auth/admin.directory.customer,https://www.googleapis.com/auth/admin.directory.device.chromeos,https://www.googleapis.com/auth/admin.directory.device.mobile.action,https://www.googleapis.com/auth/admin.directory.device.mobile,https://www.googleapis.com/auth/admin.directory.domain,https://www.googleapis.com/auth/admin.directory.group.member,https://www.googleapis.com/auth/admin.directory.group,https://www.googleapis.com/auth/admin.directory.notifications,https://www.googleapis.com/auth/admin.directory.orgunit,https://www.googleapis.com/auth/admin.directory.resource.calendar,https://www.googleapis.com/auth/admin.directory.rolemanagement,https://www.googleapis.com/auth/admin.directory.user.alias,https://www.googleapis.com/auth/admin.directory.user.security,https://www.googleapis.com/auth/admin.directory.user,https://www.googleapis.com/auth/apps.groups.settings,https://www.googleapis.com/auth/calendar,https://www.googleapis.com/auth/chat.bot,https://www.googleapis.com/auth/classroom.announcements,https://www.googleapis.com/auth/classroom.courses,https://www.googleapis.com/auth/classroom.coursework.me,https://www.googleapis.com/auth/classroom.coursework.students,https://www.googleapis.com/auth/classroom.guardianlinks.students,https://www.googleapis.com/auth/classroom.profile.emails,https://www.googleapis.com/auth/classroom.profile.photos,https://www.googleapis.com/auth/classroom.push-notifications,https://www.googleapis.com/auth/classroom.rosters,https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/compute,https://www.googleapis.com/auth/devstorage.full_control,https://www.googleapis.com/auth/documents,https://www.googleapis.com/auth/drive.appdata,https://www.googleapis.com/auth/drive.file,https://www.googleapis.com/auth/drive.metadata,https://www.googleapis.com/auth/drive.scripts,https://www.googleapis.com/auth/drive,https://www.googleapis.com/auth/appengine.admin,https://www.googleapis.com/auth/forms,https://www.googleapis.com/auth/groups,https://www.googleapis.com/auth/presentations,https://www.googleapis.com/auth/spreadsheets,https://www.googleapis.com/auth/script.scriptapp,https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/userinfo.profile,https://www.googleapis.com/auth/script.projects,https://spreadsheets.google.com/feeds
 
 
+## VIM
 
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'terryma/vim-multiple-cursors'
+Plug '907th/vim-auto-save'
+Plug 'chrisbra/csv.vim'
+Plug 'Townk/vim-autoclose'
+Plug 'Quramy/tsuquyomi'
+Plug 'Shougo/vimproc.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'tomasiser/vim-code-dark'
+call plug#end()
+
+filetype plugin indent off
+set number    
+set expandtab    
+set tabstop=2    
+set softtabstop=2    
+set shiftwidth=2    
+set textwidth=80    
+set cursorline    
+set laststatus=2    
+set omnifunc=syntaxcomplete#Complete    
+set splitright 
+
+nnoremap L <C-W><C-W>
+nnoremap H <C-W><C-H>
+tnoremap dk <C-W>w
+
+inoremap ff <Esc>
+inoremap ( ()<Left>
+inoremap ' ''<Left>
+inoremap " ""<Left> 
+
+map ft :bprev<CR>
+map fe :bnext<CR>
+map fd :tabnew 
+
+map Q :qa<CR>
+map W :Vex<CR>
+map E <C-d>
+map R <C-u> 
+map c <C-f>
+map x <C-b> 
+map B :vert term<CR>
+map K :below term<CR>
+map ss ZZ
+map F :vert res 50<CR>
+map M <C-z>
+map S :s/\<\>//g<left><left><left><left><left>
+map ee :s/^/# /g<CR>:let @/ = ""<CR>
+map rr :s/^# //g<CR>:let @/ = ""<CR>
+map vs :vs 
+
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 25
+let g:netrw_altv = 1
+let g:auto_save = 1
+let g:auto_save_silent = 1
+let g:auto_save_events = ["InsertLeave","TextChanged","TextChangedI"]
+let g:tsuquyomi_disable_quickfix = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+
+colorscheme codedark
+hi Normal guibg=NONE ctermbg=NONE
+hi LineNr guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
+hi NonText guibg=NONE ctermbg=NONE
+hi CursorLine ctermbg=NONE
+hi Pmenu guifg=NONE ctermbg=NONE
+
+ru macros/justify.vim
+set bs=2
+set noshowmode
 
 
 
