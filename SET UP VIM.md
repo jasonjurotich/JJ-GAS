@@ -1,4 +1,4 @@
-## VIM
+## VIM OLD
 vim .vimrc
 
 ```
@@ -28,7 +28,11 @@ set shiftwidth=2
 set textwidth=80    
 set cursorline    
 set laststatus=2    
-set omnifunc=syntaxcomplete#Complete    
+
+
+set omnifunc=syntaxcomplete#Complete 
+" To use omni completion, type <C-X><C-O> while open in Insert mode. If matching names are found, a pop-up menu opens which can be navigated using the <C-N> and <C-P> keys.
+
 set splitright 
 
 nnoremap L <C-W><C-W>
