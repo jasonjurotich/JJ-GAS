@@ -21,7 +21,8 @@ function onOpen() {
 
 function createTemplate() {
   var s = SpreadsheetApp
-    .getActiveSpreadsheet()
+    // .getActiveSpreadsheet()
+    .openById('ID')
     .getActiveSheet();
 
   s.deleteColumns(17, 8);
@@ -733,11 +734,12 @@ function body(s) {
 function createForm() {
 
   var s = SpreadsheetApp
-    .getActiveSpreadsheet()
+    // .getActiveSpreadsheet()
+    .openById('ID')
     .getActiveSheet();
 
   body(s); 
-
+  return 'form created'
 }
 
 
@@ -751,6 +753,6 @@ function createForms() {
     var s = sh[k];
     body(s);
   }
-
+  return 'forms created'
 } 
 
