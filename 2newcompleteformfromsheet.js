@@ -1,4 +1,4 @@
-var ID = 'ID';
+var ID = '1IYtN0qfTwwql7mihJsiYvUGpZcBlesbsqsE-Efgkt-Q';
 
 function onOpen() {
   var menu = SpreadsheetApp.getUi()
@@ -258,7 +258,7 @@ function body(s) {
               .duplicate(); 
           }
         }
-      } 
+     } 
 
       else { 
         var q = f.addMultipleChoiceItem(); 
@@ -432,7 +432,7 @@ function dform(){
 
   var iti = f.getItems();
 
-  for (var y = 3; y < iti.length; y += 1){
+  for (var y = 4; y < iti.length; y += 1){
     var ito = iti[y];
 
     if (ito.getType() == "MULTIPLE_CHOICE"){ 
@@ -529,6 +529,16 @@ function dform(){
   }
 
   f.deleteItem(f.getItemById(ch));
+ 
+  var iti3 = f.getItems();
+
+  for (let y = 0; y < iti3.length; y += 1){
+    var ito3 = iti3[y];
+
+    if (ito3.getTitle() === "FINAL"){ 
+      f.moveItem(ito3,iti3.length - 1); 
+    } 
+  }
 
   return 'done';
 }
