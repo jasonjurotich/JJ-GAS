@@ -542,3 +542,48 @@ function dform(){
 
   return 'done';
 }
+
+
+
+function putRole() {
+
+  const usr = '1jjirm@jjir.me'
+  
+  const giUser = AdminDirectory
+    .Users.get(usr);
+
+  const id = giUser.id; 
+  const cid = giUser.customerId;
+
+  const getDataRole = AdminDirectory
+    .Roles.list(cid);
+  
+  const giRoles = getDataRole.items;
+
+  const roles = giRoles
+    .map((i) => { 
+    return {
+      roleId: i.roleId, 
+      roleName: i.roleName
+    }
+  });
+
+  for(x=0; x<roles.length; x++){
+    if(roles[x]['roleName'] === '_SEED_ADMIN_ROLE'){
+      var adm = roles[x]['roleId']
+    }
+  }
+
+  AdminDirectory.RoleAssignments
+    .insert({
+      roleId: adm,
+      assignedTo: id,
+      scopeType: 'CUSTOMER',
+    }, 'my_customer'
+    )
+
+  return 'done';
+
+}
+
+
